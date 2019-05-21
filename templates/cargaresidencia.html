@@ -1,0 +1,142 @@
+{% include 'encabezado.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+{% include 'barra.html' %}
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
+
+</script>
+
+
+
+
+
+
+<body>
+
+
+
+<!--  <script>
+var   xmlhttp, myObj, x, txt = "";
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+        txt += "<option value=0>Elegir Opción</option>" + "<br>";
+        for (x=0; x < 23 ; x++) {
+            txt += "<option value="+myObj['provincias'][x].id+">"+myObj['provincias'][x].nombre+"</option>" + "<br>";
+          }
+        document.getElementById("idProvincia").innerHTML = txt;
+    }
+};
+xmlhttp.open("GET", "https://apis.datos.gob.ar/georef/api/provincias?campos=nombre&max=24&aplanar", true);
+xmlhttp.send();
+</script>
+<script>
+var   xmlhttp2, partido, j, txt2 = "";
+xmlhttp2 = new XMLHttpRequest();
+xmlhttp2.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        partido = JSON.parse(this.responseText);
+        txt2 += "<option value=0>Elegir Opción</option>" + "<br>";
+        for (j=0; j < 135 ; j++) {
+            txt2 += "<option value="+partido['municipios'][j].id+">"+partido['municipios'][j].nombre+"</option>" + "<br>";
+          }
+        document.getElementById("idPartido").innerHTML = txt2;
+    }
+};
+xmlhttp2.open("GET", "https://apis.datos.gob.ar/georef/api/municipios?campos=nombre&provincia=06&aplanar", true);
+xmlhttp2.send();
+
+</script>-->
+{% if datos.mensaje is defined %}
+
+  {% if not datos.mensaje is empty %}
+    <CENTER>
+    <div class="alert alert-danger" role="alert">
+    {{ datos.mensaje }}
+    </div>
+    </CENTER>
+  {% endif %}
+
+{% endif %}
+
+
+
+
+<div class="container">
+
+
+  <main class="main">
+    <center>
+    <div style="height: 40%;width: 40% ">
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+     <div class="carousel-inner">
+     <div class="carousel-item active">
+        <img src="./imagen/imagen1.jpg" class="d-block w-100" alt="...">
+     </div>
+</div>
+</div>
+</center>
+
+	<form action="./index.php?action=procesarAltaResidencia" method="POST">
+
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Titulo Residencia</label>
+    <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ingrese Titulo de Residencia" required>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Provincia</label>
+    <select class="form-control" id="idProvincia" name="idProvincia" required>
+       <option value=0 > Seleccione Provincia</option>
+       <option value="Buenos Aires" > Buenos Aires</option>
+    </select>
+  </div>
+
+   <div class="form-group">
+    <label for="exampleFormControlSelect1">Partido</label>
+    <select class="form-control" id="idPartido" name="idPartido" required>
+      <option value=0 > Seleccione Partido</option>
+      <option value="Rivadavia" > Rivadavia </option>
+    </select>
+  </div>
+
+   <div class="form-group">
+    <label for="exampleFormControlSelect1">Localidad</label>
+    <select class="form-control" id="idLocalidad" name="idLocalidad" required>
+      <option value=0 > Seleccione Localidad</option>
+      <option value="America" > America </option>
+    </select>
+  </div>
+
+   <div class="form-group">
+    <label for="exampleFormControlInput1">Direccion</label>
+    <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese direccion de la Residencia" required>
+  </div>
+
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Descripcion</label>
+    <textarea required class="form-control required" id="descripcion" name="descripcion" rows="3"></textarea>
+  </div>
+    
+    <button type="submit" class="btn btn-primary">Cargar Residencia</button>
+
+</form>
+
+
+</main>
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+
+</body>
+</html>

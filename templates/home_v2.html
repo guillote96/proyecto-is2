@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- AMG CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+
+
+</head>
+<body>
+
+  {% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+    <CENTER>
+    <div class="alert alert-danger" role="alert">
+    {{ mensaje }}
+    </div>
+    </CENTER>
+  {% endif %}
+
+{% endif %}
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+
+  <main>
+    
+
+    <!-- CAROUSEL -->
+    <div class="carousel-inner d-flex justify-content-center">
+
+
+
+      <div class="carousel-item active">
+        <img class="d-block w-100 slide-img" src="imagen/residencia-1.jpg" alt="First slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100 slide-img" src="imagen/residencia-2.jpg" alt="Second slide">
+      </div>
+
+      <div class="position-absolute align-self-center">
+
+        <!-- TITLE -->
+        <h1 class="text-white text-center" style="font-size: 80px"> Home Switch Home </h1>
+
+        <div class="d-flex justify-content-center">
+
+          <!-- LOG IN -->
+          <button type="button" class="btn btn-primary btn-lg mr-3" data-toggle="modal" data-target="#login">Iniciar Sesión</button>
+
+          <form action="./index.php?action=user-login" method="POST">
+            <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="loginLabel">Iniciar Sesión</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="email-input-login" class="col-form-label">Email</label>
+                        <input name="email-input-login" type="text" class="form-control" id="email-input-login">
+                      </div>
+                      <div class="form-group">
+                        <label for="password-input-login" class="col-form-label">Contraseña</label>
+                        <input name="password-input-login" type="password" class="form-control" id="password-input-login">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+
+          <!-- SIGN UP -->
+          <button type="button" class="btn btn-secondary btn-lg mr-4" data-toggle="modal" data-target="#signup">Registrarse</button>
+
+          <form action="./index.php?action=user-signup" method="POST">
+            <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="signup-label">Registrarse</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="email-input-signup" class="col-form-label">Email</label>
+                      <input type="text" class="form-control" id="email-input-signup">
+                    </div>
+                    <div class="form-group">
+                      <label for="password-input-signup" class="col-form-label">Contraseña</label>
+                      <input type="text" class="form-control" id="password-input-signup">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-primary">Crear cuenta</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          </form>
+
+        </div>
+      </div>
+
+
+      <div class="position-absolute align-self-end text-center mb-5">
+
+        <!-- ADMIN LOGIN -->
+        <button type="button" class="btn btn-link text-white font-size-10" data-toggle="modal" data-target="#admin-login">Acceso para administradores</button>
+
+        <form action="./index.php?action=admin-login" method="POST">
+          <div class="modal fade" id="admin-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="admin-login-label">Acceso para administradores</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="username-input-admin" class="col-form-label">Username</label>
+                      <input name="username-input-admin" type="text" class="form-control" id="username-input-admin">
+                    </div>
+                    <div class="form-group">
+                      <label for="password-input-admin" class="col-form-label">Contraseña</label>
+                      <input name="password-input-admin" type="password" class="form-control" id="password-input-admin">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-primary">Acceder</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+        <p class="mb-5 font-italic text-white">Powered by AMG</p>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

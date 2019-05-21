@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+{% include 'encabezado.html' %}
+    <head>
+        <title>Pujar Subasta</title>
+
+<script>
+function validateForm() {
+  var pujamayor = document.form["pujamayor"].value;
+  var puja = document.form["puja"].value;
+  if (puja <= pujamayor) {
+    alert("El monto debe ser mayor al existente");
+    return false;
+  }
+}
+</script>
+
+</head>
+{% include 'barra_user.html' %}
+
+
+<body>
+<br>
+
+
+
+
+<div class="container" >
+
+    <main class="main">
+
+
+
+   <center> 
+<div class="card">
+  <br>
+  <h1> Pujar Subasta</h1>
+	<br>
+
+	   <form name="form" action="./index.php?action=pujarSubasta&idSubasta={{idSubasta}}"   onsubmit="return validateForm()" method="POST" >
+
+
+               
+  
+        <div style=" width: 20%">
+
+
+
+         <div class="input-group mb-3">
+           <div class="input-group-prepend">
+            <span class="input-group-text">Puja Maxima</span>
+
+          <input class="form-control" type="decimal" name="pujamayor" value="{{puja}}" readonly>
+         </div>
+       </div>
+
+        
+
+		       <div class="input-group mb-3">
+           <div class="input-group-prepend">
+            <span class="input-group-text">Ingrese Monto</span>
+            </div>
+            <input type="decimal" id="puja" min="0" class="form-control" name="puja">
+           </div>
+           </div>
+  
+ 
+       {% if boton == true %}
+
+          <button type="submit" class="btn btn-primary">Pujar</button>
+
+      {% else %}
+     
+          <button type="submit" class="btn btn-primary" disabled>Pujar</button>
+ 
+     {% endif %}
+    </form>
+
+
+<br>
+</center>  
+          
+</div>
+
+</main>
+</div>
+
+</body>
+</html>

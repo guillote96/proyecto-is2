@@ -1,0 +1,110 @@
+{% include 'encabezado.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Publicacion de Residencia</title>
+</head>
+{% include 'barra.html' %}
+
+<body>
+
+
+
+	<div class="container">
+
+  {% if tipousuario == "administrador" %}
+		 <a href="./index.php?action=editarResidencia&id={{residencia[0].idResidencia}}" class="btn btn-primary" role="button" aria-pressed="true">Editar INFO </a>
+
+      <a href="" class="btn btn-primary" role="button" aria-pressed="true">Crear Subasta </a>
+
+   {% endif %}
+
+
+  
+    <main class="main">
+      <!-- mensaje de exito o no -->
+    {% if datos.exito is not empty %}
+       {% if datos.exito %}
+        <br>
+       <div class="alert alert-success" role="alert">
+        {{datos.mensaje}}
+       </div>
+      {% endif %}
+
+      {% if not datos.exito %}
+        <div class="alert alert-danger" role="alert">
+       {{datos.mensaje}}
+      </div>
+      {% endif %}
+     {% endif %}
+
+
+
+
+
+	<center><h1>{{ residencia[0].titulo }}</h1>
+
+   <div style="height: 40%;width: 40%;">
+           <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+           <div class="carousel-inner">
+           <div class="carousel-item active">
+              <img src="./imagen/imagen1.jpg" class="d-block w-100" alt="...">
+           </div>
+           </div>
+           </div>
+         </center>
+		<br>
+
+
+<div class="card">
+
+           
+
+
+  <div class="card-body">
+    Provincia: {{ residencia[0].provincia }}
+  </div>
+    <div class="card-body">
+    Partido: {{ residencia[0].partido }}
+  </div>
+    <div class="card-body">
+    Localidad: {{ residencia[0].ciudad }}
+  </div>
+    <div class="card-body">
+    Direccion: {{ residencia[0].direccion }}
+  </div>
+    <div class="card-body">
+    Descripcion: {{ residencia[0].descripcion }}
+  </div>
+
+</div>
+
+
+</div>
+<br>
+
+	<center><h4> Lista de Semanas Disponibles (Solo Subastas) </h4>
+		<br>
+    {% if residenciasemanasubastas is not empty %}
+			{% for rs in residenciasemanasubastas %}
+           <form action="./index.php?action=verSemana" method="POST">
+             <input type="radio" name="idRS" value="{{rs.idResidenciaSemana}}"> Fecha Inicio: {{rs.fecha_inicio}} - Fecha Fin: {{rs.fecha_fin}}
+
+
+
+             <br>
+            {% endfor %}
+            <br>
+             {% if tipousuario != "administrador" %}
+            <button type="submit" class="btn btn-primary">Pujar en Semana</button>  
+              {% endif %}
+            </form>
+  {% endif %}
+
+	</center>
+
+
+</main>
+</div>
+</body>
+</html>
