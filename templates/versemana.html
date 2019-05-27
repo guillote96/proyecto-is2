@@ -9,10 +9,13 @@
 function validateForm() {
   var pujamayor = document.form["pujamayor"].value;
   var puja = document.form["puja"].value;
-  if (puja <= pujamayor) {
+  if (puja > pujamayor) {
+    return true;
+  }else{
     alert("El monto debe ser mayor al existente");
-    return false;
+     return false;
   }
+ 
 }
 </script>
 

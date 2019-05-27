@@ -61,7 +61,6 @@ class PDOSubasta extends PDORepository {
      public function insertarParticipanteSubasta($idUsuario, $idSubasta, $puja){
         $answer= $this->queryList("INSERT INTO participa_subasta (idSubasta, idUsuario, puja)
 VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSubasta' => $idSubasta,':puja' => $puja));
-      var_dump($answer);
 
      }
     
