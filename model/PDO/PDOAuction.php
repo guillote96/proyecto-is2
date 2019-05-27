@@ -29,7 +29,7 @@ class PDOAuction extends PDORepository {
   public function getDetailedAuctions()
   {
     $auctions = $this->queryList("
-        SELECT s.idSubasta, s.base, rs.estado, r.titulo, sem.fecha_inicio, sem.fecha_fin
+        SELECT s.idSubasta, s.base, s.activa, r.titulo, sem.fecha_inicio, sem.fecha_fin
         FROM subasta s
         INNER JOIN residencia_semana rs on s.idResidenciaSemana = rs.idResidenciaSemana
         INNER JOIN residencia r on rs.idResidencia = r.idResidencia
@@ -59,7 +59,7 @@ class PDOAuction extends PDORepository {
     return array_map(function ($auctionInfo) {
 
       $auctionId = $auctionInfo["auction"]["idSubasta"];
-      $active = $auctionInfo["auction"]["estado"];
+      $active = $auctionInfo["auction"]["activa"];
       $base = $auctionInfo["auction"]["base"];
       $currentAmount = $auctionInfo["currentAmount"];
       $week = ["from_date" => $auctionInfo["auction"]["fecha_inicio"], "to_date" => $auctionInfo["auction"]["fecha_fin"]];

@@ -21,7 +21,7 @@ class AuctionsController extends Controller {
 
   public function listAuctions() {
     $auctionsView = new AuctionsView();
-    $auctions = PDOAuction::getInstance()->getDetailedAuctions();
+    $auctions = PDOSubasta::getInstance()->getDetailedAuctions();
     $auctionsView->show(array("auctions" => $auctions, "user" => $_SESSION['usuario']));
   }
 

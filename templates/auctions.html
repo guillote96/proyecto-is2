@@ -69,14 +69,22 @@
           <div class="col-md-4 mt-3">
             <h5 class="card-title">
               Subasta N°{{ auction.auctionId }}
-              <span class="badge badge-info ml-lg-2">{{ active ? "Activa": "Inactiva" }}</span>
+              {% if  auction.active == 1 %}
+              <span class="badge badge-info ml-lg-2">Activa</span>
+              {% else %}
+               <span class="badge badge-info ml-lg-2">Inactiva</span>
+              {% endif %}
+
+
+
+
             </h5>
 
             <p class="card-text d-flex justify-content-between">
               <span>Base: ${{ auction.base }}</span>
               <span>Puja actual: ${{ auction.base }}</span>
             </p>
-            <p class="card-text">Semana: COMPLETAR</p>
+            <p class="card-text">Semana: {{auction.week.from_date}} - {{auction.week.to_date}}</p>
             <a href="#" class="btn btn-danger btn-sm">Finalizar Subasta</a>
           </div>
 
