@@ -128,6 +128,12 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
         return true;
       }
 
+      public function desactivarSubasta($idSubasta){
+        $answer = $this->queryList("UPDATE subasta SET activa= :activa WHERE idSubasta=:idSubasta",array(':idSubasta' => $idSubasta, ':activa' => 0 ));
+        return true;
+      }
+
+
   /**
    * Retorna todas las subastas de la base de datos
    *
@@ -145,14 +151,14 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
   }
 
 
- public function getDetailedAuctions()
+ public function getDetailedAuctions($activa)
   {
     $auctions = $this->queryList("
         SELECT s.idSubasta, s.base, s.activa, r.titulo, sem.fecha_inicio, sem.fecha_fin
         FROM subasta s
         INNER JOIN residencia_semana rs on s.idResidenciaSemana = rs.idResidenciaSemana
         INNER JOIN residencia r on rs.idResidencia = r.idResidencia
-        INNER JOIN semana sem on rs.idSemana = sem.idSemana", []
+        INNER JOIN semana sem on rs.idSemana = sem.idSemana WHERE s.activa=$activa", []
     );
 
 

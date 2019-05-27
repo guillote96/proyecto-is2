@@ -85,7 +85,43 @@
               <span>Puja actual: ${{ auction.base }}</span>
             </p>
             <p class="card-text">Semana: {{auction.week.from_date}} - {{auction.week.to_date}}</p>
-            <a href="#" class="btn btn-danger btn-sm">Finalizar Subasta</a>
+            <a href="#ventanaConfirmacion{{auction.auctionId}}" class="btn btn-danger btn-sm" data-toggle="modal" >Finalizar Subasta</a>
+
+
+
+              <div class="modal fade" id="ventanaConfirmacion{{auction.auctionId}}">
+
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">    
+                         <h5 class="modal-title">
+                           ¿Desea Finalizar la subasta {{auction.auctionId}} ?
+                         </h5>
+                         <button type ="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>
+                         
+                      </div>    
+
+                      <div class="modal-body">
+                        <center><p>Seleccione Opcion </p></center>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type ="button" class="btn btn-default"   data-dismiss="modal">Cancelar</button>  
+                        <a  href="./index.php?action=finalizarSubasta&idSubasta={{auction.auctionId}}" class="btn btn-danger " role="button" >
+                          Finalizar Subasta
+                        </a>
+
+                      </div>         
+
+                  </div>
+                </div> 
+              </div>
+
+
+
+
+
+
           </div>
 
         </div>
@@ -115,6 +151,10 @@
   </div>
 
 </div>
+
+
+
+
 
 
 <!-- Optional JavaScript -->

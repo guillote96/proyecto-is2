@@ -102,6 +102,9 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'crearSubasta' && !empty($_
 else if(isset($_GET["action"]) && $_GET["action"] == 'procesarCreacionSubasta' && !empty($_GET['idResidencia'])){
    AuctionsController::getInstance()->procesar_subasta($_GET['idResidencia'], $_POST['idSemana'],$_POST['base']);
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'finalizarSubasta' && !empty($_GET['idSubasta'])){
+   AuctionsController::getInstance()->finalizarSubasta($_GET['idSubasta']);
+}
 else if(isset($_GET["action"]) && $_GET["action"] == 'verEstadoSubastas'){
    AuctionsController::getInstance()->estadoSubasta(null);
 }

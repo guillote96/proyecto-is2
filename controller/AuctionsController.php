@@ -21,7 +21,7 @@ class AuctionsController extends Controller {
 
   public function listAuctions() {
     $auctionsView = new AuctionsView();
-    $auctions = PDOSubasta::getInstance()->getDetailedAuctions();
+    $auctions = PDOSubasta::getInstance()->getDetailedAuctions(1);
     $auctionsView->show(array("auctions" => $auctions, "user" => $_SESSION['usuario']));
   }
 
@@ -95,6 +95,14 @@ class AuctionsController extends Controller {
      return false;
    }
 
+public function finalizarSubasta($idSubasta){
 
+   PDOSubasta::getInstance()->desactivarSubasta($idSubasta);
+   $auctionsView = new AuctionsView();
+   $auctions = PDOSubasta::getInstance()->getDetailedAuctions(1);
+   $auctionsView->show(array("auctions" => $auctions, "user" => $_SESSION['usuario']));
+
+
+}
 
 }
