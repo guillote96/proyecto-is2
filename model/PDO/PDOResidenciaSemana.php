@@ -65,6 +65,34 @@ class PDOResidenciaSemana extends PDORepository {
         return $final_answer;
     }
 
+   public function insertarSemanaResidencia($idResidencia,$idSemana){
+     $answer = $this->queryList("INSERT INTO residencia_semana (idResidencia,idSemana)
+     VALUES (:idResidencia,:idSemana);",array(':idResidencia' => $idResidencia,':idSemana'=>$idSemana));
+
+
+
+   }
+
+   public function existeSemanaParaResidencia($idResidencia,$idSemana){
+
+    $answer = $this->queryList("SELECT * FROM residencia_semana WHERE idResidencia=:idResidencia AND idSemana =:idSemana",array(':idResidencia' => $idResidencia,':idSemana'=> $idSemana));
+    if(sizeof($answer) > 0){
+        return true;
+    }
+    return false;
+    
+   }
+
+   public function traerIdResidenciaSemana($idResidencia,$idSemana){
+    $answer = $this->queryList("SELECT rs.idResidenciaSemana FROM residencia_semana rs WHERE idResidencia=:idResidencia AND idSemana =:idSemana",array(':idResidencia' => $idResidencia,':idSemana'=> $idSemana));
+
+    return $answer[0]["idResidenciaSemana"];
+
+
+
+
+
+   }
 
 
 }

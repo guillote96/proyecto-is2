@@ -18,38 +18,12 @@ class UsuarioController extends Controller {
         
     }
     
-
-    private function verificar_datos(){
-
-         if(empty($_POST['email']) || empty($_POST['password'])){
-             $this->vistaIniciarSesion(array('mensaje' => "Hay Campos Vacios"));
-             return false;
-        }
-
-        if($_POST['email'] == "user@user.com" && $_POST['password'] == 1234){
-
-             $this->alta_sesion($_POST['email'], 1, "usuario"); // el id es ficticio para esta entrega
-             $datos= array('user' => $_POST['email'], 'tipousuario'=> $_SESSION['tipo']);
-             $this->vistaHome($datos);
-        }else{           
-             $this->vistaIniciarSesion(array('mensaje' => "Usuario o contraseña incorrecta"));
-             return false;
-        }
-
-
-    }
-
-
-   public function verificarDatos(){
-        $this->verificar_datos();
-   }
-
   public function userLogin(){
     // TODO: Validaciones del lado del servidor
-        if(empty($_POST['email-input-login']) || empty($_POST['password-input-login'])){
-             $this->vistaIniciarSesion(array('mensaje' => "Hay Campos Vacios"));
-             return false;
-        }
+     if(empty($_POST['email-input-login']) || empty($_POST['password-input-login'])){
+       $this->vistaIniciarSesion(array('mensaje' => "Hay Campos Vacios"));
+       return false;
+     }
 
 
     if($_POST['email-input-login'] == "user@user.com" && $_POST['password-input-login'] == 1234){

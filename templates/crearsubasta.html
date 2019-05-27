@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+{% include 'encabezado.html' %}
+    <head>
+        <title>Crear Subasta</title>
+
+</head>
+{% include 'barra.html' %}
+
+
+<body>
+<br>
+
+
+
+
+<div class="container" >
+
+<main class="main">
+ <center> 
+   <div class="card" >
+    <br>
+   <h1>Crear Subasta</h1>
+   <br>
+   <div style="width:20%;">
+  <form action="./index.php?action=procesarCreacionSubasta&idResidencia={{idResidencia}}" method="POST">
+    <select  class="custom-select" name="idSemana" required>
+      <option value="0" selected>Seleccione semana</option>
+      {% for semana in semanas %}
+      <option value="{{semana.idSemana}}">{{semana.fecha_inicio}} A {{semana.fecha_fin}}</option>
+       {% endfor %}
+
+    </select>
+      
+      <br>
+
+    <div class="input-group mb-3">
+       <div class="input-group-prepend">
+       <span class="input-group-text">$</span>
+       </div>
+       <input type="text" name= "base" min="0" class="form-control required" aria-label="Amount (to the nearest dollar)" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Crear Subasta</button>
+   </form>
+
+    
+  </div>
+
+    <br>
+</center>            
+   </div>
+
+ </main>
+</div>
+
+</body>
+</html>

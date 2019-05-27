@@ -189,4 +189,9 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
     }, $usersPerAuction);
   }
 
+
+  public function insertarSubasta($idResidenciaSemana,$base){
+    $answer = $this->queryList("INSERT INTO subasta (idResidenciaSemana,activa,base) VALUES (:idResidenciaSemana,0,:base);",array(':idResidenciaSemana' => $idResidenciaSemana,':base'=>$base));
+   }
+
 }

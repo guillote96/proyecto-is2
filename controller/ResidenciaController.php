@@ -198,7 +198,12 @@ class ResidenciaController extends Controller {
            }
      }
 
-        
+       
+
+   public function crearSubasta($idResidencia){
+      AuctionsController::getInstance()->crearSubasta($idResidencia);
+   }
+
 
 
 }

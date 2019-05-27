@@ -24,6 +24,7 @@ require_once('view/CargarResidencia.php');
 require_once('view/MostrarResidencia.php');
 require_once('view/EstadoSubasta.php');
 require_once('view/AuctionsView.php');
+require_once('view/CrearSubasta.php');
 
 
 
@@ -33,12 +34,14 @@ require_once('model/PDO/PDOResidencia.php');
 require_once('model/PDO/PDOSubasta.php');
 require_once('model/PDO/PDOResidenciaSemana.php');
 require_once('model/PDO/PDOAuction.php');
+require_once('model/PDO/PDOSemana.php');
 
 /* MODEL */
 
 require_once('model/Subasta.php');
 require_once('model/ResidenciaSemana.php');
 require_once('model/Residencia.php');
+require_once('model/Sem.php');
 require_once('model/AuctionDetail.php');
 
 if(isset($_GET["action"]) && $_GET["action"] == 'iniciarsesion'){
@@ -92,6 +95,12 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'procesarEdicionResidencia'
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'cancelarEdicionResidencia' && !empty($_GET['id'])){
    ResidenciaController::getInstance()->cancelarEdicion($_GET['id']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'crearSubasta' && !empty($_GET['idResidencia'])){
+   ResidenciaController::getInstance()->crearSubasta($_GET['idResidencia']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'procesarCreacionSubasta' && !empty($_GET['idResidencia'])){
+   AuctionsController::getInstance()->procesar_subasta($_GET['idResidencia'], $_POST['idSemana'],$_POST['base']);
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'verEstadoSubastas'){
    AuctionsController::getInstance()->estadoSubasta(null);
