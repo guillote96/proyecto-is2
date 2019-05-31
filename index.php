@@ -11,7 +11,9 @@ require_once('controller/AuctionsController.php');
 require_once('controller/ResidenciaController.php');
 require_once('controller/AdministradorController.php');
 require_once('controller/AuctionsController.php');
-
+require_once('controller/DirectaController.php');
+require_once('controller/HotsaleController.php');
+require_once('controller/ResidenciaSemanaController.php');
 /* VIEW */
 require_once('view/TwigView.php');
 require_once('view/Home.php');
@@ -35,10 +37,12 @@ require_once('model/PDO/PDOSubasta.php');
 require_once('model/PDO/PDOResidenciaSemana.php');
 require_once('model/PDO/PDOAuction.php');
 require_once('model/PDO/PDOSemana.php');
+require_once('model/PDO/PDODirecta.php');
 
 /* MODEL */
 
 require_once('model/Subasta.php');
+require_once('model/Directa.php');
 require_once('model/ResidenciaSemana.php');
 require_once('model/Residencia.php');
 require_once('model/Sem.php');
@@ -107,6 +111,9 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'finalizarSubasta' && !empt
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'verEstadoSubastas'){
    AuctionsController::getInstance()->estadoSubasta(null);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizar'){
+   ResidenciaController::getInstance()->sincronizador();
 }
 else{
 	if(!isset($_SESSION['usuario']))

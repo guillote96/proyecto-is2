@@ -1,6 +1,8 @@
 <?php
 
-class AuctionsController extends Controller {
+require_once('controller/ResidenciaSemanaController.php');
+
+class AuctionsController extends ResidenciaSemanaController {
 
   private static $instance;
 
@@ -104,5 +106,10 @@ public function finalizarSubasta($idSubasta){
 
 
 }
+
+
+
+
+
 
 }
