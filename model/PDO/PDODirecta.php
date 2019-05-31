@@ -38,6 +38,20 @@ class PDODirecta extends PDORepository {
 
      }
 
+     public function desactivarSemanaDirecta($idResidenciaSemana){
+
+        $answer = $this->queryList("UPDATE directa SET activa = 0 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana));
+
+
+     }
+
+     public function borrarSemanaDirecta($idResidenciaSemana){
+
+        $answer = $this->queryList("UPDATE directa SET borrada = 1 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana));
+
+
+     }
+
 
 
 }

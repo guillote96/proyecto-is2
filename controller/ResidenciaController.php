@@ -206,15 +206,16 @@ class ResidenciaController extends Controller {
 
 
 
-   public function sincronizador(){
+  public function sincronizador(){
       // Sincroniza todas las semanas para cada residencia.
      $residencias= PDOResidencia::getInstance()->listarTodas();
      foreach ($residencias as $key => $residencia){
+
        ResidenciaSemanaController::getInstance()->sincronizador($residencia->getIdResidencia());
+
       }
-    }
 
 
-
+   }
 }
     
