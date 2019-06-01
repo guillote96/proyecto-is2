@@ -21,10 +21,10 @@ class PDOSubasta extends PDORepository {
 
     public function subastaInfo($idRS){
         //subasta info activas ( activo =0)
-        $answer = $this->queryList("SELECT su.idSubasta, su.idResidenciaSemana, su.base, su.activa, s.fecha_inicio, s.fecha_fin FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN subasta su ON (su.idResidenciaSemana=rs.idResidenciaSemana) WHERE su.idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana' => $idRS));
+        $answer = $this->queryList("SELECT su.idSubasta,su.borrada su.idResidenciaSemana, su.base, su.activa, s.fecha_inicio, s.fecha_fin FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN subasta su ON (su.idResidenciaSemana=rs.idResidenciaSemana) WHERE su.idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana' => $idRS));
         $final_answer = [];
         foreach ($answer as &$element) {
-            $final_answer[] = new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"]);
+            $final_answer[] = new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]);
         }
 
         return $final_answer;
@@ -96,12 +96,12 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
           //Para una residencia trae unicamente las semanas que  esta Inactivas
 
-         $answer = $this->queryList("SELECT su.idSubasta, su.idResidenciaSemana, su.base, su.activa, s.fecha_inicio, s.fecha_fin FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN subasta su ON (su.idResidenciaSemana=rs.idResidenciaSemana)WHERE idResidencia =:idResidencia AND su.activa=:activa",array(':idResidencia' => $idResidencia, ':activa' => 0 ));
+         $answer = $this->queryList("SELECT su.idSubasta,su.borrada, su.idResidenciaSemana, su.base, su.activa, s.fecha_inicio, s.fecha_fin FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN subasta su ON (su.idResidenciaSemana=rs.idResidenciaSemana)WHERE idResidencia =:idResidencia AND su.activa=:activa",array(':idResidencia' => $idResidencia, ':activa' => 0 ));
          
          $final_answer = [];
 
          foreach ($answer as &$element) {
-            $final_answer[] = new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"]);
+            $final_answer[] = new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]);
          }
 
         return $final_answer;
@@ -109,12 +109,12 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
 
       public function traerSubastasActivas($idResidencia){
-        $answer = $this->queryList("SELECT su.idSubasta, su.idResidenciaSemana, su.base, su.activa, s.fecha_inicio, s.fecha_fin FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN subasta su ON (su.idResidenciaSemana=rs.idResidenciaSemana)WHERE idResidencia =:idResidencia AND su.activa=:activa",array(':idResidencia' => $idResidencia, ':activa' => 1 ));
+        $answer = $this->queryList("SELECT su.idSubasta,su.borrada, su.idResidenciaSemana, su.base, su.activa, s.fecha_inicio, s.fecha_fin FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN subasta su ON (su.idResidenciaSemana=rs.idResidenciaSemana)WHERE idResidencia =:idResidencia AND su.activa=:activa",array(':idResidencia' => $idResidencia, ':activa' => 1 ));
          
          $final_answer = [];
 
          foreach ($answer as &$element) {
-            $final_answer[] = new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"]);
+            $final_answer[] = new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]);
          }
 
         return $final_answer;
@@ -122,6 +122,8 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
 
       }
+
+      //Hcaer transicion de idSubasta a idResidenciaSemana
 
       public function activarSubasta($idSubasta){
         $answer = $this->queryList("UPDATE subasta SET activa= :activa WHERE idSubasta=:idSubasta",array(':idSubasta' => $idSubasta, ':activa' => 1 ));
@@ -197,7 +199,73 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
 
   public function insertarSubasta($idResidenciaSemana,$base){
-    $answer = $this->queryList("INSERT INTO subasta (idResidenciaSemana,activa,base) VALUES (:idResidenciaSemana,0,:base);",array(':idResidenciaSemana' => $idResidenciaSemana,':base'=>$base));
+    $answer = $this->queryList("INSERT INTO subasta (idResidenciaSemana,activa,base,borrada) VALUES (:idResidenciaSemana,0,:base,0);",array(':idResidenciaSemana' => $idResidenciaSemana,':base'=>$base));
    }
+
+
+
+    public function listarSubasta ($idResidencia){
+      //lista las semanas en subasta para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase subasta y ResidenciaSemana)
+       $answer = $this->queryList("SELECT s.idSubasta,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia,s.borrada, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) WHERE rs.idResidencia = :idResidencia AND rs.borrada = 0 AND s.borrada = 0",array(':idResidencia' => $idResidencia));
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array(new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element["estado"],null),new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]));
+        }
+
+        return $final_answer;
+
+     }
+
+     
+     public function activarSemanaSubasta($idResidenciaSemana){
+
+        $answer = $this->queryList("UPDATE subasta SET activa = 1 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana));
+
+     }
+
+     public function desactivarSemanaSubasta($idResidenciaSemana){
+
+        $answer = $this->queryList("UPDATE subasta SET activa = 0 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana));
+
+     }
+
+     public function borrarSemanaSubasta($idResidenciaSemana){
+
+        $answer = $this->queryList("UPDATE subasta SET borrada = 1 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana));
+
+     }
+
+  public function tieneParticipantes($idSubasta){
+   $answer = $this->queryList("SELECT * FROM participa_subasta WHERE idSubasta=:idSubasta",array(':idSubasta'=> $idSubasta));
+
+        if(sizeof($answer) > 0){
+            //existen participantes
+          return true;
+       }
+
+       return false;
+
+
+     }
+
+  public function idUsuarioConMayorPujaEnSubasta($idSubasta){
+    $answer = $this->queryList("SELECT idUsuario FROM participa_subasta WHERE idSubasta = :idSubasta ORDER BY puja DESC LIMIT 1",array(':idSubasta'=> $idSubasta));
+
+    if(sizeof($answer)> 0){
+
+      return $answer[0]["idUsuario"];
+    }
+
+    return false;
+
+   }
+
+    public function adjudicarSubasta($idSubasta, $idUsuario){
+
+        $answer = $this->queryList("UPDATE participa_subasta SET es_ganador = 1 WHERE idSubasta= :idSubasta AND idUsuario=:idUsuario",array(':idSubasta'=> $idSubasta,':idUsuario'=> $idUsuario));
+
+     }
+
 
 }

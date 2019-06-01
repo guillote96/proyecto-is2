@@ -4,6 +4,7 @@ ini_set('display_errors',1);
 error_reporting(-1);
 
 session_start();
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 /* CONTROLLER */
 require_once('controller/UsuarioController.php');
@@ -35,7 +36,7 @@ require_once('model/PDO/PDORepository.php');
 require_once('model/PDO/PDOResidencia.php');
 require_once('model/PDO/PDOSubasta.php');
 require_once('model/PDO/PDOResidenciaSemana.php');
-require_once('model/PDO/PDOAuction.php');
+require_once('model/PDO/PDOHotsale.php');
 require_once('model/PDO/PDOSemana.php');
 require_once('model/PDO/PDODirecta.php');
 

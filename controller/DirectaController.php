@@ -21,7 +21,7 @@ class DirectaController extends ResidenciaSemanaController {
 
    public function procesarInactivas($dato){
    	//mientras este en el rango de los primeros 6 meses correspondiente a una semana directa, la misma se activara..
-          $hoy = date_create('2019-11-30');//cambiar por fecha de hoy
+          $hoy = date_create('2019-05-31');//cambiar por fecha de hoy
           $hoy= date_format($hoy, 'Y-m-d');
 
 	 
@@ -53,7 +53,7 @@ class DirectaController extends ResidenciaSemanaController {
 
     	 }else{
     	 	// Nadie la compro. Hay que verificar si esta lista para pasarse a subasta
-    	    $hoy = date_create('2019-12-01');//cambiar por fecha de hoy
+    	    $hoy = date_create('2019-12-02');//cambiar por fecha de hoy
             $hoy= date_format($hoy, 'Y-m-d');
 
             $fecha_fin = date_create($dato[0]->getFechaInicio());
