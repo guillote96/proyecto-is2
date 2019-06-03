@@ -27,7 +27,7 @@ class PDOResidenciaSemana extends PDORepository {
          $final_answer = [];
 
          foreach ($answer as &$element) {
-            $final_answer[] = new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"]);
+            $final_answer[] = new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element["borrada"]);
          }
 
         return $final_answer;
@@ -42,7 +42,7 @@ class PDOResidenciaSemana extends PDORepository {
          $final_answer = [];
 
          foreach ($answer as &$element) {
-            $final_answer[] = new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"]);
+            $final_answer[] = new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element["borrada"]);
          }
 
         return $final_answer;
@@ -53,13 +53,13 @@ class PDOResidenciaSemana extends PDORepository {
 
             //Para una residencia trae unicamente las semanas que son SUBASTAS
 
-         $answer = $this->queryList("SELECT r.idResidencia,s.idSemana,su.idSubasta,r.titulo, r.descripcion, s.fecha_inicio, s.fecha_fin, rs.idResidenciaSemana,max(ps.puja) as puja, rs.estado, su.activa FROM residencia r INNER JOIN residencia_semana rs ON (r.idResidencia=rs.idResidencia) inner join semana s on (s.idSemana=rs.idSemana) inner JOIN subasta su on (su.idResidenciaSemana =rs.idResidenciaSemana) inner JOIN participa_subasta ps ON (ps.idSubasta = su.idSubasta)  where ps.idUsuario = :idUsuario AND su.activa = 1 GROUP BY ps.idSubasta",array(':idUsuario' => $idUsuario));
+         $answer = $this->queryList("SELECT r.idResidencia,rs.borrada,s.idSemana,su.idSubasta,r.titulo, r.descripcion, s.fecha_inicio, s.fecha_fin, rs.idResidenciaSemana,max(ps.puja) as puja, rs.estado, su.activa FROM residencia r INNER JOIN residencia_semana rs ON (r.idResidencia=rs.idResidencia) inner join semana s on (s.idSemana=rs.idSemana) inner JOIN subasta su on (su.idResidenciaSemana =rs.idResidenciaSemana) inner JOIN participa_subasta ps ON (ps.idSubasta = su.idSubasta)  where ps.idUsuario = :idUsuario AND su.activa = 1 GROUP BY ps.idSubasta",array(':idUsuario' => $idUsuario));
          
          $final_answer = [];
 
          foreach ($answer as &$element) {
             $residencia= PDOResidencia::getInstance()->traerResidencia($element["idResidencia"]);
-            $final_answer[] = array('residenciasemana'=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"]), 'residencia' => $residencia, 'pujamaxima' => $element["puja"], "idSubasta" => $element["idSubasta"]);
+            $final_answer[] = array('residenciasemana'=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element["borrada"]), 'residencia' => $residencia, 'pujamaxima' => $element["puja"], "idSubasta" => $element["idSubasta"]);
          }
 
         return $final_answer;

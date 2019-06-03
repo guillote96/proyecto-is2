@@ -20,7 +20,7 @@ class ResidenciaSemanaController extends Controller {
 
 
    public function sincronizador($idResidencia){
-    	//llamar funciones directas, subasta y hotsale
+    	//llamar funciones directas, subasta 
     	DirectaController::getInstance()->sincronizador($idResidencia);
         AuctionsController::getInstance()->sincronizador($idResidencia);
 

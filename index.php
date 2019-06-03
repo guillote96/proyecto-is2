@@ -34,6 +34,7 @@ require_once('view/CrearSubasta.php');
 /* PDO */
 require_once('model/PDO/PDORepository.php');
 require_once('model/PDO/PDOResidencia.php');
+require_once('model/PDO/PDOUsuario.php');
 require_once('model/PDO/PDOSubasta.php');
 require_once('model/PDO/PDOResidenciaSemana.php');
 require_once('model/PDO/PDOHotsale.php');
@@ -43,6 +44,7 @@ require_once('model/PDO/PDODirecta.php');
 /* MODEL */
 
 require_once('model/Subasta.php');
+require_once('model/Usuario.php');
 require_once('model/Directa.php');
 require_once('model/ResidenciaSemana.php');
 require_once('model/Residencia.php');

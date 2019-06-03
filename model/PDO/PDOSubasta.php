@@ -20,8 +20,8 @@ class PDOSubasta extends PDORepository {
     }
 
     public function subastaInfo($idRS){
-        //subasta info activas ( activo =0)
-        $answer = $this->queryList("SELECT su.idSubasta,su.borrada su.idResidenciaSemana, su.base, su.activa, s.fecha_inicio, s.fecha_fin FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN subasta su ON (su.idResidenciaSemana=rs.idResidenciaSemana) WHERE su.idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana' => $idRS));
+        //subasta info activas ( activo =1)
+        $answer = $this->queryList("SELECT su.idSubasta,su.borrada, su.idResidenciaSemana, su.base, su.activa, s.fecha_inicio, s.fecha_fin FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN subasta su ON (su.idResidenciaSemana=rs.idResidenciaSemana) WHERE su.idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana' => $idRS));
         $final_answer = [];
         foreach ($answer as &$element) {
             $final_answer[] = new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]);
@@ -156,7 +156,7 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
  public function getDetailedAuctions($activa)
   {
     $auctions = $this->queryList("
-        SELECT s.idSubasta, s.base, s.activa, r.titulo, sem.fecha_inicio, sem.fecha_fin
+        SELECT s.idSubasta, s.base,s.borrada ,s.activa, r.titulo, sem.fecha_inicio, sem.fecha_fin
         FROM subasta s
         INNER JOIN residencia_semana rs on s.idResidenciaSemana = rs.idResidenciaSemana
         INNER JOIN residencia r on rs.idResidencia = r.idResidencia
@@ -187,13 +187,14 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
       $auctionId = $auctionInfo["auction"]["idSubasta"];
       $active = $auctionInfo["auction"]["activa"];
+      $borrada= $auctionInfo["auction"]["borrada"];
       $base = $auctionInfo["auction"]["base"];
       $currentAmount = $auctionInfo["currentAmount"];
       $week = ["from_date" => $auctionInfo["auction"]["fecha_inicio"], "to_date" => $auctionInfo["auction"]["fecha_fin"]];
       $residence = $auctionInfo["auction"]["titulo"];
 
 
-      return new AuctionDetail($auctionId, $active, $base, $currentAmount, $week, $residence);
+      return new AuctionDetail($auctionId, $active, $base, $currentAmount, $week, $residence,$borrada);
     }, $usersPerAuction);
   }
 

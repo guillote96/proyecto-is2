@@ -28,21 +28,6 @@ class AuctionsController extends ResidenciaSemanaController {
   }
 
   public function listadoSubastasHabilitadas($idResidencia){
-     date_default_timezone_set('America/Argentina/Buenos_Aires');
-
-     $inactivas= PDOSubasta::getInstance()->traerSubastasInactivas($idResidencia);
-     $hoy = date('Y-m-d');
-     foreach ($inactivas as $key => $subasta) {
-         $fecha = date_create($subasta->getFechaInicio());
-         date_sub($fecha, date_interval_create_from_date_string('6 months'));
-         $f= date_format($fecha, 'Y-m-d');
-
-         if($hoy == $f){
-
-          PDOSubasta::getInstance()->activarSubasta($subasta->getIdSubasta());
-         }
-
-      }
 
       $activas= PDOSubasta::getInstance()->traerSubastasActivas($idResidencia);
        
@@ -182,8 +167,10 @@ public function finalizarSubasta($idSubasta){
            //si tiene pujantes no puede ponerse en hotsale.
            if(PDOSubasta::getInstance()->tieneParticipantes($dato[1]->getIdSubasta())){
                  // ADJUDICAR
-            $idUsuario=PDOSubasta::getInstance()->idUsuarioConMayorPujaEnSubasta($dato[1]->getIdSubasta());
-            PDOSubasta::getInstance()->adjudicarSubasta($dato[1]->getIdSubasta(),$idUsuario);
+
+            $this->adjudicarSubasta($dato[1]->getIdSubasta());
+            /*$idUsuario=PDOSubasta::getInstance()->idUsuarioConMayorPujaEnSubasta($dato[1]->getIdSubasta());
+            PDOSubasta::getInstance()->adjudicarSubasta($dato[1]->getIdSubasta(),$idUsuario);*/
             //si no tiene pujantes
            }else{
 
@@ -192,5 +179,15 @@ public function finalizarSubasta($idSubasta){
           }
        }
 }
+
+   public function adjudicarSubasta($idSubasta){
+      $idUsuario=PDOSubasta::getInstance()->idUsuarioConMayorPujaEnSubasta($idSubasta);
+      $usuario=PDOUsuario::getInstance()->traerUsuario($idUsuario);
+      if ($usuario->getCreditos() > 0) {
+         PDOUsuario::getInstance()->decrementarCreditos($idUsuario);
+         PDOSubasta::getInstance()->adjudicarSubasta($idSubasta,$idUsuario);
+      }
+
+  }
 
 }

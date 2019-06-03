@@ -88,6 +88,7 @@ class ResidenciaController extends Controller {
     public function verSemana($idRS){
         //idRS = identificador de residencia semana... Esto es solo para las subastas
         $subasta = PDOSubasta::getInstance()->subastaInfo($idRS);
+
         if(empty($subasta) ||  empty($_SESSION['usuario'])){
             $this->vistaExito(array('mensaje' =>"Debe iniciar Sesion...", 'user' =>null));
             return false;
