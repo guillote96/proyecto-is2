@@ -169,8 +169,6 @@ public function finalizarSubasta($idSubasta){
                  // ADJUDICAR
 
             $this->adjudicarSubasta($dato[1]->getIdSubasta());
-            /*$idUsuario=PDOSubasta::getInstance()->idUsuarioConMayorPujaEnSubasta($dato[1]->getIdSubasta());
-            PDOSubasta::getInstance()->adjudicarSubasta($dato[1]->getIdSubasta(),$idUsuario);*/
             //si no tiene pujantes
            }else{
 

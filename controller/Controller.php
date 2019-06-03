@@ -26,20 +26,18 @@
            return true;
         }
          $viewAdmin= new AdminPanel();
-        if (!empty($_SESSION['usuario']) && $_SESSION['tipo'] == "administrador") {
+     if(!empty($_SESSION['usuario'])){
+        if ($_SESSION['tipo'] == "administrador") {
             $viewAdmin->show(array('user' => $_SESSION['usuario'],'listaresidencia'=> $listaresidencia));
             return true;
-        }
+        }else{
             $viewUser= new UserPanel();
-        if (!empty($_SESSION['usuario']) && $_SESSION['tipo'] == "usuario") {
             $viewUser->show(array('user' => $_SESSION['usuario'],'listaresidencia'=> $listaresidencia));
             return true;
         }
+     }
         
         return false;
-           //$view->show(array('user' => $datos['user'],'listaresidencia'=> $listaresidencia, 'tipousuario' => $datos['tipousuario']));
-
-
     }
 
     public function vistaExito($mensaje){
@@ -76,7 +74,6 @@
     public function cerrarSesion(){
         session_destroy();
         $this->vistaExito(array('mensaje' => "Sesión Terminada." ));
-        //$this->vistaHome(null);
     }
 
     public function verificarDatos(){}

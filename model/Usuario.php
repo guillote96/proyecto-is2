@@ -31,11 +31,28 @@ class Usuario extends PDORepository {
 
   }
 
+  public function getIdUsuario(){
+
+    return $this->idUsuario;
+  }
+
+
 
   public function getCreditos(){
 
     return $this->creditos;
   }
+
+    public function getEmail(){
+
+    return $this->email;
+    }
+  
+    public function getPassword(){
+
+    return $this->password;
+  }
+
 
 
 
