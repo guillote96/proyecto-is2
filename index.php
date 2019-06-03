@@ -28,6 +28,7 @@ require_once('view/MostrarResidencia.php');
 require_once('view/EstadoSubasta.php');
 require_once('view/AuctionsView.php');
 require_once('view/CrearSubasta.php');
+require_once('view/EstadoDirecta.php');
 
 
 
@@ -117,6 +118,12 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'verEstadoSubastas'){
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizar'){
    ResidenciaController::getInstance()->sincronizador();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'listarDirectas'){
+   DirectaController::getInstance()->listarDirectasTodas();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'comprarDirecta' && !empty($_GET['idRS']) && !empty($_GET['idUser'])){
+   DirectaController::getInstance()->comprarSemana($_GET['idRS'],$_GET['idUser']);
 }
 else{
 	if(!isset($_SESSION['usuario']))

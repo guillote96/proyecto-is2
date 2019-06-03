@@ -85,6 +85,43 @@ class DirectaController extends ResidenciaSemanaController {
 
      }
 
+
+     public function listarDirectasTodas(){
+
+      $directas= PDODirecta::getInstance()->listarTodasDirectas();
+      $view= new EstadoDirecta();
+      if(sizeof($directas)>0){
+          $view->show(array('datos' => $directas , 'idUser' => $_SESSION["id"],'tipo' => $_SESSION['tipo']));
+          return true;
+
+      }else{
+         $this->vistaExito(array('mensaje' =>"No Hay semanas directas para Mostrar.", 'user' => $_SESSION['usuario']));
+        return false;
+
+
+      }
+
+
+
+
+
+     }
+
+     public function comprarSemana($idResidenciaSemana,$idUser){
+
+       $usuario=PDOUsuario::getInstance()->traerUsuario($idUser);
+       if ($usuario->getCreditos() > 0) {
+         PDOUsuario::getInstance()->decrementarCreditos($idUser);
+         PDODirecta::getInstance()->adjudicarDirecta($idResidenciaSemana,$idUser);
+         $this->vistaExito(array('mensaje' =>"Compra Concretada ¡Muchas Gracias!", 'user' =>$_SESSION['usuario']));
+         return true;
+       }
+        $this->vistaExito(array('mensaje' =>"Usted no tiene creditos Suficientes!", 'user' =>$_SESSION['usuario']));
+        return false;
+
+
+     }
+
  }
 
 

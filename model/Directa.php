@@ -4,13 +4,15 @@ class Directa extends PDORepository {
     
     public $idResidenciaSemana;
     public $idPremiumCompra;
+    public $precio;
     public $activa;
     public $borrada;
 
 
-    public function __construct($idResidenciaSemana,$idPremiumCompra, $activa, $borrada) {
+    public function __construct($idResidenciaSemana,$idPremiumCompra,$precio, $activa, $borrada) {
     	$this->idResidenciaSemana= $idResidenciaSemana;
     	$this->idPremiumCompra= $idPremiumCompra;
+        $this->precio= $precio;
     	$this->activa= $activa;
     	$this->borrada= $borrada;        
     }
