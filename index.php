@@ -12,6 +12,7 @@ require_once('controller/ResidenciaController.php');
 require_once('controller/AdministradorController.php');
 require_once('controller/AuctionsController.php');
 
+
 /* VIEW */
 require_once('view/TwigView.php');
 require_once('view/Home.php');
@@ -35,6 +36,7 @@ require_once('model/PDO/PDOSubasta.php');
 require_once('model/PDO/PDOResidenciaSemana.php');
 require_once('model/PDO/PDOAuction.php');
 require_once('model/PDO/PDOSemana.php');
+require_once('model/PDO/PDOUsuario.php');
 
 /* MODEL */
 
@@ -43,10 +45,12 @@ require_once('model/ResidenciaSemana.php');
 require_once('model/Residencia.php');
 require_once('model/Sem.php');
 require_once('model/AuctionDetail.php');
+require_once('model/Usuario.php');
 
 if(isset($_GET["action"]) && $_GET["action"] == 'iniciarsesion'){
      Controller::getInstance()->vistaIniciarSesion(null);   
 }
+
 else if(isset($_GET["action"]) && $_GET["action"] == 'verificarDatosUsuario'){
      UsuarioController::getInstance()->verificarDatos();
 }
@@ -79,6 +83,9 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'admin-login'){
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'user-login'){
   UsuarioController::getInstance()->userLogin();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'user-signup'){
+     UsuarioController::getInstance()->userSignup();
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'list-auctions'){
   AuctionsController::getInstance()->listAuctions();

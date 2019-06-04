@@ -35,6 +35,57 @@ class UsuarioController extends Controller {
     }
   }
 
+
+
+public function userSignup(){
+  
+  if($this->verificarRegistro()){
+
+    $this->altaRegistro();
+      return true;
+    }
+  else{
+     return false;
+    }
+  }
+
+
+  public function verificarRegistro(){
+      
+    if(empty($_POST['nombre-input-signup']) || empty($_POST['apellido-input-signup'])|| empty($_POST['email-input-signup'])|| empty($_POST['password-input-signup'])|| empty($_POST['tarjeta-input-signup']) || empty($_POST['fechanacimiento-input-signup'])){
+
+       $this->vistaIniciarSesion(array('mensaje' => "Hay Campos Vacios"));
+
+       return false;
+     }
+
+     else {
+      $fechanacimiento = new DateTime($_POST['fechanacimiento-input-signup']);
+      $fecharegistro = new DateTime("now");
+      $diff = $fechanacimiento->diff($fecharegistro);
+                            
+    //  echo $diff->y .' años ';
+        if($diff->y<18){
+          $this->vistaIniciarSesion(array('mensaje' => "Debe ser mayor a 18 años de edad"));
+
+           return false;
+
+          }
+      }   
+
+     return true;
+  }
+
+  public function altaRegistro(){
+      // Inserta el usuario
+       PDOUsuario::getInstance()->insertarUsuario();
+        $this->vistaExito(array('mensaje' =>"¡¡¡El usuario fue cargado exitosamente!!!"));
+        return true;
+       
+    }
+
+  
+
   public function vistaUserPanel($user){
     $view = new UserPanel();
     $listaresidencia=PDOResidencia::getInstance()->listarTodas();
