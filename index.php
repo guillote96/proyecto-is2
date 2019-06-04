@@ -4,6 +4,7 @@ ini_set('display_errors',1);
 error_reporting(-1);
 
 session_start();
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 /* CONTROLLER */
 require_once('controller/UsuarioController.php');
@@ -11,7 +12,9 @@ require_once('controller/AuctionsController.php');
 require_once('controller/ResidenciaController.php');
 require_once('controller/AdministradorController.php');
 require_once('controller/AuctionsController.php');
-
+require_once('controller/DirectaController.php');
+require_once('controller/HotsaleController.php');
+require_once('controller/ResidenciaSemanaController.php');
 
 /* VIEW */
 require_once('view/TwigView.php');
@@ -26,26 +29,29 @@ require_once('view/MostrarResidencia.php');
 require_once('view/EstadoSubasta.php');
 require_once('view/AuctionsView.php');
 require_once('view/CrearSubasta.php');
+require_once('view/EstadoDirecta.php');
 
 
 
 /* PDO */
 require_once('model/PDO/PDORepository.php');
 require_once('model/PDO/PDOResidencia.php');
+require_once('model/PDO/PDOUsuario.php');
 require_once('model/PDO/PDOSubasta.php');
 require_once('model/PDO/PDOResidenciaSemana.php');
-require_once('model/PDO/PDOAuction.php');
+require_once('model/PDO/PDOHotsale.php');
 require_once('model/PDO/PDOSemana.php');
-require_once('model/PDO/PDOUsuario.php');
+require_once('model/PDO/PDODirecta.php');
 
 /* MODEL */
 
 require_once('model/Subasta.php');
+require_once('model/Usuario.php');
+require_once('model/Directa.php');
 require_once('model/ResidenciaSemana.php');
 require_once('model/Residencia.php');
 require_once('model/Sem.php');
 require_once('model/AuctionDetail.php');
-require_once('model/Usuario.php');
 
 if(isset($_GET["action"]) && $_GET["action"] == 'iniciarsesion'){
      Controller::getInstance()->vistaIniciarSesion(null);   
@@ -114,6 +120,15 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'finalizarSubasta' && !empt
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'verEstadoSubastas'){
    AuctionsController::getInstance()->estadoSubasta(null);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizar'){
+   ResidenciaController::getInstance()->sincronizador();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'listarDirectas'){
+   DirectaController::getInstance()->listarDirectasTodas();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'comprarDirecta' && !empty($_GET['idRS']) && !empty($_GET['idUser'])){
+   DirectaController::getInstance()->comprarSemana($_GET['idRS'],$_GET['idUser']);
 }
 else{
 	if(!isset($_SESSION['usuario']))

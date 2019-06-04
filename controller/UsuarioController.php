@@ -25,9 +25,21 @@ class UsuarioController extends Controller {
        return false;
      }
 
+    $usuario=PDOUsuario::getInstance()->traerUsuarioPorEmail($_POST['email-input-login']);
+     if($usuario == false){
+      //no existe usuario
+       $this->vistaIniciarSesion(array('mensaje' => "Email o contraseña incorrecta"));
+       return false;
+     }
 
-    if($_POST['email-input-login'] == "user@user.com" && $_POST['password-input-login'] == 1234){
-      $this->alta_sesion($_POST['email-input-login'], 1, "usuario"); // el id es ficticio para esta entrega
+
+    if($_POST['email-input-login'] == $usuario->getEmail() && $_POST['password-input-login'] == $usuario->getPassword()){
+
+      if(PDOUsuario::getInstance()->esPremium($usuario->getIdUsuario())) 
+        $this->alta_sesion($_POST['email-input-login'], $usuario->getIdUsuario(), "premium");
+      else
+         $this->alta_sesion($_POST['email-input-login'], $usuario->getIdUsuario(), "usuario");
+
       $this->vistaUserPanel($_POST['email-input-login']);
     }else{
       $this->vistaIniciarSesion(array('mensaje' => "Email o contraseña incorrecta"));

@@ -1,6 +1,6 @@
 <?php
 
-
+//ATENCION::: USAR LA CLASE PDO SUBASTA Y LA CLASE QUE MAPEA LLAMADA SUBASTA
 class PDOAuction extends PDORepository {
 
   private static $instance;
@@ -29,7 +29,7 @@ class PDOAuction extends PDORepository {
   public function getDetailedAuctions()
   {
     $auctions = $this->queryList("
-        SELECT s.idSubasta, s.base, s.activa, r.titulo, sem.fecha_inicio, sem.fecha_fin
+        SELECT s.idSubasta, s.base, s.activa,s.borrada, r.titulo, sem.fecha_inicio, sem.fecha_fin
         FROM subasta s
         INNER JOIN residencia_semana rs on s.idResidenciaSemana = rs.idResidenciaSemana
         INNER JOIN residencia r on rs.idResidencia = r.idResidencia
@@ -59,6 +59,7 @@ class PDOAuction extends PDORepository {
     return array_map(function ($auctionInfo) {
 
       $auctionId = $auctionInfo["auction"]["idSubasta"];
+      $borrada= $auctionInfo["auction"]["borrada"];
       $active = $auctionInfo["auction"]["activa"];
       $base = $auctionInfo["auction"]["base"];
       $currentAmount = $auctionInfo["currentAmount"];
@@ -70,5 +71,8 @@ class PDOAuction extends PDORepository {
     }, $usersPerAuction);
   }
 
+//RECORDAR QUE SE ESTA HACIENDO UNA TRANSICION ENTRE LO DE ARRIBA y LO QUE SIGUE
+
+ 
 
 }

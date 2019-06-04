@@ -47,6 +47,10 @@
 
         <a class="nav-link" href="./index.php?action=cerrarSesion">Cerrar Sesión</a>
 
+        <li class="nav-item">
+          <a class="nav-link" href="./index.php?action=sincronizar">SINCRONIZAR</a>
+        </li>
+
         {% endif %}
       </ul>
     </div>
@@ -115,23 +119,30 @@
       {% endfor %}
     </div>
 
-    <!-- DETALLE DE RESIDENCIA -->
+    <!-- BUSCADOR DE RESIDENCIA -->
       <div class="col-md-6">
-        <div class="card pt-sm-5 pl-sm-5 pr-sm-5">
-          <img class="card-img-top " src="imagen/residencia-1.jpg" height="400px" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Residencia abierta</h5>
-            <p class="card-text">Descripción de la residencia</p>
+        <div class="card pt-sm-5 pl-sm-5 pr-sm-5" style="height: 100%">
+          <center><h2>Buscador Residencia</h2></center>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+               <span class="input-group-text" id="inputGroup-sizing-default">Titulo</span>
+            </div>
+             <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Dirección</li>
-            <li class="list-group-item">Provincia</li>
-            <li class="list-group-item">País</li>
-          </ul>
-          <div class="card-body">
-            <a href="#" class="card-link">Publicaciones</a>
-            <a href="#" class="card-link">Cerrar</a>
+
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Localidad</label>
+             </div>
+           <select class="custom-select" id="inputGroupSelect01">
+                <option selected>Seleccione Localidad</option>
+            </select>
+
+            
           </div>
+          <br>
+          <center><button style="width:23%"type="button" class="btn btn-primary">Buscar</button></center>
         </div>
       </div>
 

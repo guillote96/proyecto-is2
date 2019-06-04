@@ -1,61 +1,60 @@
 <?php
 
-class Usuario extends PDOUsuario {
-    
-    public $idUsuario;
-    public $nombre;
-    public $apellido;
-    public $email;
-    public $contraseña;
-    public $tarjeta;
-    public $fecha;
-    public $creditos;
-    
 
-    public function __construct($idUsuario,$nombre,$apellido,$email,$contraseña,$tarjeta,$fecha,$creditos) {
+class Usuario extends PDORepository {
+      public $idUsuario;
+      public $email;
+      public $password;
+      public $nombre;
+      public $apellido;
+      public $tarjeta;
+      public $creditos;
+      public $fecha_nac;
+      public $fecha_reg;
+      public $borrada;
 
-        $this->idUsuario= $idUsuario;
-    	$this->nombre= $nombre;
-    	$this->apellido= $apellido;
-    	$this->email= $email;
-    	$this->contraseña= $contraseña;
-    	$this->tarjeta= $tarjeta;
-    	$this->fecha= $fecha;
-        $this->creditos=$creditos;
-        
-    }
 
-    public function getIdUsuario(){
-    	return $this->idUsuario;
-    }
 
-    public function getNombre(){
-    	return $this->nombre;
-    }
-    public function getApelido(){
-    	return $this->apellido
-        ;
-    }
+
+  public function __construct($idUsuario,$email,$password, $nombre,$apellido,$tarjeta,$creditos,$fecha_nac,$fecha_reg,$borrada){
+
+    $this->idUsuario=$idUsuario;
+    $this->email=$email;
+    $this->password=$password;
+    $this->nombre=$nombre;
+    $this->apellido=$apellido;
+    $this->tarjeta=$tarjeta;
+    $this->creditos=$creditos;
+    $this->fecha_nac=$fecha_nac;
+    $this->fecha_reg=$fecha_reg;
+    $this->borrada=$borrada;
+
+  }
+
+  public function getIdUsuario(){
+
+    return $this->idUsuario;
+  }
+
+
+
+  public function getCreditos(){
+
+    return $this->creditos;
+  }
+
     public function getEmail(){
-    	return $this->email;
-    }
-    
-    public function getContraseña(){
-    	return $this->contraseña;
-    }
-    
-    public function getTarjeta(){
-    	return $this->tarjeta;
-    }
 
-    public function getFecha(){
-        return $this->fecha;
+    return $this->email;
     }
+  
+    public function getPassword(){
 
-    public function getCreditos(){
-        return $this->creditos;
-    }
-    
+    return $this->password;
+  }
+
+
+
 
 
 

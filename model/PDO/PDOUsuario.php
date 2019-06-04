@@ -1,5 +1,6 @@
 <?php
 
+
 class PDOUsuario extends PDORepository {
 
     private static $instance;
@@ -84,7 +85,45 @@ class PDOUsuario extends PDORepository {
 
       
         $answer = $this->queryList("DELETE FROM residencia WHERE idResidencia=:idResidencia",array(':idResidencia' => $idResidencia));
-            }
+            
 
+        }
+
+           public function traerUsuario($idUsuario){
+
+        $answer = $this->queryList("SELECT * FROM usuario WHERE idUsuario=:idUsuario",array(':idUsuario'=> $idUsuario));
+
+        return (sizeof($answer)> 0) ? new Usuario($answer[0]['idUsuario'],$answer[0]['email'],$answer[0]['password'], $answer[0]['nombre'],$answer[0]['apellido'],$answer[0]['tarjeta'],(int)$answer[0]['creditos'],$answer[0]['fecha_nac'],$answer[0]['fecha_reg'],$answer[0]['borrada']) : false;
+
+        /*$final_answer = [];
+        foreach ($answer as &$element) {
+            return new Usuario($element['idUsuario'],$element['email'],$element['password'], $element['nombre'],$element['apellido'],$element['tarjeta'],(int)$element['creditos'],$element['fecha_nac'],$element['fecha_reg'],$element['borrada']);
+
+        }*/
+
+   }
+
+    public function traerUsuarioPorEmail($email){
+
+        $answer = $this->queryList("SELECT * FROM usuario WHERE email=:email",array(':email'=> $email));
+        
+
+     return (sizeof($answer)> 0) ? new Usuario($answer[0]['idUsuario'],$answer[0]['email'],$answer[0]['password'], $answer[0]['nombre'],$answer[0]['apellido'],$answer[0]['tarjeta'],(int)$answer[0]['creditos'],$answer[0]['fecha_nac'],$answer[0]['fecha_reg'],$answer[0]['borrada']) : false;
+
+
+   }
+
+   public function decrementarCreditos($idUsuario){
+      $answer = $this->queryList("UPDATE usuario SET creditos = creditos - 1  WHERE idUsuario=:idUsuario",array(':idUsuario'=> $idUsuario));
+
+     }
+
+    public function esPremium($idUsuario){
+      $answer = $this->queryList("SELECT * FROM premium WHERE idUsuario=:idUsuario",array(':idUsuario'=> $idUsuario));
+
+      return (sizeof($answer) > 0 && $answer[0]['borrada']!= 1) ?  true : false; 
+
+
+    }
 
 }

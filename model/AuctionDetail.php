@@ -9,6 +9,7 @@ class AuctionDetail {
   private $currentAmount;
   private $week;
   private $residence;
+  private $borrada;
 
   /**
    * AuctionDetail constructor.
@@ -19,7 +20,7 @@ class AuctionDetail {
    * @param $week
    * @param $residence
    */
-  public function __construct($auctionId, $active, $base, $currentAmount, $week, $residence)
+  public function __construct($auctionId, $active, $base, $currentAmount, $week, $residence,$borrada)
   {
     $this->auctionId = $auctionId;
     $this->active = $active;
@@ -27,6 +28,7 @@ class AuctionDetail {
     $this->currentAmount = $currentAmount;
     $this->week = $week;
     $this->residence = $residence;
+     $this->borrada = $borrada;
   }
 
   /**
@@ -123,6 +125,11 @@ class AuctionDetail {
   public function setResidence($residence): void
   {
     $this->residence = $residence;
+  }
+
+   public function getBorrada()
+  {
+    return $this->borrada;
   }
 
 
