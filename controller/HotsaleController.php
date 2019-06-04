@@ -20,4 +20,28 @@ class HotsaleController extends ResidenciaSemanaController {
   }
 
 
+  public function listarPosiblesHotsale(){
+     $posiblesHotsale=PDOHotsale::getInstance()->listarTodosHotsaleDeshabilitado();
+     $view= new EstadoHotsale();
+     $view->show(array('hotsales' => $posiblesHotsale, 'user'=> $_SESSION['usuario']));
+
+
+  }
+
+  public function habilitarHotsale($idResidenciaSemana){
+    //Llamar a vista de ingreso de precio.
+    $view= new IngresoMonto();
+    $view->show(array('idRS'=> $idResidenciaSemana, 'user'=> $_SESSION['usuario']));
+
+  }
+
+  public function procesarHotsale($idResidenciaSemana,$precio){
+    PDOHotsale::getInstance()->habilitarHotsale($idResidenciaSemana,$precio);
+    $this->vistaExito(array('mensaje' =>"Hotsale Habilitado!! ", 'user' =>$_SESSION['usuario']));
+
+
+
+  }
+
+
 }
