@@ -29,7 +29,10 @@ require_once('view/MostrarResidencia.php');
 require_once('view/EstadoSubasta.php');
 require_once('view/AuctionsView.php');
 require_once('view/CrearSubasta.php');
+require_once('view/CrearDirecta.php');
 require_once('view/EstadoDirecta.php');
+require_once('view/EstadoHotsale.php');
+require_once('view/IngresoMonto.php');
 
 
 
@@ -42,10 +45,12 @@ require_once('model/PDO/PDOResidenciaSemana.php');
 require_once('model/PDO/PDOHotsale.php');
 require_once('model/PDO/PDOSemana.php');
 require_once('model/PDO/PDODirecta.php');
+require_once('model/PDO/PDOHotsale.php');
 
 /* MODEL */
 
 require_once('model/Subasta.php');
+require_once('model/Hotsale.php');
 require_once('model/Usuario.php');
 require_once('model/Directa.php');
 require_once('model/ResidenciaSemana.php');
@@ -129,6 +134,21 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'listarDirectas'){
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'comprarDirecta' && !empty($_GET['idRS']) && !empty($_GET['idUser'])){
    DirectaController::getInstance()->comprarSemana($_GET['idRS'],$_GET['idUser']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'listaPosibleHotsale'){
+   HotsaleController::getInstance()->listarPosiblesHotsale();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'habilitarHotsale' && !empty($_GET['idRS'])){
+   HotsaleController::getInstance()->habilitarHotsale($_GET['idRS']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'procesarHotsale' && !empty($_GET['idRS'])){
+   HotsaleController::getInstance()->procesarHotsale($_GET['idRS'],$_POST['precio']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'procesarCreacionDirecta' && !empty($_GET['idResidencia'])){
+   DirectaController::getInstance()->procesar_directa($_GET['idResidencia'], $_POST['idSemana'],$_POST['base']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'crearDirecta' && !empty($_GET['idResidencia'])){
+   DirectaController::getInstance()->crearDirecta($_GET['idResidencia']);
 }
 else{
 	if(!isset($_SESSION['usuario']))
