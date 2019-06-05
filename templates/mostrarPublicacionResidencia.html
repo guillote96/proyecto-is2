@@ -15,7 +15,11 @@
   {% if tipousuario == "administrador" %}
 		 <a href="./index.php?action=editarResidencia&id={{residencia[0].idResidencia}}" class="btn btn-primary" role="button" aria-pressed="true">Editar INFO </a>
 
+      <a href="./index.php?action=crearDirecta&idResidencia={{residencia[0].idResidencia}}" class="btn btn-primary" role="button" aria-pressed="true">Crear Directa </a>
+
       <a href="./index.php?action=crearSubasta&idResidencia={{residencia[0].idResidencia}}" class="btn btn-primary" role="button" aria-pressed="true">Crear Subasta </a>
+
+     
 
    {% endif %}
 

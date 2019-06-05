@@ -72,6 +72,22 @@ class PDODirecta extends PDORepository {
 
       }
 
+      public function insertarDirecta($idResidenciaSemana,$precio){
+        $answer = $this->queryList("INSERT INTO directa (idResidenciaSemana,precio,activa,borrada)  VALUES (:idResidenciaSemana,:precio,:activa,:borrada)",array(':idResidenciaSemana'=> $idResidenciaSemana, ':precio'=> $precio, ':activa'=> 0,':borrada'=> 0));
+
+
+
+      }
+
+     public function existeResidenciaSemanaDirecta($idResidenciaSemana){
+
+    $answer = $this->queryList("SELECT * FROM directa WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana' => $idResidenciaSemana));
+    if(sizeof($answer) > 0){
+        return true;
+    }
+    return false;
+    
+   }
 
 
 }

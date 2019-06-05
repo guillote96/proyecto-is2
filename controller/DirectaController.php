@@ -122,6 +122,41 @@ class DirectaController extends ResidenciaSemanaController {
 
      }
 
+
+
+
+  public function crearDirecta($idResidencia){
+    $view= new CrearDirecta();
+    $semanas= PDOSemana::getInstance()->semanasNoIncluidas($idResidencia);
+    $view->show(array('user' => $_SESSION['usuario'], 'semanas' => $semanas,'idResidencia'=> $idResidencia));
+
+   }
+
+   public function procesar_directa($idResidencia, $idSemana, $precio){
+    if(empty($idSemana)){
+      $this->vistaExito(array('mensaje' => "Ups! Hubo un error ;)","user"=> $_SESSION['usuario']));
+     return false;
+
+    }
+
+
+
+    if(!PDOResidenciaSemana::getInstance()->existeSemanaParaResidencia($idResidencia,$idSemana)){
+      PDOResidenciaSemana::getInstance()->insertarSemanaResidencia($idResidencia,$idSemana);
+     }
+
+     $idResidenciaSemana=PDOResidenciaSemana::getInstance()->traerIdResidenciaSemana($idResidencia,$idSemana);
+
+     if(!PDODirecta::getInstance()->existeResidenciaSemanaDirecta($idResidenciaSemana)){
+       PDODirecta::getInstance()->insertarDirecta($idResidenciaSemana,$precio);
+       $this->vistaExito(array('mensaje' => "se registro Directa ;)","user"=> $_SESSION['usuario']));
+       return true;
+     }
+
+     $this->vistaExito(array('mensaje' => "Ups! Hubo un error ;)","user"=> $_SESSION['usuario']));
+     return false;
+   }
+
  }
 
 

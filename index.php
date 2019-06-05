@@ -28,6 +28,7 @@ require_once('view/MostrarResidencia.php');
 require_once('view/EstadoSubasta.php');
 require_once('view/AuctionsView.php');
 require_once('view/CrearSubasta.php');
+require_once('view/CrearDirecta.php');
 require_once('view/EstadoDirecta.php');
 require_once('view/EstadoHotsale.php');
 require_once('view/IngresoMonto.php');
@@ -137,6 +138,12 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'habilitarHotsale' && !empt
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'procesarHotsale' && !empty($_GET['idRS'])){
    HotsaleController::getInstance()->procesarHotsale($_GET['idRS'],$_POST['precio']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'procesarCreacionDirecta' && !empty($_GET['idResidencia'])){
+   DirectaController::getInstance()->procesar_directa($_GET['idResidencia'], $_POST['idSemana'],$_POST['base']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'crearDirecta' && !empty($_GET['idResidencia'])){
+   DirectaController::getInstance()->crearDirecta($_GET['idResidencia']);
 }
 else{
 	if(!isset($_SESSION['usuario']))
