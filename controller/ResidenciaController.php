@@ -218,5 +218,23 @@ class ResidenciaController extends Controller {
 
 
    }
+
+
+   public function buscarResidencia(){
+
+     $residencias=PDOResidencia::getInstance()->buscarResidencia();
+     if($residencias != false){
+       if (sizeof($residencias)>0 ) {
+         $this->adminPanel(array('residencias' => $residencias, 'mensaje' => null));
+         return true;
+        }     
+     }
+     $this->adminPanel(array('residencias' => $residencias, 'mensaje' => 'No hay Resultados'));
+     return false;
+
+
+
+   }
+
 }
     

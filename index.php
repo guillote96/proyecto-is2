@@ -156,6 +156,9 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'listarSubastaInactivas'){
 else if(isset($_GET["action"]) && $_GET["action"] == 'cargarMontoSubasta' && !empty($_GET['idRS'])){
    AuctionsController::getInstance()->cargarMontoSubasta($_GET['idRS'],$_POST['base']);
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'buscarResidencia'){
+   ResidenciaController::getInstance()->buscarResidencia();
+}
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);
