@@ -10,5 +10,12 @@ class EstadoSubasta extends TwigView {
         
     }
 
+    public function listarSubastasInactivasSinMonto($datos){
+    	echo self::getTwig()->render('estadosubastainhabilitada.html', $datos);
+        
+
+
+    }
+
     
 }

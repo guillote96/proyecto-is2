@@ -135,6 +135,11 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
         return true;
       }
 
+      public function actualizarBase($idResidenciaSemana,$base){
+        $answer = $this->queryList("UPDATE subasta SET base=:base WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana' => $idResidenciaSemana, ':base' => $base ));
+        return true;
+      }
+
 
   /**
    * Retorna todas las subastas de la base de datos
@@ -265,6 +270,19 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
     public function adjudicarSubasta($idSubasta, $idUsuario){
 
         $answer = $this->queryList("UPDATE participa_subasta SET es_ganador = 1 WHERE idSubasta= :idSubasta AND idUsuario=:idUsuario",array(':idSubasta'=> $idSubasta,':idUsuario'=> $idUsuario));
+
+     }
+
+  public function listarSubastaInactivasSinMonto (){
+      //lista las semanas en subasta para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase subasta y ResidenciaSemana)
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE s.borrada = 0 AND s.activa=0 AND s.base is null",array());
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array("residenciasemana" => new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),"subasta" => new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"]);
+        }
+
+        return $final_answer;
 
      }
 

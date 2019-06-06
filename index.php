@@ -150,6 +150,12 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'procesarCreacionDirecta' &
 else if(isset($_GET["action"]) && $_GET["action"] == 'crearDirecta' && !empty($_GET['idResidencia'])){
    DirectaController::getInstance()->crearDirecta($_GET['idResidencia']);
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'listarSubastaInactivas'){
+   AuctionsController::getInstance()->listarSubastasSinMontos();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'cargarMontoSubasta' && !empty($_GET['idRS'])){
+   AuctionsController::getInstance()->cargarMontoSubasta($_GET['idRS'],$_POST['base']);
+}
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);

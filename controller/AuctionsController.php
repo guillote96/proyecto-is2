@@ -188,4 +188,28 @@ public function finalizarSubasta($idSubasta){
 
   }
 
+  public function listarSubastasSinMontos(){
+
+    $lista=PDOSubasta::getInstance()->listarSubastaInactivasSinMonto();
+    if(sizeof($lista)> 0){
+        $view= new EstadoSubasta();
+        $view->listarSubastasInactivasSinMonto(array('datos'=> $lista, 'user'=> $_SESSION['usuario']));
+    }else{
+      $this->vistaExito(array('mensaje' => "No hay Subastas para completar","user"=> $_SESSION['usuario']));
+
+
+    }
+
+
+  }
+
+  public function cargarMontoSubasta($idResidenciaSemana,$base){
+
+    PDOSubasta::getInstance()->actualizarBase($idResidenciaSemana,$base);
+    $this->vistaExito(array('mensaje' => "Se completo subasta..","user"=> $_SESSION['usuario']));
+
+
+
+  }
+
 }
