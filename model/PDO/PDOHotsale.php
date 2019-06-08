@@ -19,6 +19,21 @@ class PDOHotsale extends PDORepository {
         
     }
 
+        public function listarTodosHotsale(){
+         //Solamente los que no estan habilitados y no estan borrados (posibles Hotsale)
+        $answer = $this->queryList("SELECT r.titulo, r.descripcion,h.idResidenciaSemana, h.activa,h.idUsuario,h.borrada as hotsaleborrada,h.precio,s.fecha_inicio,s.fecha_fin,rs.idResidencia,rs.idSemana,rs.estado,rs.borrada FROM residencia r INNER JOIN residencia_semana rs ON (r.idResidencia=rs.idResidencia) INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN hotsale h ON (h.idResidenciaSemana=rs.idResidenciaSemana) WHERE h.activa=1 AND h.borrada=0",array());
+        $final_answer = [];
+        foreach ($answer as &$element) {
+         $final_answer[] = array('residenciasemana'=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element["borrada"]),'hotsale'=> new Hotsale ($element["idResidenciaSemana"], $element["idUsuario"],$element["precio"],$element["fecha_inicio"],$element["fecha_fin"],$element["activa"],$element["hotsaleborrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"]);
+
+        }
+
+
+
+       return $final_answer;
+     }
+
+
     public function insertarHotsale($idResidenciaSemana){
         $answer = $this->queryList("INSERT INTO hotsale (idResidenciaSemana,activa, borrada) VALUES (:idResidenciaSemana,0,0);",array(':idResidenciaSemana' => $idResidenciaSemana));
     }
@@ -45,5 +60,51 @@ class PDOHotsale extends PDORepository {
 
 
      }
+
+
+  public function buscarHotsales(){
+
+         $sql="SELECT r.titulo, r.descripcion,h.idResidenciaSemana, h.activa,h.idUsuario,h.borrada as hotsaleborrada,h.precio,s.fecha_inicio,s.fecha_fin,rs.idResidencia,rs.idSemana,rs.estado,rs.borrada FROM residencia r INNER JOIN residencia_semana rs ON (r.idResidencia=rs.idResidencia) INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN hotsale h ON (h.idResidenciaSemana=rs.idResidenciaSemana) WHERE h.activa=1 AND h.borrada=0 AND";
+
+
+         $parametros=array();
+         if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin']) && !isset($_POST['localidad'])){
+             return false;
+
+         }
+         if(empty($_POST['fecha_inicio']) && empty($_POST['fecha_fin']) && empty($_POST['localidad'])){
+              return false;
+
+         }
+
+         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio'])){
+            $sql.=" fecha_inicio=:fecha_inicio OR ";
+            $parametros[":fecha_inicio"]=$_POST['fecha_inicio'];
+         }
+
+         if(isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
+            $sql.=" fecha_fin=:fecha_fin AND";
+            $parametros[":fecha_fin"]=$_POST['fecha_fin'];
+         }
+          $ciudad;
+         if(isset($_POST['localidad']) && !empty($_POST['localidad'])){
+            $ciudad=$_POST['localidad'];
+            $sql.=" r.ciudad LIKE '$ciudad%' AND";
+            //$parametros[":ciudad"]=$_POST['localidad'];
+         }
+
+
+         $sql = substr($sql, 0, -4);
+
+         $answer = $this->queryList($sql,$parametros);
+         $final_answer = [];
+         foreach ($answer as &$element) {
+         $final_answer[] = array('residenciasemana'=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element["borrada"]),'hotsale'=> new Hotsale ($element["idResidenciaSemana"], $element["idUsuario"],$element["precio"],$element["fecha_inicio"],$element["fecha_fin"],$element["activa"],$element["hotsaleborrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"]);
+
+         }
+
+         return $final_answer;
+   }
+
 
 }

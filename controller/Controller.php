@@ -46,6 +46,14 @@
         return true;
     }
 
+    public function userPanel($datos){
+      $viewUser= new UserPanel();
+      $viewUser->show(array('user' => $_SESSION['usuario'],'listaresidencia'=> $datos['residencias']));
+            return true;
+
+
+    }
+
     public function vistaExito($mensaje){
         $view = new Exito();
         $view->show($mensaje);

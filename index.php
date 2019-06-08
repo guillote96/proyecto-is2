@@ -159,6 +159,12 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'cargarMontoSubasta' && !em
 else if(isset($_GET["action"]) && $_GET["action"] == 'buscarResidencia'){
    ResidenciaController::getInstance()->buscarResidencia();
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'buscarSemanas'){
+   ResidenciaController::getInstance()->buscarSemanas();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'buscar'){
+   ResidenciaController::getInstance()->buscar_semanas();
+}
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);
