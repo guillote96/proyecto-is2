@@ -17,6 +17,7 @@
 <body>
 
 <!-- NAV BAR -->
+{% if tipousuario != "administrador" %}
 <nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
   <button onclick="location.href='./index.php'" type="button" class="btn btn-outline-primary ml-3">VOLVER</button>
    <button onclick="location.href='./index.php?action=verEstadoSubastas'" type="button" class="btn btn-outline-primary ml-3">Subastas Participando</button>
@@ -25,6 +26,12 @@
   <button onclick="location.href='./index.php?action=cerrarSesion'" type="button" class="btn btn-outline-secondary mr-3">Cerrar Sesión</button>
 
 </nav>
+{% else %}
+
+  {% include 'barra.html' %}
+
+
+{% endif %}
 
 
 
@@ -59,9 +66,13 @@
           <FONT SIZE=4><b>Numero de Tarjeta: </b></font>{{ datos.tarjeta }}</li>
         <li class="list-group-item" id="fecha_reg" name="fecha_reg" ><FONT SIZE=4><b>Fecha de Registro: </b></font>{{ datos.fecha_reg }}</li>
       </ul>
+      {% if tipousuario != "administrador" %}
+
       <div class="card-body">
-        <a href="./index.php?action=editarPerfil"class="btn btn-primary">Editar Datos</a>
+        <a href="./index.php?action=editarPerfil" class="btn btn-primary">Editar Datos</a>
       </div>
+
+      {% endif %}
     </div>
 
 

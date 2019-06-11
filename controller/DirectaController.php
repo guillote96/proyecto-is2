@@ -91,7 +91,7 @@ class DirectaController extends ResidenciaSemanaController {
       $directas= PDODirecta::getInstance()->listarTodasDirectas();
       $view= new EstadoDirecta();
       if(sizeof($directas)>0){
-          $view->show(array('datos' => $directas , 'idUser' => $_SESSION["id"],'tipo' => $_SESSION['tipo']));
+          $view->show(array('datos' => $directas , 'idUser' => $_SESSION["id"],'tipousuario' => $_SESSION['tipo'], "user"=> $_SESSION['usuario']));
           return true;
 
       }else{

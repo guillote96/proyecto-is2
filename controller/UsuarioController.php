@@ -139,7 +139,7 @@ public function userSignup(){
 
         $unUsuario=PDOUsuario::getInstance()->traerUsuario($idUsuario);  
         $view = new VerPerfil();
-        $view->show(array('user' => $idUsuario,'datos' => $unUsuario));
+        $view->show(array('user' => $idUsuario,'datos' => $unUsuario, "tipousuario"=> $_SESSION['tipo']));
   }
 
 public function editarPerfil(){
