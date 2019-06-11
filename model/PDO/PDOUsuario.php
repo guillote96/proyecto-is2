@@ -17,6 +17,18 @@ class PDOUsuario extends PDORepository {
     public function __construct() {
         
     }
+    public function listarUsuarios(){
+      $answer = $this->queryList("SELECT * FROM usuario WHERE borrada=:borrada",array(':borrada'=>0));
+
+       $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array("usuario"=> new Usuario($element['idUsuario'],$element['email'],$element['password'], $element['nombre'],$element['apellido'],$element['tarjeta'],(int)$element['creditos'],$element['fecha_nac'],$element['fecha_reg'],$element['borrada']),'esPremium' => $this->esPremium($element['idUsuario']));
+        }
+
+        return $final_answer;
+
+
+    }
 
     
 

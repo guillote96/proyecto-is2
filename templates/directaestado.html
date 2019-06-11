@@ -41,7 +41,9 @@
               {% if tipo == "premium" %}
               <a href="#ventanaConfirmacion{{dato.residenciasemana.idSemana}}" class="btn btn-danger btn-sm" data-toggle="modal" >Comprar Semana</a>
               {% else %}
-               <a href="" class="btn btn-danger btn-sm" >Solicitar Premium</a>
+                {% if tipo != "administrador" %}
+                 <a href="" class="btn btn-danger btn-sm" >Solicitar Premium</a>
+                {% endif %}
 
               {% endif %}
 

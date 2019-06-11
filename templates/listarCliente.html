@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- AMG CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+
+</head>
+<body>
+	{% include 'barra.html' %}
+<div class="container">
+
+
+<form>
+  <div class="form-row">
+
+    <div class="col">
+      <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+    </div>
+
+    <div class="col">
+      <input type="date" class="form-control" name="fecha_registro" placeholder="Fecha Registro">
+    </div>
+
+    <div class="col">
+      <select class="custom-select" name="tipo_usuario">
+        <option selected>Seleccione Tipo</option>
+        <option value="1">Estandar</option>
+        <option value="2">Premium</option>
+      </select>
+    </div>
+
+    <div class="col">
+      <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+    </div>
+
+  </div>
+</form>
+
+
+<br>
+<br>
+	<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Fecha Registro</th>
+      <th scope="col">Ver Perfil</th>
+      <th scope="col">Cambiar Tipo</th>
+      <th scope="col">Solicitud Premium</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for cliente in clientes %}
+    <tr>
+      <th scope="row" > {{cliente.usuario.nombre}}</td>
+      <td>{{cliente.usuario.apellido}}</td>
+      <td>{{cliente.esPremium ? "Premium" : "Estandar" }}</td>
+      <td>{{cliente.usuario.fecha_reg}}</td>
+      <td><a class="btn btn-primary"  href="#" role="button">Ver Perfil</a></td>
+      <td> {% if cliente.esPremium %} <a class="btn btn-primary"  href="#" role="button">Estandar</a>  {% else %} <a class="btn btn-primary"  href="#" role="button">Premium</a> {% endif %}</td>
+      <td></td>
+    </th>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+
+</body>
+</html>

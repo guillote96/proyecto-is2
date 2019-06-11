@@ -42,6 +42,12 @@ class HotsaleController extends ResidenciaSemanaController {
 
 
   }
+  public function comprarSemana($idResidenciaSemana,$idUser){
+     PDOHotsale::getInstance()->adjudicarHotsale($idResidenciaSemana,$idUser);
+     $this->vistaExito(array('mensaje' =>"Compra Concretada ¡Muchas Gracias!", 'user' =>$_SESSION['usuario']));
+         return true;
+
+  }
 
 
 }

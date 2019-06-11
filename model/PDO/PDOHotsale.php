@@ -106,5 +106,15 @@ class PDOHotsale extends PDORepository {
          return $final_answer;
    }
 
+     public function adjudicarHotsale($idResidenciaSemana,$idUser){
+        $answer = $this->queryList("UPDATE hotsale SET idUsuario=:idUser ,activa= 0,borrada = 1 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana, ':idUser'=>$idUser));
+        return true;
+
+
+
+
+      }
+
+
 
 }

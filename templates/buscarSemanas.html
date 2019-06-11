@@ -90,7 +90,7 @@
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <span class="badge badge-success">Activa</span>
               <p class="card-text"> Descripcion:{{ dato.descripcion}} </p>
-              <p class="card-text"> Puja Maxima:{{ dato.pujamaxima}} </p>
+              <p class="card-text"> Puja Maxima:{{ dato.subasta.pujamaxima}} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio}} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
       <button type="button" onclick="location.href='./index.php?action=pujarSubasta&idRS={{dato.residenciasemana.idResidenciaSemana}}'"   class="btn btn-primary btn-sm">Pujar Subasta</button>
@@ -179,11 +179,44 @@
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
               <span class="badge badge-success">Activa</span>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
-              <p class="card-text"> Precio: A definir...</p>
+              <p class="card-text"> Precio: {{hotsale.hotsale.precio}}</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
+              <a href="#ventanaConfirmacion{{dato.residenciasemana.idSemana}}" class="btn btn-danger btn-sm" data-toggle="modal" >Comprar Hotsale</a>
 
-              <a href="" class="btn btn-danger btn-sm" >Comprar Hotsale</a>
+              <div class="modal fade" id="ventanaConfirmacion{{dato.residenciasemana.idSemana}}">
+
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">    
+                         <h5 class="modal-title">
+                           ¿Desea Comprar la semana {{dato.residenciasemana.idSemana}} ?
+                         </h5>
+                         <button type ="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>
+                         
+                      </div>    
+
+                      <div class="modal-body">
+                        <center><p>Seleccione Opcion </p></center>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type ="button" class="btn btn-default"   data-dismiss="modal">Cancelar</button>  
+                        <a  href="./index.php?action=comprarHotsale&idRS={{hotsale.hotsale.idResidenciaSemana}}&idUser={{idUser}}" class="btn btn-danger " role="button" >
+                          Comprar Hotsale
+                        </a>
+
+                      </div>         
+
+                  </div>
+                </div> 
+              </div>
+
+
+
+
+
+
 
 
             </div>
