@@ -90,4 +90,50 @@ class PDODirecta extends PDORepository {
    }
 
 
+       public function buscarDirectas(){
+
+         $sql="SELECT r.titulo, r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE d.activa=1 AND d.borrada = 0 AND";
+
+
+         $parametros=array();
+         if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin']) && !isset($_POST['localidad'])){
+             return false;
+
+         }
+         if(empty($_POST['fecha_inicio']) && empty($_POST['fecha_fin']) && empty($_POST['localidad'])){
+              return false;
+
+         }
+
+         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio'])){
+            $sql.=" fecha_inicio=:fecha_inicio OR ";
+            $parametros[":fecha_inicio"]=$_POST['fecha_inicio'];
+         }
+
+         if(isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
+            $sql.=" fecha_fin=:fecha_fin AND";
+            $parametros[":fecha_fin"]=$_POST['fecha_fin'];
+         }
+
+          $ciudad;
+         if(isset($_POST['localidad']) && !empty($_POST['localidad'])){
+            $ciudad=$_POST['localidad'];
+            $sql.=" r.ciudad LIKE '$ciudad%' AND";
+            //$parametros[":ciudad"]=$_POST['localidad'];
+         }
+
+         $sql = substr($sql, 0, -4);
+         $answer = $this->queryList($sql,$parametros);
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = array("residenciasemana"=>new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],null),"directa"=> new Directa($element["idResidenciaSemana"],$element["idPremiumCompra"],$element["precio"], $element["activa"], $element["borrada"]),"titulo"=> $element["titulo"],"descripcion"=> $element["descripcion"]);
+        }
+
+        return $final_answer;
+
+     }
+
+
+
 }

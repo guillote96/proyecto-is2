@@ -18,24 +18,59 @@
 
 <!-- NAV BAR -->
 <nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
+
   <button onclick="location.href='./index.php?action=verPerfil'" type="button" class="btn btn-outline-primary ml-3">Ver Perfil</button>
+
+
+    <button onclick="location.href='./index.php?action=buscar'" type="button" class="btn btn-outline-secondary mr-3">Buscar Semanas</button>
+
    <button onclick="location.href='./index.php?action=verEstadoSubastas'" type="button" class="btn btn-outline-primary ml-3">Subastas Participando</button>
   <a class="navbar-brand" href="./index.php"><img src="./imagen/logo.svg" width="65" height="40"></a>
+
      <button onclick="location.href='./index.php?action=listarDirectas'" type="button" class="btn btn-outline-secondary mr-3">Listar Directas</button>
   <button onclick="location.href='./index.php?action=cerrarSesion'" type="button" class="btn btn-outline-secondary mr-3">Cerrar Sesión</button>
 
 </nav>
 
 <div class="row no-gutters">
-
-  <!-- CAJA DE BUSQUEDA -->
+<!--
   <div class="col-md-3 search-box">
-    CAJA DE BÚSQUEDA
-  </div>
+    <br>
+    <div style="height: 10%">
+    <center><h2>Buscador Semanas</h2></center>
+    <form action="./index.php?action=buscarSemanas" method="POST">
+      <div class="input-group mb-3">
+            <div class="input-group-prepend">
+               <span class="input-group-text" id="inputGroup-sizing-default">Desde</span>
+            </div>
+             <input type="date" class="form-control" name='fecha_inicio' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+      </div>
 
-  <div class="col-md-7">
+      <div class="input-group mb-3">
+            <div class="input-group-prepend">
+               <span class="input-group-text" id="inputGroup-sizing-default">Hasta</span>
+            </div>
+             <input type="date" class="form-control" name='fecha_fin' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text"  for="inputGroupSelect01">Localidad</label>
+             </div>
+             <input type="text" class="form-control" name='localidad' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">   
+      </div>
+
+      <center><button type="submit" style="width:23%" type="button" class="btn btn-primary">Buscar</button></center>
+    </form>
+     </div> 
+
+  </div>
+-->
+<div class="col-md-7">
+
     <div class="results-box">
-      {% for residencia in listaresidencia %}
+
+      {% for dato in listaresidencia %}
       <div class="card mb-5">
         <div class="card-body">
 
@@ -46,15 +81,17 @@
             </div>
 
             <div class="col-md-4 mt-3">
-              <h5 class="card-title">{{ residencia.titulo }}</h5>
-              <p class="card-text"> {{ residencia.direccion}} {{ residencia.pais }} </p>
-      <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{residencia.idResidencia}}'"   class="btn btn-primary btn-sm">Ver Residencia</button>
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <p class="card-text"> {{ dato.direccion}} {{ dato.pais }} </p>
+      <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{dato.idResidencia}}'"   class="btn btn-primary btn-sm">Ver Residencia</button>
             </div>
           </div>
 
         </div>
       </div>
       {% endfor %}
+
+
     </div>
   </div>
 </div>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- AMG CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+
+{% include 'barra.html' %}
+</head>
+
+<script>
+function validateForm() {
+  var precio = document.form["precio"].value;
+  if (precio > 0) {
+    return true;
+  }else{
+    alert("El monto debe ser mayor a 0");
+     return false;
+  }
+ 
+}
+</script>
+
+<body>
+
+<div class="row no-gutters">
+
+  <div class="col-md-9">
+    <div class="results-box">
+
+      {% for dato in datos %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-success">Inactiva</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Precio: a Definir... </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <a href="#ventanaConfirmacion{{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" data-toggle="modal" >Completar Semana</a>
+
+
+
+              <div class="modal fade" id="ventanaConfirmacion{{dato.residenciasemana.idResidenciaSemana}}">
+
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">    
+                         <h5 class="modal-title">
+                           Completar Base {{dato.residenciasemana.idSemana}}
+                         </h5>
+                         <button type ="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>
+                         
+                      </div>    
+                       <center>
+                      <div class="modal-body">
+
+
+                         <form name="form" action="./index.php?action=cargarMontoSubasta&idRS={{dato.residenciasemana.idResidenciaSemana}}"
+                          onsubmit="return validateForm()" method="POST" >
+                         <div style=" width: 40%">
+        
+                         
+                         <div class="input-group mb-2">
+
+                         <input type="decimal" id="base" name="base" min="0" class="form-control" placeholder="Ingrese base..">
+                        </div>
+                        
+                        
+                        
+
+                      </div>
+                      </center>
+
+                      <div class="modal-footer">
+                        <button type ="button" class="btn btn-default"   data-dismiss="modal">Cancelar</button>  
+                        <button type="submit" class="btn btn-primary">Terminar</button>
+
+                      </div>         
+
+                  </div>
+                </div> 
+              </div>
+            </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

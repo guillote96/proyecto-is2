@@ -86,4 +86,46 @@ class PDOResidencia extends PDORepository {
             }
 
 
+    public function buscarResidencia(){
+         $sql="SELECT * FROM residencia WHERE ";
+         $parametros=array();
+         if(!isset($_POST['titulo']) && !isset($_POST['localidad'])){
+             return false;
+
+         }
+         if(empty($_POST['titulo']) && empty($_POST['localidad'])){
+              return false;
+
+         }
+
+         if(isset($_POST['titulo']) && !empty($_POST['titulo'])){
+            $sql.="titulo=:titulo AND ";
+            $parametros["titulo"]=$_POST['titulo'];
+         }
+
+         if(isset($_POST['localidad']) && !empty($_POST['localidad'])){
+            $sql.="ciudad=:localidad AND ";
+            $parametros["localidad"]=$_POST['localidad'];
+         }
+
+
+         $sql = substr($sql, 0, -5);
+         $answer = $this->queryList($sql,$parametros);
+
+
+         $final_answer = [];
+         foreach ($answer as &$element) {
+            $tieneparticipantes=$this->existenParticipantes($element["idResidencia"]);
+            $final_answer[] = new Residencia ($element["idResidencia"],$element["ciudad"], $element["direccion"],$element["idAdministrador"],$element["titulo"],$element["provincia"],$element["partido"],$element["descripcion"],$tieneparticipantes);
+         }
+
+         return $final_answer;
+
+
+
+
+
+    }
+
+
 }

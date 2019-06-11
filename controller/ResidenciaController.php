@@ -218,5 +218,51 @@ class ResidenciaController extends Controller {
 
 
    }
+
+
+   public function buscarResidencia(){
+
+     $residencias=PDOResidencia::getInstance()->buscarResidencia();
+     if($residencias != false){
+       if (sizeof($residencias)>0 ) {
+         $this->adminPanel(array('residencias' => $residencias, 'mensaje' => null));
+         return true;
+        }     
+     }
+     $this->adminPanel(array('residencias' => $residencias, 'mensaje' => 'No hay Resultados'));
+     return false;
+
+
+
+   }
+
+   public function buscar_semanas(){
+     $subastas=PDOSubasta::getInstance()->listarTodasSubasta();
+     $directas=PDODirecta::getInstance()->listarTodasDirectas();
+     $hotsale= PDOHotsale::getInstance()->listarTodosHotsale();
+     $view= new Semana();
+    $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo']));
+
+
+   }
+
+   public function buscarSemanas(){
+
+     $subastas=PDOSubasta::getInstance()->buscarSubasta();
+     $directas=PDODirecta::getInstance()->buscarDirectas();
+     $hotsales=PDOHotsale::getInstance()->buscarHotsales();
+     $view= new Semana();
+    
+    if(($subastas != false) || ($directas != false) || ($hotsales !=false) ){
+
+     $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=> $hotsales), 'mensaje' => null,'tipo'=> $_SESSION['tipo']));
+         return true;   
+     }
+      $view->buscarSemana(array('datos' => null, 'mensaje' => 'No hay Resultados'));
+     return false;
+
+
+   }
+
 }
     

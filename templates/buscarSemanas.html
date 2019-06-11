@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- AMG CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+
+
+</head>
+<body>
+
+<!-- NAV BAR -->
+<nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
+  <button onclick="location.href='./index.php?action=verPerfil'" type="button" class="btn btn-outline-primary ml-3">Ver Perfil</button>
+   <button onclick="location.href='./index.php?action=verEstadoSubastas'" type="button" class="btn btn-outline-primary ml-3">Subastas Participando</button>
+  <a class="navbar-brand" href="./index.php"><img src="./imagen/logo.svg" width="65" height="40"></a>
+     <button onclick="location.href='./index.php?action=listarDirectas'" type="button" class="btn btn-outline-secondary mr-3">Listar Directas</button>
+  <button onclick="location.href='./index.php?action=cerrarSesion'" type="button" class="btn btn-outline-secondary mr-3">Cerrar Sesión</button>
+
+</nav>
+
+<div class="row no-gutters">
+
+  <!-- CAJA DE BUSQUEDA -->
+  <div class="col-md-3 search-box">
+    <br>
+    <div style="height: 10%">
+    <center><h2>Buscador Semanas</h2></center>
+    <form action="./index.php?action=buscarSemanas" method="POST">
+      <div class="input-group mb-3">
+            <div class="input-group-prepend">
+               <span class="input-group-text" id="inputGroup-sizing-default">Desde</span>
+            </div>
+             <input type="date" class="form-control" name='fecha_inicio' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+            <div class="input-group-prepend">
+               <span class="input-group-text" id="inputGroup-sizing-default">Hasta</span>
+            </div>
+             <input type="date" class="form-control" name='fecha_fin' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text"  for="inputGroupSelect01">Localidad</label>
+             </div>
+             <input type="text" class="form-control" name='localidad' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">   
+      </div>
+
+      <center><button type="submit" style="width:23%" type="button" class="btn btn-primary">Buscar</button></center>
+    </form>
+     </div> 
+
+  </div>
+
+<div class="col-md-7">
+
+            {% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+    <CENTER>
+      <br>
+     <p>{{ mensaje }}</p>
+    </CENTER>
+  {% endif %}
+  {% endif %}
+
+
+    <div class="results-box">
+
+      {% for dato in datos.subastas %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion}} </p>
+              <p class="card-text"> Puja Maxima:{{ dato.pujamaxima}} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio}} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+      <button type="button" onclick="location.href='./index.php?action=pujarSubasta&idRS={{dato.residenciasemana.idResidenciaSemana}}'"   class="btn btn-primary btn-sm">Pujar Subasta</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+      {% for dato in datos.directas %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              {% if tipo == "premium" %}
+              <a href="#ventanaConfirmacion{{dato.residenciasemana.idSemana}}" class="btn btn-danger btn-sm" data-toggle="modal" >Comprar Semana</a>
+              {% else %}
+               <a href="" class="btn btn-danger btn-sm" >Solicitar Premium</a>
+
+              {% endif %}
+
+
+
+              <div class="modal fade" id="ventanaConfirmacion{{dato.residenciasemana.idSemana}}">
+
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">    
+                         <h5 class="modal-title">
+                           ¿Desea Comprar la semana {{dato.residenciasemana.idSemana}} ?
+                         </h5>
+                         <button type ="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>
+                         
+                      </div>    
+
+                      <div class="modal-body">
+                        <center><p>Seleccione Opcion </p></center>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type ="button" class="btn btn-default"   data-dismiss="modal">Cancelar</button>  
+                        <a  href="./index.php?action=comprarDirecta&idRS={{dato.directa.idResidenciaSemana}}&idUser={{idUser}}" class="btn btn-danger " role="button" >
+                          Comprar Semana
+                        </a>
+
+                      </div>         
+
+                  </div>
+                </div> 
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+      {% for hotsale in datos.hotsales %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ hotsale.titulo }}</h5>
+              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
+              <p class="card-text"> Precio: A definir...</p>
+              <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
+
+              <a href="" class="btn btn-danger btn-sm" >Comprar Hotsale</a>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
