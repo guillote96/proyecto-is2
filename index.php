@@ -183,6 +183,9 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'comprarHotsale'&& !empty($
 else if(isset($_GET["action"]) && $_GET["action"] == 'listarClientes'){
     UsuarioController::getInstance()->listarClientes();
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'detallesCliente' && !empty($_GET["idUsuario"])){
+    UsuarioController::getInstance()->detallesUsuario($_GET["idUsuario"]);
+}
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);

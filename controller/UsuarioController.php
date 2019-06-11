@@ -125,12 +125,21 @@ public function userSignup(){
   public function verPerfil(){
         
        
-        $unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
+        /*$unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
         
         $view = new VerPerfil();
-        $view->show(array('user' => $_SESSION['id'],'datos' => $unUsuario));
+        $view->show(array('user' => $_SESSION['id'],'datos' => $unUsuario));*/
+        $this->detallesUsuario($_SESSION['id']);
        
 
+  }
+
+
+  public function detallesUsuario($idUsuario){
+
+        $unUsuario=PDOUsuario::getInstance()->traerUsuario($idUsuario);  
+        $view = new VerPerfil();
+        $view->show(array('user' => $idUsuario,'datos' => $unUsuario));
   }
 
 public function editarPerfil(){
