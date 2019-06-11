@@ -33,7 +33,8 @@ require_once('view/CrearDirecta.php');
 require_once('view/EstadoDirecta.php');
 require_once('view/EstadoHotsale.php');
 require_once('view/IngresoMonto.php');
-
+require_once('view/VerPerfil.php');
+require_once('view/EditarPerfil.php');
 
 
 /* PDO */
@@ -57,6 +58,7 @@ require_once('model/ResidenciaSemana.php');
 require_once('model/Residencia.php');
 require_once('model/Sem.php');
 require_once('model/AuctionDetail.php');
+
 
 if(isset($_GET["action"]) && $_GET["action"] == 'iniciarsesion'){
      Controller::getInstance()->vistaIniciarSesion(null);   
@@ -97,6 +99,15 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'user-login'){
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'user-signup'){
      UsuarioController::getInstance()->userSignup();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'verPerfil'){
+  UsuarioController::getInstance()->verPerfil();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'editarPerfil'){
+  UsuarioController::getInstance()->editarPerfil();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'procesarEdicionPerfil'){
+  UsuarioController::getInstance()->procesarEdicionPerfil();
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'list-auctions'){
   AuctionsController::getInstance()->listAuctions();

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- AMG CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+
+
+</head>
+<body>
+
+<!-- NAV BAR -->
+<nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
+  <button onclick="location.href='./index.php'" type="button" class="btn btn-outline-primary ml-3">VOLVER</button>
+   <button onclick="location.href='./index.php?action=verEstadoSubastas'" type="button" class="btn btn-outline-primary ml-3">Subastas Participando</button>
+  <a class="navbar-brand" href="./index.php"><img src="./imagen/logo.svg" width="65" height="40"></a>
+     <button onclick="location.href='./index.php?action=listarDirectas'" type="button" class="btn btn-outline-secondary mr-3">Listar Directas</button>
+  <button onclick="location.href='./index.php?action=cerrarSesion'" type="button" class="btn btn-outline-secondary mr-3">Cerrar Sesión</button>
+
+</nav>
+
+
+
+
+
+
+
+<div class="container ">
+
+
+  <main class="main">
+    <div class= "card  col-md-6 offset-md-3  mt-4 mb-5" >
+      <img class="card-img-top" src="./imagen/usuario.png" alt="Card image cap"> 
+
+      <form action="./index.php?action=procesarEdicionPerfil" method="POST">
+
+      <div class="form-group">
+        <label for="nombre-input-signup">Nombre</label>
+        <input type="text" class="form-control" id="nombre-input-signup" name="nombre-input-signup" placeholder="Ingrese su Nombre" value="{{ datos.nombre }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="apellido-input-signup">Apellido</label>
+        <input type="text" class="form-control" id="apellido-input-signup" name="apellido-input-signup" placeholder="Ingrese su Apellido" value="{{ datos.apellido }}" required>
+      </div>
+
+       <div class="form-group">
+        <label for="email-input-signup">Email</label>
+        <input type="email" class="form-control" id="email-input-signup" name="email-input-signup" placeholder="Ingrese su email" value="{{ datos.email }}" required>
+      </div>
+
+       <div class="form-group">
+        <label for="password-input-signup">Contraseña</label>
+        <input type="password" class="form-control" id="password-input-signup" name="password-input-signup" value="{{ datos.password }}" required>
+      </div>
+
+      
+
+      <div class="form-group">
+        <label for="tarjeta-input-signup">Numero de Tarjeta</label>
+        <input type="number" class="form-control" id="tarjeta-input-signup" name="tarjeta-input-signup" placeholder="Ingrese el Numero de su Tarjeta" value="{{ datos.tarjeta }}" required>
+      </div>
+
+
+      <div class="form-group">
+        <label for="fechanacimiento-input-signup">Fecha de Nacimiento</label>
+        <input  type="date" class="form-control" id="fechanacimiento-input-signup" name="fechanacimiento-input-signup" value="{{ datos.fecha_nac }}" required>
+      </div>
+
+      
+        <div class="card-body text-center">
+          <button type="button" onclick="location.href='./index.php'" class="btn btn-secondary">Cancelar Edicion</button> 
+          <button type="submit" class="btn btn-outline-primary">Editar Cambios</button>         
+        </div>
+        
+         
+     </form>
+
+   
+
+
+  </div>
+</main>
+</div>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

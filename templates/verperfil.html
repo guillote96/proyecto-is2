@@ -18,7 +18,7 @@
 
 <!-- NAV BAR -->
 <nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
-  <button onclick="location.href='./index.php?action=verPerfil'" type="button" class="btn btn-outline-primary ml-3">Ver Perfil</button>
+  <button onclick="location.href='./index.php'" type="button" class="btn btn-outline-primary ml-3">VOLVER</button>
    <button onclick="location.href='./index.php?action=verEstadoSubastas'" type="button" class="btn btn-outline-primary ml-3">Subastas Participando</button>
   <a class="navbar-brand" href="./index.php"><img src="./imagen/logo.svg" width="65" height="40"></a>
      <button onclick="location.href='./index.php?action=listarDirectas'" type="button" class="btn btn-outline-secondary mr-3">Listar Directas</button>
@@ -26,38 +26,52 @@
 
 </nav>
 
-<div class="row no-gutters">
 
-  <!-- CAJA DE BUSQUEDA -->
-  <div class="col-md-3 search-box">
-    CAJA DE BÚSQUEDA
-  </div>
 
-  <div class="col-md-7">
-    <div class="results-box">
-      {% for residencia in listaresidencia %}
-      <div class="card mb-5">
-        <div class="card-body">
 
-          <div class="row">
 
-            <div class="col-md-4 ml-5 mr-3">
-              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
-            </div>
+<div class="container">
 
-            <div class="col-md-4 mt-3">
-              <h5 class="card-title">{{ residencia.titulo }}</h5>
-              <p class="card-text"> {{ residencia.direccion}} {{ residencia.pais }} </p>
-      <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{residencia.idResidencia}}'"   class="btn btn-primary btn-sm">Ver Residencia</button>
-            </div>
-          </div>
 
-        </div>
+  <main class="main" >
+    
+
+
+    <div class= "card  col-md-6 offset-md-3  mt-4 mb-5" >
+      <img class="card-img-top" src="./imagen/usuario.png" alt="Card image cap">
+      <div class= "card-header " align="center">
+        <FONT SIZE=5 ><b>Datos del usuario</b> </font>
       </div>
-      {% endfor %}
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" id="nombre" name="nombre" >
+          <FONT SIZE=4><b>Nombre: </b></font>{{ datos.nombre }}</li>
+        <li class="list-group-item" id="apellido" name="apellido" >
+          <FONT SIZE=4><b>Apellido: </b></font>{{ datos.apellido }}</li>
+        <li class="list-group-item" id="email" name="email" >
+          <FONT SIZE=4><b>Email: </b></font> {{ datos.email }}</li>
+        <li class="list-group-item" id="password" name="password" >
+          <FONT SIZE=4><b>Contraseña: </b></font>{{datos.password}}</li>
+        <li class="list-group-item" id="creditos" name="creditos" >
+          <FONT SIZE=4><b>Creditos Disponibles: </b></font>{{ datos.creditos }}</li>
+        <li class="list-group-item" id="fecha_nac" name="fecha_nac" >
+          <FONT SIZE=4><b>Fecha de Nacimiento: </b></font>{{ datos.fecha_nac }}</li>
+        <li class="list-group-item" id="tarjeta" name="tarjeta" >
+          <FONT SIZE=4><b>Numero de Tarjeta: </b></font>{{ datos.tarjeta }}</li>
+        <li class="list-group-item" id="fecha_reg" name="fecha_reg" ><FONT SIZE=4><b>Fecha de Registro: </b></font>{{ datos.fecha_reg }}</li>
+      </ul>
+      <div class="card-body">
+        <a href="./index.php?action=editarPerfil"class="btn btn-primary">Editar Datos</a>
+      </div>
     </div>
-  </div>
+
+
+
+
+
+
+</main>
 </div>
+
 
 
 <!-- Optional JavaScript -->

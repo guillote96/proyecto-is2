@@ -51,7 +51,7 @@ class UsuarioController extends Controller {
 
 public function userSignup(){
   
-  if($this->verificarRegistro()){
+  if($this->verificarDatosUsuario()){
 
     $this->altaRegistro();
       return true;
@@ -62,7 +62,7 @@ public function userSignup(){
   }
 
 
-  public function verificarRegistro(){
+  public function verificarDatosUsuario(){
       
     if(empty($_POST['nombre-input-signup']) || empty($_POST['apellido-input-signup'])|| empty($_POST['email-input-signup'])|| empty($_POST['password-input-signup'])|| empty($_POST['tarjeta-input-signup']) || empty($_POST['fechanacimiento-input-signup'])){
 
@@ -72,21 +72,35 @@ public function userSignup(){
      }
 
      else {
-      $fechanacimiento = new DateTime($_POST['fechanacimiento-input-signup']);
-      $fecharegistro = new DateTime("now");
-      $diff = $fechanacimiento->diff($fecharegistro);
+        $fechanacimiento = new DateTime($_POST['fechanacimiento-input-signup']);
+        $fechaactual = new DateTime("now");
+        $diff = $fechanacimiento->diff($fechaactual);
                             
-    //  echo $diff->y .' años ';
+        //  echo $diff->y .' años ';
         if($diff->y<18){
           $this->vistaIniciarSesion(array('mensaje' => "Debe ser mayor a 18 años de edad"));
 
            return false;
 
           }
+         //si no existe la sesion pasa se fija si el mail del registro no esta en la base, si el mail que ingrese en el editar perfil es distinto al que tengo en SESSION entonces se fija en la base si existe el nuevo email 
+        if(!isset($_SESSION['usuario']) || $_SESSION['usuario']!=$_POST['email-input-signup']){
+            if(PDOUsuario::getInstance()->existeEmail($_POST['email-input-signup'])){
+
+              $this->vistaIniciarSesion(array('mensaje' => "El email ya se encuentra registrado por otro usuario"));
+
+              return false;
+          }
+        }
+
+        
       }   
 
      return true;
   }
+
+
+  
 
   public function altaRegistro(){
       // Inserta el usuario
@@ -106,6 +120,45 @@ public function userSignup(){
     else
       $view->show(array('user' => $user,'listaresidencia'=> $listaresidencia));
   }
+
+
+  public function verPerfil(){
+        
+       
+        $unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
+        
+        $view = new VerPerfil();
+        $view->show(array('user' => $_SESSION['id'],'datos' => $unUsuario));
+       
+
+  }
+
+public function editarPerfil(){
+        
+        $unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
+        $view = new EditarPerfil();
+        $view->show(array('user' => $_SESSION['id'],'datos' => $unUsuario));
+       
+
+  }
+
+  public function procesarEdicionPerfil(){
+
+         if ($this->verificarDatosUsuario()){
+           PDOUsuario::getInstance()->actualizarUsuario($_SESSION['id']);
+         //pregunta si el mail del editar registro es igual al que esta en SESSION, si lo cambie hay que cerrar sesion por seguridad.
+         if($_SESSION['usuario']==$_POST['email-input-signup']){
+
+               $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'Los datos del usuario fueron actualizados con exito! ', 'exito' => true));
+               return true;
+            }
+          else{
+            $this->cerrarSesion();
+            }
+          }
+  }
+
+
 
 
 }

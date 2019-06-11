@@ -1,0 +1,90 @@
+[33mcommit 96cb1671f468ef2d12983e3c00444a59ac6bf777[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 7c7473f c0ea2ed
+Author: Mauricio <belymau@hotmail.com>
+Date:   Tue Jun 4 19:09:31 2019 -0300
+
+    merge
+
+[33mcommit 7c7473f962f75cd84446e9d33b05ec21a9508a3b[m
+Author: Mauricio <belymau@hotmail.com>
+Date:   Tue Jun 4 18:45:23 2019 -0300
+
+    Hice Registrar usuario sin verificar mail
+
+[33mcommit c0ea2ed46bfc3a5d50659c19371ad1a9b4f8166c[m[33m ([m[1;31morigin/directas[m[33m)[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Mon Jun 3 17:23:20 2019 -0300
+
+    se hizo listado de directas y compra de semana directa
+
+[33mcommit 40fbda570356f7aba0fdbada8b97e63d708158de[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Mon Jun 3 15:09:42 2019 -0300
+
+    se corrigio inicio de sesion para premium
+
+[33mcommit 4aa3216dc1697783bf1f520a236df590339cc157[m[33m ([m[1;31morigin/estadosemana[m[33m)[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Mon Jun 3 11:50:41 2019 -0300
+
+    se agrego descuento de creditos y solucion de bug
+
+[33mcommit ec079ab6a0d3427e1f97419ce27b66afe8adfcf0[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Sat Jun 1 16:09:24 2019 -0300
+
+    se termino sincronizador de subasta y directas.Se agrego formulario buscqueda residencia admin
+
+[33mcommit a9998fa54bb03a39dde21a8fbe0a7b6e87446b3b[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Fri May 31 19:08:53 2019 -0300
+
+    se termino sincronizador de directas
+
+[33mcommit 637744503d1f31c10648dc50f908c87f7a3305bd[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Fri May 31 18:16:50 2019 -0300
+
+    se hizo PARTE de cambio de estado de directas inactivas
+
+[33mcommit e776ed0e90e0274f8ba1f2671abe3e80ae312cc3[m[33m ([m[1;31morigin/pendientedemo1[m[33m, [m[1;32mregistrar[m[33m)[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Mon May 27 17:07:43 2019 -0300
+
+    se hizo cierre de subasta
+
+[33mcommit a03ab18a287dd1ab73a4870df892de05e45b25f8[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Mon May 27 15:52:51 2019 -0300
+
+    se hizo crear subasta
+
+[33mcommit 295ae5992ca0b8212ced622867a1eee93b5f4280[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Mon May 27 11:38:33 2019 -0300
+
+    se corrigio estados de subasta (list auctions)
+
+[33mcommit eabbf7ea781f4467ff7a28919b423e0d97daa8a9[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Mon May 27 10:59:28 2019 -0300
+
+    se arreglo bug puja subasta
+
+[33mcommit c5e762e454daf0fb76e2fbd0396408b157ca524c[m
+Author: guillote96 <37410412+guillote96@users.noreply.github.com>
+Date:   Tue May 21 19:42:12 2019 -0300
+
+    Delete LICENSE
+
+[33mcommit 8757f489573b6fb247751e84fbafbf77b2b39663[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Tue May 21 19:22:39 2019 -0300
+
+    traspaso de proyecto ingenieria software 2
+
+[33mcommit 5da4ffb9bd44657a8eb0203ebf264e9b6d9d247d[m
+Author: Guille <juarez.unlp96@gmail.com>
+Date:   Tue May 21 19:20:41 2019 -0300
+
+    first commit
