@@ -175,6 +175,12 @@ public function editarPerfil(){
 
   }
 
+  public function buscarCliente(){
+    $usuarios= PDOUsuario::getInstance()->buscarUsuario();
+    $view=new Cliente();
+    $view->show(array('clientes'=>$usuarios,'user'=> $_SESSION['usuario'],'tipousuario'=> $_SESSION['tipo']));
+  }
+
 
 
 

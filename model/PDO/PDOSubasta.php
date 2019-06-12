@@ -300,7 +300,7 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
      }
 
    public function buscarSubasta(){
-         $sql="SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE s.borrada = 0 AND s.activa=1 AND";
+         $sql="SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE s.borrada = 0 AND s.activa=1 AND ";
 
 
          $parametros=array();
@@ -313,15 +313,24 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
          }
 
-         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio'])){
-            $sql.=" fecha_inicio=:fecha_inicio OR ";
+         /*if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio'])){
+            $sql.=" fecha_inicio =>:fecha_inicio OR ";
             $parametros[":fecha_inicio"]=$_POST['fecha_inicio'];
          }
 
          if(isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
-            $sql.=" fecha_fin=:fecha_fin AND";
+            $sql.=" fecha_fin =>:fecha_fin AND";
             $parametros[":fecha_fin"]=$_POST['fecha_fin'];
+         }*/
+          
+         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio']) && isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
+           $sql.="(fecha_inicio BETWEEN :fecha_inicio AND :fecha_fin) AND (fecha_fin BETWEEN :fecha_inicio AND :fecha_fin) ";
+           $parametros[":fecha_inicio"]=$_POST['fecha_inicio'];
+           $parametros[":fecha_fin"]=$_POST['fecha_fin'];
+
+
          }
+
 
           $ciudad;
          if(isset($_POST['localidad']) && !empty($_POST['localidad'])){

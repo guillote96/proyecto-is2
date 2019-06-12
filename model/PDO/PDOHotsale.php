@@ -78,12 +78,12 @@ class PDOHotsale extends PDORepository {
          }
 
          if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio'])){
-            $sql.=" fecha_inicio=:fecha_inicio OR ";
+            $sql.=" fecha_inicio=>:fecha_inicio OR ";
             $parametros[":fecha_inicio"]=$_POST['fecha_inicio'];
          }
 
          if(isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
-            $sql.=" fecha_fin=:fecha_fin AND";
+            $sql.=" fecha_fin<=:fecha_fin AND";
             $parametros[":fecha_fin"]=$_POST['fecha_fin'];
          }
           $ciudad;
