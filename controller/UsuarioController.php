@@ -129,11 +129,18 @@ public function userSignup(){
         $esPremium=PDOUsuario::getInstance()->esPremium($_SESSION['id']);
         $view = new VerPerfil();
         $view->show(array('esPremium' => $esPremium,'datos' => $unUsuario));
-       
-
   }
 
-  public function editarPerfil(){
+
+  public function detallesUsuario($idUsuario){
+
+        $unUsuario=PDOUsuario::getInstance()->traerUsuario($idUsuario);  
+        $view = new VerPerfil();
+        $view->show(array('user' => $idUsuario,'datos' => $unUsuario, "tipousuario"=> $_SESSION['tipo']));
+  }
+
+
+public function editarPerfil(){
         
         $unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
         $view = new EditarPerfil();
@@ -149,13 +156,27 @@ public function userSignup(){
          //pregunta si el mail del editar registro es igual al que esta en SESSION, si lo cambie hay que cerrar sesion por seguridad.
          if($_SESSION['usuario']==$_POST['email-input-signup']){
 
-               $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'Los datos del usuario fueron actualizados con exito! ', 'exito' => true));
+               $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'Los datos del usuario fueron actualizados con exito! ', 'exito' => true,'tipousuario'=>$_SESSION['tipo'],'user'=> $_SESSION['usuario']));
                return true;
             }
           else{
             $this->cerrarSesion();
             }
           }
+  }
+
+  public function listarClientes(){
+    $usuarios= PDOUsuario::getInstance()->listarUsuarios();
+    $view=new Cliente();
+    $view->show(array('clientes'=>$usuarios,'user'=> $_SESSION['usuario'],'tipousuario'=> $_SESSION['tipo']));
+
+
+  }
+
+  public function buscarCliente(){
+    $usuarios= PDOUsuario::getInstance()->buscarUsuario();
+    $view=new Cliente();
+    $view->show(array('clientes'=>$usuarios,'user'=> $_SESSION['usuario'],'tipousuario'=> $_SESSION['tipo']));
   }
 
 

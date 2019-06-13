@@ -62,7 +62,7 @@ class ResidenciaController extends Controller {
     public function altaResidencia(){
       // Inserta la residencia
        PDOResidencia::getInstance()->insertarResidencia();
-        $this->vistaExito(array('mensaje' =>"¡¡¡La residencia fue cargada exitosamente!!!", 'user' => $_SESSION['usuario']));
+        $this->vistaExito(array('mensaje' =>"¡¡¡La residencia fue cargada exitosamente!!!", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
         return true;
        
     }
@@ -90,7 +90,7 @@ class ResidenciaController extends Controller {
         $subasta = PDOSubasta::getInstance()->subastaInfo($idRS);
 
         if(empty($subasta) ||  empty($_SESSION['usuario'])){
-            $this->vistaExito(array('mensaje' =>"Debe iniciar Sesion...", 'user' =>null));
+            $this->vistaExito(array('mensaje' =>"Debe iniciar Sesion...", 'user' =>null,'tipousuario'=>$_SESSION['tipo']));
             return false;
         }
 
@@ -114,19 +114,19 @@ class ResidenciaController extends Controller {
 
         $creditos=1; // esto existe por que no se hacen consultas de primera movida (despues se saca)
         if($_SESSION['tipo'] == "administrador"){
-               $this->vistaExito(array('mensaje' =>"No tiene permisos para hacer esta accion", 'user' => $_SESSION['usuario']));
+               $this->vistaExito(array('mensaje' =>"No tiene permisos para hacer esta accion", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
                return false;
 
         }
         if (PDOSubasta::getInstance()->esMayorPuja($idSubasta, $puja) && $creditos > 0) {
 
           PDOSubasta::getInstance()->insertarParticipanteSubasta($_SESSION['id'], $idSubasta, $puja);
-          $this->vistaExito(array('mensaje' =>"¡¡¡La Puja fue registrada!!!", 'user' => $_SESSION['usuario']));
+          $this->vistaExito(array('mensaje' =>"¡¡¡La Puja fue registrada!!!", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
             return true;
         }
         if($creditos == 0){
 
-          $this->vistaExito(array('mensaje' =>"Creditos Insuficientes", 'user' => $_SESSION['usuario']));
+          $this->vistaExito(array('mensaje' =>"Creditos Insuficientes", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
         
         }
        return false;
@@ -136,7 +136,7 @@ class ResidenciaController extends Controller {
    public function editarResidencia($idResidencia){
        // se puede editar una residencia si NO hay partipantes en las semanas correspondiente a la misma
         if($_SESSION['tipo'] != "administrador"){
-            $this->vistaExito(array('mensaje' =>"No tiene permisos para hacer esta accion", 'user' => $_SESSION['usuario']));
+            $this->vistaExito(array('mensaje' =>"No tiene permisos para hacer esta accion", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
                return false;
 
         }
@@ -147,7 +147,7 @@ class ResidenciaController extends Controller {
        return true;
      }
 
-     $this->vistaExito(array('mensaje' =>"No puede editarse.Ya existen Participantes", 'user' => $_SESSION['usuario']));
+     $this->vistaExito(array('mensaje' =>"No puede editarse.Ya existen Participantes", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
      return false;
 
    }
@@ -178,7 +178,7 @@ class ResidenciaController extends Controller {
      
       if(empty($_SESSION['usuario']) || empty($_SESSION['tipo']) || $_SESSION['tipo'] != "administrador"){
 
-            $this->vistaExito(array('mensaje' =>"No tiene permisos para hacer esta accion", 'user' => $_SESSION['usuario']));
+            $this->vistaExito(array('mensaje' =>"No tiene permisos para hacer esta accion", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
                return false;
         }
 
@@ -189,11 +189,11 @@ class ResidenciaController extends Controller {
 
               PDOResidencia::getInstance()->borrarResidencia($idResidencia);
 
-              $this->vistaExito(array('mensaje' =>"La residencia se elimino satisfactoriamente", 'user' => $_SESSION['usuario']));  
+              $this->vistaExito(array('mensaje' =>"La residencia se elimino satisfactoriamente", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));  
                }
 
            else{
-              $this->vistaExito(array('mensaje' =>"La Residencia no pudo ser eliminada, debido a que se encuentra reservada ", 'user' => $_SESSION['usuario']));
+              $this->vistaExito(array('mensaje' =>"La Residencia no pudo ser eliminada, debido a que se encuentra reservada ", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
                return false;
                }
            }
@@ -241,25 +241,27 @@ class ResidenciaController extends Controller {
      $directas=PDODirecta::getInstance()->listarTodasDirectas();
      $hotsale= PDOHotsale::getInstance()->listarTodosHotsale();
      $view= new Semana();
-    $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo']));
+    $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
 
 
    }
 
    public function buscarSemanas(){
-
+    
      $subastas=PDOSubasta::getInstance()->buscarSubasta();
      $directas=PDODirecta::getInstance()->buscarDirectas();
      $hotsales=PDOHotsale::getInstance()->buscarHotsales();
      $view= new Semana();
+
+
     
-    if(($subastas != false) || ($directas != false) || ($hotsales !=false) ){
+    if(($subastas != false) || ($directas != false) || ($hotsales != false)){ 
 
      $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=> $hotsales), 'mensaje' => null,'tipo'=> $_SESSION['tipo']));
-         return true;   
+       return true;   
      }
       $view->buscarSemana(array('datos' => null, 'mensaje' => 'No hay Resultados'));
-     return false;
+      return false;
 
 
    }

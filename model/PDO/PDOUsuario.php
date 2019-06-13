@@ -17,6 +17,18 @@ class PDOUsuario extends PDORepository {
     public function __construct() {
         
     }
+    public function listarUsuarios(){
+      $answer = $this->queryList("SELECT * FROM usuario WHERE borrada=:borrada",array(':borrada'=>0));
+
+       $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array("usuario"=> new Usuario($element['idUsuario'],$element['email'],$element['password'], $element['nombre'],$element['apellido'],$element['tarjeta'],(int)$element['creditos'],$element['fecha_nac'],$element['fecha_reg'],$element['borrada']),'esPremium' => $this->esPremium($element['idUsuario']));
+        }
+
+        return $final_answer;
+
+
+    }
 
     
 
@@ -96,6 +108,78 @@ class PDOUsuario extends PDORepository {
       $answer = $this->queryList("SELECT * FROM premium WHERE idUsuario=:idUsuario",array(':idUsuario'=> $idUsuario));
 
       return (sizeof($answer) > 0 && $answer[0]['borrada']!= 1) ?  true : false; 
+
+
+    }
+
+    public function buscarUsuario(){
+      $sql="SELECT * FROM usuario WHERE borrada=:borrada AND ";
+      $parametros=array(':borrada'=>0);
+         if(!isset($_POST['nombre']) && !isset($_POST['fecha_registro']) && !isset($_POST['tipo_usuario'])){
+             return false;
+
+         }
+         $nombre;
+
+         if(isset($_POST['nombre']) && !empty($_POST['nombre'])){
+             $nombre=$_POST['nombre'];
+            $sql.="nombre LIKE '$nombre%' AND ";
+            
+         }
+
+         if(isset($_POST['fecha_registro']) && !empty($_POST['fecha_registro'])){
+            $sql.="fecha_reg=:fecha_registro AND ";
+            $parametros[":fecha_registro"]=$_POST['fecha_registro'];
+         }
+         $sql = substr($sql, 0, -5);
+         $answer = $this->queryList($sql,$parametros);
+         $premium;
+         if(isset($_POST['tipo_usuario']) && !empty($_POST['tipo_usuario'])){
+             if($_POST['tipo_usuario'] == 1){
+              //estndar
+                $premium=false;
+             }
+             if($_POST['tipo_usuario'] == 5){
+                $premium=true;
+             }
+
+         }
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array("usuario"=> new Usuario($element['idUsuario'],$element['email'],$element['password'], $element['nombre'],$element['apellido'],$element['tarjeta'],(int)$element['creditos'],$element['fecha_nac'],$element['fecha_reg'],$element['borrada']),'esPremium' => $this->esPremium($element['idUsuario']));
+         }
+
+
+
+        if(!isset($premium)){
+          return $final_answer;
+        }
+
+         $tipo=[];
+         if((isset($premium)) && ($premium)){
+             
+              foreach ($final_answer as $key => $cliente) {
+                if($cliente['esPremium']){
+                  $tipo[]=$cliente;
+                }
+              }
+
+                      
+
+        }else{
+               
+               foreach ($final_answer as $key => $cliente) {
+                 if(!$cliente['esPremium']){
+                  $tipo[]=$cliente;
+                 }
+
+               }
+
+        }    
+
+
+      return $tipo;
 
 
     }

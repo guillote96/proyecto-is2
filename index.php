@@ -35,6 +35,7 @@ require_once('view/EstadoHotsale.php');
 require_once('view/IngresoMonto.php');
 require_once('view/VerPerfil.php');
 require_once('view/EditarPerfil.php');
+require_once('view/Cliente.php');
 
 
 /* PDO */
@@ -182,12 +183,23 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'buscarSemanas'){
 else if(isset($_GET["action"]) && $_GET["action"] == 'buscar'){
    ResidenciaController::getInstance()->buscar_semanas();
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'comprarHotsale'&& !empty($_GET['idRS']) && !empty($_GET['idUser'])){
+    HotsaleController::getInstance()->comprarSemana($_GET['idRS'],$_GET['idUser']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'listarClientes'){
+    UsuarioController::getInstance()->listarClientes();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'detallesCliente' && !empty($_GET["idUsuario"])){
+    UsuarioController::getInstance()->detallesUsuario($_GET["idUsuario"]);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'buscarCliente'){
+    UsuarioController::getInstance()->buscarCliente();
+}
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);
     else
 	    Controller::getInstance()->vistaHome(array('user' => $_SESSION['usuario'], 'tipousuario' => $_SESSION['tipo']));
 }
-
 
 

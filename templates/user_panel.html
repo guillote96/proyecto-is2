@@ -17,20 +17,8 @@
 <body>
 
 <!-- NAV BAR -->
-<nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
+   {% include 'barra_user.html' %}
 
-  <button onclick="location.href='./index.php?action=verPerfil'" type="button" class="btn btn-outline-primary ml-3">Ver Perfil</button>
-
-
-    <button onclick="location.href='./index.php?action=buscar'" type="button" class="btn btn-outline-secondary mr-3">Buscar Semanas</button>
-
-   <button onclick="location.href='./index.php?action=verEstadoSubastas'" type="button" class="btn btn-outline-primary ml-3">Subastas Participando</button>
-  <a class="navbar-brand" href="./index.php"><img src="./imagen/logo.svg" width="65" height="40"></a>
-
-     <button onclick="location.href='./index.php?action=listarDirectas'" type="button" class="btn btn-outline-secondary mr-3">Listar Directas</button>
-  <button onclick="location.href='./index.php?action=cerrarSesion'" type="button" class="btn btn-outline-secondary mr-3">Cerrar Sesión</button>
-
-</nav>
 
 <div class="row no-gutters">
 <!--

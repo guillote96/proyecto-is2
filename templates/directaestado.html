@@ -11,8 +11,18 @@
 
   <!-- AMG CSS -->
   <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+{% if tipousuario != "administrador" %}
 
 {% include 'barra_user.html' %}
+
+{% else %}
+
+{% include 'barra.html' %}
+
+{% endif %}
+
+
+
 </head>
 <body>
 
@@ -38,10 +48,12 @@
               <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
-              {% if tipo == "premium" %}
+              {% if tipousuario == "premium" %}
               <a href="#ventanaConfirmacion{{dato.residenciasemana.idSemana}}" class="btn btn-danger btn-sm" data-toggle="modal" >Comprar Semana</a>
               {% else %}
-               <a href="" class="btn btn-danger btn-sm" >Solicitar Premium</a>
+                {% if tipousuario != "administrador" %}
+                 <a href="" class="btn btn-danger btn-sm" >Solicitar Premium</a>
+                {% endif %}
 
               {% endif %}
 

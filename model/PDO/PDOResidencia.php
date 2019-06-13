@@ -87,20 +87,18 @@ class PDOResidencia extends PDORepository {
 
 
     public function buscarResidencia(){
-         $sql="SELECT * FROM residencia WHERE ";
-         $parametros=array();
+         $sql="SELECT * FROM residencia WHERE borrada=:borrada AND ";
+         $parametros=array(':borrada' => 0);
          if(!isset($_POST['titulo']) && !isset($_POST['localidad'])){
              return false;
 
          }
-         if(empty($_POST['titulo']) && empty($_POST['localidad'])){
-              return false;
-
-         }
+           
+           $titulo;
 
          if(isset($_POST['titulo']) && !empty($_POST['titulo'])){
-            $sql.="titulo=:titulo AND ";
-            $parametros["titulo"]=$_POST['titulo'];
+            $titulo=$_POST['titulo'];
+            $sql.="titulo LIKE '$titulo%' AND ";
          }
 
          if(isset($_POST['localidad']) && !empty($_POST['localidad'])){

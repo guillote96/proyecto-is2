@@ -300,34 +300,36 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
      }
 
    public function buscarSubasta(){
-         $sql="SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE s.borrada = 0 AND s.activa=1 AND";
+         $sql="SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE (s.borrada = :borrada ) AND (s.activa=:activa) AND ";
 
 
-         $parametros=array();
+         $parametros=array(':borrada' => 0,':activa'=> 1);
          if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin']) && !isset($_POST['localidad'])){
              return false;
 
          }
-         if(empty($_POST['fecha_inicio']) && empty($_POST['fecha_fin']) && empty($_POST['localidad'])){
+         if((empty($_POST['fecha_inicio']) || empty($_POST['fecha_fin'])) && empty($_POST['localidad'])){
               return false;
 
          }
 
-         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio'])){
-            $sql.=" fecha_inicio=:fecha_inicio OR ";
-            $parametros[":fecha_inicio"]=$_POST['fecha_inicio'];
+          $fechainicio; $fechafin;
+         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio']) && isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
+
+          $fechainicio=date_format(new DateTime($_POST['fecha_inicio']),"Y-m-d");
+        $fechafin=date_format(new DateTime($_POST['fecha_fin']),"Y-m-d");
+
+        $sql.=" (fecha_inicio BETWEEN '$fechainicio' AND '$fechafin') AND (fecha_fin BETWEEN '$fechainicio' AND '$fechafin') AND";
+        
+
+
          }
 
-         if(isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
-            $sql.=" fecha_fin=:fecha_fin AND";
-            $parametros[":fecha_fin"]=$_POST['fecha_fin'];
-         }
 
           $ciudad;
          if(isset($_POST['localidad']) && !empty($_POST['localidad'])){
             $ciudad=$_POST['localidad'];
             $sql.=" r.ciudad LIKE '$ciudad%' AND";
-            //$parametros[":ciudad"]=$_POST['localidad'];
          }
          $sql = substr($sql, 0, -4);
 

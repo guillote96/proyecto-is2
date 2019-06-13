@@ -10,21 +10,12 @@
       <li class="nav-item active">
       <a class="nav-link" href="./index.php">Inicio <span class="sr-only">(current)</span></a>
       </li>
-      {% if user is empty %}
-        <li class="nav-item">
-        <a class="nav-link" href="./index.php?action=iniciarsesion">Login</a>
-        </li>
 
-      {% else %}
-
-
-       {% if tipousuario == "administrador" %}
        
         <li class="nav-item">
-        <a class="nav-link" href="./index.php?action=cargarResidencia">Cargar Residencia</a>
+          <a class="nav-link" href="./index.php?action=listarClientes">Clientes</a>
         </li>
 
-        {% endif %}
 
         <a class="nav-link" href="./index.php?action=listarDirectas">Directas</a>
 
@@ -51,16 +42,6 @@
           <a class="nav-link" href="./index.php?action=sincronizar">SINCRONIZAR</a>
         </li>
 
-
-
-
-
-
-
-
-
-
-      {% endif %}
     </ul>
   </div>
 </nav>
