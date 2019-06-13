@@ -247,20 +247,21 @@ class ResidenciaController extends Controller {
    }
 
    public function buscarSemanas(){
-
+    
      $subastas=PDOSubasta::getInstance()->buscarSubasta();
      $directas=PDODirecta::getInstance()->buscarDirectas();
      $hotsales=PDOHotsale::getInstance()->buscarHotsales();
      $view= new Semana();
 
+
     
-    if(($subastas != false) || ($directas != false) || ($hotsales !=false) ){
+    if(($subastas != false) || ($directas != false) || ($hotsales != false)){ 
 
      $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=> $hotsales), 'mensaje' => null,'tipo'=> $_SESSION['tipo']));
-         return true;   
+       return true;   
      }
       $view->buscarSemana(array('datos' => null, 'mensaje' => 'No hay Resultados'));
-     return false;
+      return false;
 
 
    }

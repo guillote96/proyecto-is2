@@ -72,25 +72,26 @@ class PDOHotsale extends PDORepository {
              return false;
 
          }
-         if(empty($_POST['fecha_inicio']) && empty($_POST['fecha_fin']) && empty($_POST['localidad'])){
+         if((empty($_POST['fecha_inicio']) || empty($_POST['fecha_fin'])) && empty($_POST['localidad'])){
               return false;
 
          }
 
-         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio'])){
-            $sql.=" fecha_inicio=>:fecha_inicio OR ";
-            $parametros[":fecha_inicio"]=$_POST['fecha_inicio'];
-         }
+        $fechainicio; $fechafin;
+         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio']) && isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
 
-         if(isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
-            $sql.=" fecha_fin<=:fecha_fin AND";
-            $parametros[":fecha_fin"]=$_POST['fecha_fin'];
+         $fechainicio=date_format(new DateTime($_POST['fecha_inicio']),"Y-m-d");
+         $fechafin=date_format(new DateTime($_POST['fecha_fin']),"Y-m-d");
+
+         $sql.=" (fecha_inicio BETWEEN '$fechainicio' AND '$fechafin') AND (fecha_fin BETWEEN '$fechainicio' AND '$fechafin') AND";
+        
+
+
          }
           $ciudad;
          if(isset($_POST['localidad']) && !empty($_POST['localidad'])){
             $ciudad=$_POST['localidad'];
             $sql.=" r.ciudad LIKE '$ciudad%' AND";
-            //$parametros[":ciudad"]=$_POST['localidad'];
          }
 
 

@@ -93,10 +93,6 @@ class PDOResidencia extends PDORepository {
              return false;
 
          }
-       /*  if(empty($_POST['titulo']) && empty($_POST['localidad'])){
-              return false;
-
-         }*/
            
            $titulo;
 
