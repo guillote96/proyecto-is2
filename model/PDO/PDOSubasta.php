@@ -21,7 +21,7 @@ class PDOSubasta extends PDORepository {
 
         public function listarTodasSubasta (){
       //lista las semanas en subasta para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase subasta y ResidenciaSemana)
-       $answer = $this->queryList("SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia,s.borrada, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE rs.borrada = 0 AND s.borrada = 0",array());
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia,s.borrada, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE s.activa=1 AND s.borrada = 0",array());
 
         $final_answer = [];
         foreach ($answer as &$element) {
