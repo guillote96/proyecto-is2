@@ -126,14 +126,14 @@ public function userSignup(){
         
        
         $unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
-        
+        $esPremium=PDOUsuario::getInstance()->esPremium($_SESSION['id']);
         $view = new VerPerfil();
-        $view->show(array('user' => $_SESSION['id'],'datos' => $unUsuario));
+        $view->show(array('esPremium' => $esPremium,'datos' => $unUsuario));
        
 
   }
 
-public function editarPerfil(){
+  public function editarPerfil(){
         
         $unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
         $view = new EditarPerfil();
@@ -157,6 +157,55 @@ public function editarPerfil(){
             }
           }
   }
+
+
+
+  public function CambiarTipoUsuario(){
+
+    if(!$this->yaEnvioSolicitud()){
+      $this->permitirCambio();
+    }
+    else{
+      $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'Usted ya envio una solicitud, espere a ser contactado ', 'exito' => true));
+    }
+  }
+
+  public function permitirCambio(){
+
+    if(PDOUsuario::getInstance()->esPremium($_SESSION['id'])){
+      PDOUsuario::getInstance()->pasarAEstandar($_SESSION['id']);
+      $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'La solicitud para pasar a Usuario Estandar fue enviada con exito!
+      Sera informado a la brevedad ', 'exito' => true));
+    }
+    else{
+      PDOUsuario::getInstance()->pasarAPremium($_SESSION['id']);
+      $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'La solicitud para pasar a Usuario Premium fue enviada con exito 
+        Sera informado a la brevedad! ', 'exito' => true));
+    }
+  }
+  
+
+
+
+    public function yaEnvioSolicitud(){
+      if(PDOUsuario::getInstance()->existeSolicitud($_SESSION['id'])){
+        return true;
+      }
+      else{
+        return false;
+      }   
+    }
+
+   
+    
+
+ 
+
+
+
+
+
+
 
 
 

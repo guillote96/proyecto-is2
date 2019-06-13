@@ -32,6 +32,16 @@ class PDOUsuario extends PDORepository {
     }
     
 
+    public function pasarAPremium($idUsuario){
+    
+        $answer = $this->queryList("INSERT INTO solicitud (idUsuario, idTipoSolicitud) VALUES (:idUsuario, :idTipoSolicitud);", array(':idUsuario' => $idUsuario, ':idTipoSolicitud' => 1));
+    }
+
+    public function pasarAEstandar($idUsuario){
+        
+        $answer = $this->queryList("INSERT INTO solicitud (idUsuario, idTipoSolicitud) VALUES (:idUsuario, :idTipoSolicitud);", array(':idUsuario' => $idUsuario, ':idTipoSolicitud' => 2));
+    }
+
         
 
     public function traerUsuario($idUsuario){
@@ -64,6 +74,16 @@ class PDOUsuario extends PDORepository {
         
      return (sizeof($answer)> 0) ? true : false;
    }
+
+
+   public function existeSolicitud($idUsuario){
+
+        $answer = $this->queryList("SELECT * FROM solicitud WHERE idUsuario=:idUsuario AND borrada=:borrada" ,array(':idUsuario'=> $idUsuario,':borrada'=> 0));
+        
+     return (sizeof($answer)> 0) ? true : false;
+   }
+
+   
 
   
 

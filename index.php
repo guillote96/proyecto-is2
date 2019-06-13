@@ -109,6 +109,12 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'editarPerfil'){
 else if(isset($_GET["action"]) && $_GET["action"] == 'procesarEdicionPerfil'){
   UsuarioController::getInstance()->procesarEdicionPerfil();
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'quieroSerPremium'){
+  UsuarioController::getInstance()->CambiarTipoUsuario();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'volverEstandar'){
+  UsuarioController::getInstance()->volverEstandar();
+}
 else if(isset($_GET["action"]) && $_GET["action"] == 'list-auctions'){
   AuctionsController::getInstance()->listAuctions();
 }
