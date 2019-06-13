@@ -3,7 +3,21 @@
 <html>
 <head>
 	<title></title>
-	{% include 'barra.html' %}
+{% if user is empty %}
+
+
+{% else %}
+{% if tipousuario != "administrador" %}
+
+  {% include 'barra_user.html' %}
+
+{% else %}
+
+  {% include 'barra.html' %}
+
+
+{% endif %}
+{% endif %}
 </head>
 <body>
 <br>

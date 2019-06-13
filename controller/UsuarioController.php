@@ -158,7 +158,7 @@ public function editarPerfil(){
          //pregunta si el mail del editar registro es igual al que esta en SESSION, si lo cambie hay que cerrar sesion por seguridad.
          if($_SESSION['usuario']==$_POST['email-input-signup']){
 
-               $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'Los datos del usuario fueron actualizados con exito! ', 'exito' => true));
+               $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'Los datos del usuario fueron actualizados con exito! ', 'exito' => true,'tipousuario'=>$_SESSION['tipo'],'user'=> $_SESSION['usuario']));
                return true;
             }
           else{

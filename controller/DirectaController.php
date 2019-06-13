@@ -95,7 +95,7 @@ class DirectaController extends ResidenciaSemanaController {
           return true;
 
       }else{
-         $this->vistaExito(array('mensaje' =>"No Hay semanas directas para Mostrar.", 'user' => $_SESSION['usuario']));
+         $this->vistaExito(array('mensaje' =>"No Hay semanas directas para Mostrar.", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
         return false;
 
 
@@ -113,10 +113,10 @@ class DirectaController extends ResidenciaSemanaController {
        if ($usuario->getCreditos() > 0) {
          PDOUsuario::getInstance()->decrementarCreditos($idUser);
          PDODirecta::getInstance()->adjudicarDirecta($idResidenciaSemana,$idUser);
-         $this->vistaExito(array('mensaje' =>"Compra Concretada ¡Muchas Gracias!", 'user' =>$_SESSION['usuario']));
+         $this->vistaExito(array('mensaje' =>"Compra Concretada ¡Muchas Gracias!", 'user' =>$_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
          return true;
        }
-        $this->vistaExito(array('mensaje' =>"Usted no tiene creditos Suficientes!", 'user' =>$_SESSION['usuario']));
+        $this->vistaExito(array('mensaje' =>"Usted no tiene creditos Suficientes!", 'user' =>$_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
         return false;
 
 
@@ -134,7 +134,7 @@ class DirectaController extends ResidenciaSemanaController {
 
    public function procesar_directa($idResidencia, $idSemana, $precio){
     if(empty($idSemana)){
-      $this->vistaExito(array('mensaje' => "Ups! Hubo un error ;)","user"=> $_SESSION['usuario']));
+      $this->vistaExito(array('mensaje' => "Ups! Hubo un error ;)","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
      return false;
 
     }
@@ -149,11 +149,11 @@ class DirectaController extends ResidenciaSemanaController {
 
      if(!PDODirecta::getInstance()->existeResidenciaSemanaDirecta($idResidenciaSemana)){
        PDODirecta::getInstance()->insertarDirecta($idResidenciaSemana,$precio);
-       $this->vistaExito(array('mensaje' => "se registro Directa ;)","user"=> $_SESSION['usuario']));
+       $this->vistaExito(array('mensaje' => "se registro Directa ;)","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
        return true;
      }
 
-     $this->vistaExito(array('mensaje' => "Ups! Hubo un error ;)","user"=> $_SESSION['usuario']));
+     $this->vistaExito(array('mensaje' => "Ups! Hubo un error ;)","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
      return false;
    }
 
