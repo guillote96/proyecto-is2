@@ -45,7 +45,33 @@
         <img class="d-block w-100 slide-img" src="imagen/residencia-2.jpg" alt="Second slide">
       </div>
 
+
       <div class="position-absolute align-self-center">
+
+        {% if listaresidencia is not empty %}
+     <center>
+        <div class="card-group" style="width: 35%">
+  <div class="card">
+    <img src="imagen/residencia-1.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{listaresidencia[0].titulo}}</h5>
+      <p class="card-text">{{listaresidencia[0].descripcion}}</p>
+      <p class="card-text">{{listaresidencia[0].ciudad}},{{listaresidencia[0].partido}},{{listaresidencia[0].provincia}}</p>
+    </div>
+  </div>
+  <div class="card">
+    <img src="imagen/residencia-2.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{listaresidencia[1].titulo}}</h5>
+      <p class="card-text">{{listaresidencia[1].descripcion}}</p>
+       <p class="card-text">{{listaresidencia[1].ciudad}},{{listaresidencia[1].partido}},{{listaresidencia[1].provincia}}</p>
+    </div>
+  </div>
+</div>
+</center>
+{% endif %}
+<br>
+<br>
 
         <!-- TITLE -->
         <h1 class="text-white text-center" style="font-size: 80px"> Home Switch Home </h1>
