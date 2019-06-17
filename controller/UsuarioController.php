@@ -182,7 +182,7 @@ public function editarPerfil(){
 
 
 
-  public function cambiarTipoUsuario(){
+  public function quieroCambiarTipoUsuario(){
 
     if(!$this->seEnvioSolicitud($_SESSION['id'])){
       $this->permitirEnvio();
@@ -199,7 +199,7 @@ public function editarPerfil(){
       $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'La solicitud para pasar a Usuario Estandar fue enviada con exito!
       Sera informado a la brevedad ', 'exito' => true));
     }
-    else{
+    else{ //Si es Estandar
       PDOUsuario::getInstance()->envioPasarAPremium($_SESSION['id']);
       $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'La solicitud para pasar a Usuario Premium fue enviada con exito 
         Sera informado a la brevedad! ', 'exito' => true));
@@ -210,7 +210,7 @@ public function editarPerfil(){
 
 
     public function seEnvioSolicitud($idUsuario){
-      if(PDOUsuario::getInstance()->envioSolicitud($idUsuario)) {
+      if(PDOUsuario::getInstance()->existeSolicitud($idUsuario)) {
         return true;
       }
       else{

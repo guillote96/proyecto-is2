@@ -113,8 +113,8 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'cambiarRoldeUsuario'){
 else if(isset($_GET["action"]) && $_GET["action"] == 'procesarEdicionPerfil'){
   UsuarioController::getInstance()->procesarEdicionPerfil();
 }
-else if(isset($_GET["action"]) && $_GET["action"] == 'quieroSerPremium'){
-  UsuarioController::getInstance()->cambiarTipoUsuario();
+else if(isset($_GET["action"]) && $_GET["action"] == 'quieroCambiarRol'){
+  UsuarioController::getInstance()->quieroCambiarTipoUsuario();
 }
 
 else if(isset($_GET["action"]) && $_GET["action"] == 'list-auctions'){

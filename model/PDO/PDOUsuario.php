@@ -22,7 +22,7 @@ class PDOUsuario extends PDORepository {
 
        $final_answer = [];
         foreach ($answer as &$element) {
-          $final_answer[] = array("usuario"=> new Usuario($element['idUsuario'],$element['email'],$element['password'], $element['nombre'],$element['apellido'],$element['tarjeta'],(int)$element['creditos'],$element['fecha_nac'],$element['fecha_reg'],$element['borrada']),'esPremium' => $this->esPremium($element['idUsuario']),'envioSolicitud' => $this->envioSolicitud($element['idUsuario']));
+          $final_answer[] = array("usuario"=> new Usuario($element['idUsuario'],$element['email'],$element['password'], $element['nombre'],$element['apellido'],$element['tarjeta'],(int)$element['creditos'],$element['fecha_nac'],$element['fecha_reg'],$element['borrada']),'esPremium' => $this->esPremium($element['idUsuario']),'envioSolicitud' => $this->existeSolicitud($element['idUsuario']));
         }
 
         return $final_answer;
@@ -88,7 +88,7 @@ class PDOUsuario extends PDORepository {
    }
 
 
-   public function envioSolicitud($idUsuario){
+   public function existeSolicitud($idUsuario){
 
         $answer = $this->queryList("SELECT * FROM solicitud WHERE idUsuario=:idUsuario AND borrada=:borrada AND aceptada=:aceptada" ,array(':idUsuario'=> $idUsuario,':borrada'=> 0,':aceptada'=> 0));
         
