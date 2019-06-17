@@ -18,7 +18,7 @@ class PDOResidencia extends PDORepository {
     }
 
     public function listarTodas() {
-        $answer = $this->queryList("SELECT * FROM residencia",array());
+        $answer = $this->queryList("SELECT * FROM residencia WHERE borrada=:borrada",array(':borrada'=> 0));
         $final_answer = [];
         foreach ($answer as &$element) {
             $tieneparticipantes=$this->existenParticipantes($element["idResidencia"]);
