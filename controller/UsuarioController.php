@@ -168,6 +168,7 @@ public function editarPerfil(){
   public function listarClientes(){
     $usuarios= PDOUsuario::getInstance()->listarUsuarios();
     $view=new Cliente();
+
     $view->show(array('clientes'=>$usuarios,'user'=> $_SESSION['usuario'],'tipousuario'=> $_SESSION['tipo']));
 
 
@@ -181,25 +182,25 @@ public function editarPerfil(){
 
 
 
-  public function CambiarTipoUsuario(){
+  public function cambiarTipoUsuario(){
 
-    if(!$this->yaEnvioSolicitud()){
-      $this->permitirCambio();
+    if(!$this->seEnvioSolicitud($_SESSION['id'])){
+      $this->permitirEnvio();
     }
     else{
       $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'Usted ya envio una solicitud, espere a ser contactado ', 'exito' => true));
     }
   }
 
-  public function permitirCambio(){
+  public function permitirEnvio(){
 
     if(PDOUsuario::getInstance()->esPremium($_SESSION['id'])){
-      PDOUsuario::getInstance()->pasarAEstandar($_SESSION['id']);
+      PDOUsuario::getInstance()->envioPasarAEstandar($_SESSION['id']);
       $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'La solicitud para pasar a Usuario Estandar fue enviada con exito!
       Sera informado a la brevedad ', 'exito' => true));
     }
     else{
-      PDOUsuario::getInstance()->pasarAPremium($_SESSION['id']);
+      PDOUsuario::getInstance()->envioPasarAPremium($_SESSION['id']);
       $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'La solicitud para pasar a Usuario Premium fue enviada con exito 
         Sera informado a la brevedad! ', 'exito' => true));
     }
@@ -208,8 +209,8 @@ public function editarPerfil(){
 
 
 
-    public function yaEnvioSolicitud(){
-      if(PDOUsuario::getInstance()->existeSolicitud($_SESSION['id'])){
+    public function seEnvioSolicitud($idUsuario){
+      if(PDOUsuario::getInstance()->envioSolicitud($idUsuario)) {
         return true;
       }
       else{
@@ -218,6 +219,27 @@ public function editarPerfil(){
     }
 
    
+  public function cambiarRol($idUsuario){
+      PDOUsuario::getInstance()->actualizarSolicitud($idUsuario);
+
+      if(PDOUsuario::getInstance()->esPremium($idUsuario)){
+       
+        PDOUsuario::getInstance()->pasarAEstandar($idUsuario);
+      }
+      else{
+
+        if(PDOUsuario::getInstance()->yaFuePremium($idUsuario)){
+
+           PDOUsuario::getInstance()->pasarAPremium($idUsuario);
+        }
+        else{
+          PDOUsuario::getInstance()->insertarNuevoPremium($idUsuario);
+        }
+      }  
+
+      $this-> listarClientes();
+    }
+
     
 
  
