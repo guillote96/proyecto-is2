@@ -22,7 +22,7 @@ class PDOUsuario extends PDORepository {
 
        $final_answer = [];
         foreach ($answer as &$element) {
-          $final_answer[] = array("usuario"=> new Usuario($element['idUsuario'],$element['email'],$element['password'], $element['nombre'],$element['apellido'],$element['tarjeta'],(int)$element['creditos'],$element['fecha_nac'],$element['fecha_reg'],$element['borrada']),'esPremium' => $this->esPremium($element['idUsuario']));
+          $final_answer[] = array("usuario"=> new Usuario($element['idUsuario'],$element['email'],$element['password'], $element['nombre'],$element['apellido'],$element['tarjeta'],(int)$element['creditos'],$element['fecha_nac'],$element['fecha_reg'],$element['borrada']),'esPremium' => $this->esPremium($element['idUsuario']),'envioSolicitud' => $this->envioSolicitud($element['idUsuario']));
         }
 
         return $final_answer;
@@ -44,12 +44,12 @@ class PDOUsuario extends PDORepository {
     }
     
 
-    public function pasarAPremium($idUsuario){
+    public function envioPasarAPremium($idUsuario){
     
         $answer = $this->queryList("INSERT INTO solicitud (idUsuario, idTipoSolicitud) VALUES (:idUsuario, :idTipoSolicitud);", array(':idUsuario' => $idUsuario, ':idTipoSolicitud' => 1));
     }
 
-    public function pasarAEstandar($idUsuario){
+    public function envioPasarAEstandar($idUsuario){
         
         $answer = $this->queryList("INSERT INTO solicitud (idUsuario, idTipoSolicitud) VALUES (:idUsuario, :idTipoSolicitud);", array(':idUsuario' => $idUsuario, ':idTipoSolicitud' => 2));
     }
@@ -88,15 +88,42 @@ class PDOUsuario extends PDORepository {
    }
 
 
-   public function existeSolicitud($idUsuario){
+   public function envioSolicitud($idUsuario){
 
-        $answer = $this->queryList("SELECT * FROM solicitud WHERE idUsuario=:idUsuario AND borrada=:borrada" ,array(':idUsuario'=> $idUsuario,':borrada'=> 0));
+        $answer = $this->queryList("SELECT * FROM solicitud WHERE idUsuario=:idUsuario AND borrada=:borrada AND aceptada=:aceptada" ,array(':idUsuario'=> $idUsuario,':borrada'=> 0,':aceptada'=> 0));
         
      return (sizeof($answer)> 0) ? true : false;
    }
 
-   
+    public function pasarAEstandar($idUsuario){
 
+        $answer = $this->queryList("UPDATE premium SET borrada = 1 WHERE idUsuario=:idUsuario" ,array(':idUsuario'=> $idUsuario));
+        
+     
+   } 
+   public function pasarAPremium($idUsuario){
+
+        $answer = $this->queryList("UPDATE premium SET borrada = 0 WHERE idUsuario=:idUsuario" ,array(':idUsuario'=> $idUsuario));
+        
+     
+   }
+    public function insertarNuevoPremium($idUsuario){       
+        
+        $answer = $this->queryList("INSERT INTO premium (idUsuario) VALUES (:idUsuario);", array(':idUsuario' => $idUsuario));
+    }
+
+    public function actualizarSolicitud($idUsuario){
+        
+        $answer = $this->queryList("UPDATE solicitud SET aceptada = 1 WHERE idUsuario=:idUsuario AND borrada=:borrada" ,array(':idUsuario'=> $idUsuario,':borrada'=> 0));
+        
+    }
+
+    public function yaFuePremium($idUsuario){
+      $answer = $this->queryList("SELECT * FROM premium WHERE idUsuario=:idUsuario",array(':idUsuario'=> $idUsuario));
+
+      return (sizeof($answer) > 0 && $answer[0]['borrada'] = 1) ?  true : false; 
+
+    }
   
 
    public function decrementarCreditos($idUsuario){
@@ -109,9 +136,11 @@ class PDOUsuario extends PDORepository {
 
       return (sizeof($answer) > 0 && $answer[0]['borrada']!= 1) ?  true : false; 
 
-
     }
 
+    
+   
+  
     public function buscarUsuario(){
       $sql="SELECT * FROM usuario WHERE borrada=:borrada AND ";
       $parametros=array(':borrada'=>0);
