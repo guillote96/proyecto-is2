@@ -217,6 +217,8 @@ class ResidenciaController extends Controller {
 
       }
 
+      AdministradorController::getInstance()->vistaAdminPanel($_SESSION['usuario']);
+
 
    }
 
