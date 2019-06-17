@@ -223,14 +223,16 @@ public function editarPerfil(){
       PDOUsuario::getInstance()->actualizarSolicitud($idUsuario);
 
       if(PDOUsuario::getInstance()->esPremium($idUsuario)){
-       
+        
         PDOUsuario::getInstance()->pasarAEstandar($idUsuario);
+        
       }
       else{
 
         if(PDOUsuario::getInstance()->yaFuePremium($idUsuario)){
 
            PDOUsuario::getInstance()->pasarAPremium($idUsuario);
+           
         }
         else{
           PDOUsuario::getInstance()->insertarNuevoPremium($idUsuario);

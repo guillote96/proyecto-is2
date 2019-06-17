@@ -185,18 +185,19 @@ class ResidenciaController extends Controller {
       else{
     
    //     if($_SESSION['tipo'] == "administrador"){
-           if (!PDOResidencia::getInstance()->existenParticipantes($idResidencia)){      
+    //      if (!PDOResidencia::getInstance()->existenParticipantes($idResidencia)){      
 
               PDOResidencia::getInstance()->borrarResidencia($idResidencia);
 
               $this->vistaExito(array('mensaje' =>"La residencia se elimino satisfactoriamente", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));  
-               }
-
+     /* Por si volvemos a usar el borrado fisico         
+            }
            else{
               $this->vistaExito(array('mensaje' =>"La Residencia no pudo ser eliminada, debido a que se encuentra reservada ", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
                return false;
                }
-           }
+      */    
+       }
      }
 
        

@@ -95,13 +95,16 @@
               <p class="card-text"> {{ residencia.direccion}} {{ residencia.pais }} </p>
 
               <a href="./index.php?action=mostrarResidencia&id={{residencia.idResidencia}}" class="btn btn-primary btn-sm">Abrir</a>
-              {% if residencia.tieneparticipantes %}
-              <a href="./index.php?action=editarResidencia&id={{residencia.idResidencia}}" class="btn btn-secondary btn-sm disabled" disabled>Editar</a>
-              <a href="#ventanaConfirmacion{{residencia.idResidencia}}" class="btn btn-danger btn-sm disabled" data-toggle="modal" disabled>Borrar</a>
-              {% else %}
+              
               <a href="./index.php?action=editarResidencia&id={{residencia.idResidencia}}" class="btn btn-secondary btn-sm">Editar</a>
+               {% if residencia.borrada==1 %}
+              
+              <a href="#ventanaConfirmacion{{residencia.idResidencia}}" class="btn btn-danger btn-sm disabled" data-toggle="modal" disabled>Residencia Borrada</a>
+              {% else %}
+              
                <a href="#ventanaConfirmacion{{residencia.idResidencia}}" class="btn btn-danger btn-sm" data-toggle="modal" >Borrar</a>
               {% endif %}
+              
              
          <!--     <a href="./index.php?action=eliminarResidencia&id={{residencia.idResidencia}}" class="btn btn-danger btn-sm">Borrar</a>  
          -->  
@@ -111,14 +114,20 @@
                   <div class="modal-content">
                       <div class="modal-header">    
                          <h5 class="modal-title">
-                           ¿Desea eliminar los datos de la residencia {{residencia.titulo}} permanentemente?
+                                                                       
+                              ¿Desea eliminar los datos de la propiedad {{residencia.titulo}}?                    
                          </h5>
-                         <button type ="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>
-                         
+                         <button type ="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>                        
                       </div>    
-
                       <div class="modal-body">
-                        <p>Si presiona Confirmar Borrado, los datos de la residencia se eliminarán permanentemente. ¿Desea continuar? </p>
+                        <p>
+                          {% if residencia.tieneparticipantes %}
+                            Esta propiedad tiene usuarios participando. 
+                            Si presiona Confirmar Borrado, no se podran hacer reservas sobre la misma. ¿Desea confirmar? 
+                          {% else %}
+                            Si presiona Confirmar Borrado, no se podran hacer reservas sobre la misma. ¿Desea confirmar?
+                          {% endif %}
+                      </p>
                       </div>
 
                       <div class="modal-footer">

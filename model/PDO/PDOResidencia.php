@@ -22,7 +22,7 @@ class PDOResidencia extends PDORepository {
         $final_answer = [];
         foreach ($answer as &$element) {
             $tieneparticipantes=$this->existenParticipantes($element["idResidencia"]);
-            $final_answer[] = new Residencia ($element["idResidencia"],$element["ciudad"], $element["direccion"],$element["idAdministrador"],$element["titulo"],$element["provincia"],$element["partido"],$element["descripcion"],$tieneparticipantes);
+            $final_answer[] = new Residencia ($element["idResidencia"],$element["ciudad"], $element["direccion"],$element["idAdministrador"],$element["titulo"],$element["provincia"],$element["partido"],$element["descripcion"],$element["borrada"],$tieneparticipantes);
         }
 
         return $final_answer;
@@ -38,7 +38,7 @@ class PDOResidencia extends PDORepository {
         $final_answer = [];
         foreach ($answer as &$element) {
              $tieneparticipantes=$this->existenParticipantes($element["idResidencia"]);
-            $final_answer[] = new Residencia ($element["idResidencia"],$element["ciudad"], $element["direccion"],$element["idAdministrador"],$element["titulo"],$element["provincia"],$element["partido"],$element["descripcion"],$tieneparticipantes);
+            $final_answer[] = new Residencia ($element["idResidencia"],$element["ciudad"], $element["direccion"],$element["idAdministrador"],$element["titulo"],$element["provincia"],$element["partido"],$element["descripcion"],$element["borrada"],$tieneparticipantes);
         }
 
         return $final_answer;
@@ -82,7 +82,7 @@ class PDOResidencia extends PDORepository {
     public function borrarResidencia($idResidencia) {
 
       
-        $answer = $this->queryList("DELETE FROM residencia WHERE idResidencia=:idResidencia",array(':idResidencia' => $idResidencia));
+        $answer = $this->queryList("UPDATE residencia SET borrada=:borrada WHERE idResidencia=:idResidencia",array(':idResidencia' => $idResidencia, ':borrada'=> 1));
             }
 
 
@@ -114,7 +114,7 @@ class PDOResidencia extends PDORepository {
          $final_answer = [];
          foreach ($answer as &$element) {
             $tieneparticipantes=$this->existenParticipantes($element["idResidencia"]);
-            $final_answer[] = new Residencia ($element["idResidencia"],$element["ciudad"], $element["direccion"],$element["idAdministrador"],$element["titulo"],$element["provincia"],$element["partido"],$element["descripcion"],$tieneparticipantes);
+            $final_answer[] = new Residencia ($element["idResidencia"],$element["ciudad"], $element["direccion"],$element["idAdministrador"],$element["titulo"],$element["provincia"],$element["partido"],$element["descripcion"],$element["borrada"],$tieneparticipantes);
          }
 
          return $final_answer;
