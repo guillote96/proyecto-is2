@@ -22,8 +22,14 @@ class HotsaleController extends ResidenciaSemanaController {
 
   public function listarPosiblesHotsale(){
      $posiblesHotsale=PDOHotsale::getInstance()->listarTodosHotsaleDeshabilitado();
+     if(sizeof($posiblesHotsale) == 0){
+        $this->vistaExito(array('mensaje' =>"No hay Posibles hotsale para mostrar! ", 'user' =>$_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+        return false;
+
+     }
      $view= new EstadoHotsale();
      $view->show(array('hotsales' => $posiblesHotsale, 'user'=> $_SESSION['usuario']));
+     return true;
 
 
   }

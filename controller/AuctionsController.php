@@ -22,9 +22,16 @@ class AuctionsController extends ResidenciaSemanaController {
 
 
   public function listAuctions() {
-    $auctionsView = new AuctionsView();
+    
     $auctions = PDOSubasta::getInstance()->getDetailedAuctions(1);
+    if(sizeof($auctions) == 0){
+        $this->vistaExito(array('mensaje' =>"No hay subastas para mostrar! ", 'user' =>$_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+        return false;
+
+     }
+    $auctionsView = new AuctionsView();
     $auctionsView->show(array("auctions" => $auctions, "user" => $_SESSION['usuario']));
+    return true;
   }
 
   public function listadoSubastasHabilitadas($idResidencia){
