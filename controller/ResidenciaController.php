@@ -112,19 +112,21 @@ class ResidenciaController extends Controller {
      public function verificarDatosPuja($idSubasta, $puja){
         //falta mandar vista de errores y de exito
 
+        $usuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']);
+
         $creditos=1; // esto existe por que no se hacen consultas de primera movida (despues se saca)
         if($_SESSION['tipo'] == "administrador"){
                $this->vistaExito(array('mensaje' =>"No tiene permisos para hacer esta accion", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
                return false;
 
         }
-        if (PDOSubasta::getInstance()->esMayorPuja($idSubasta, $puja) && $creditos > 0) {
+        if (PDOSubasta::getInstance()->esMayorPuja($idSubasta, $puja) && $usuario->getCreditos() > 0) {
 
           PDOSubasta::getInstance()->insertarParticipanteSubasta($_SESSION['id'], $idSubasta, $puja);
           $this->vistaExito(array('mensaje' =>"¡¡¡La Puja fue registrada!!!", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
             return true;
         }
-        if($creditos == 0){
+        if($usuario->getCreditos() == 0){
 
           $this->vistaExito(array('mensaje' =>"Creditos Insuficientes", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
         
