@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- AMG CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+{% if tipousuario != "administrador" %}
+
+{% include 'barra_user.html' %}
+
+{% else %}
+
+{% include 'barra.html' %}
+
+{% endif %}
+
+
+
+</head>
+<body>
+
+
+
+<div class="row no-gutters">
+
+  <div class="col-md-9">
+    <div class="results-box">
+
+       <center><h1>Directas</h1></center>
+
+       {% if directasParaActivas is not empty %}
+       <br>
+         <center> <p> No hay Resultados <p></center>
+          <br>
+       {% endif %}
+
+     
+      {% for dato in directasParaActivar %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-danger">Inactiva</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <a href="./index.php?action=habilitarDirecta&idResidenciaSemana={{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" > Habilitar Directa</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+     
+      {% for dato in directas.parasubasta %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <a href="./index.php?action=pasarSubasta&idResidenciaSemana={{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" >Pasar a Subasta</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+      {% for dato in directas.directas %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

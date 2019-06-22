@@ -196,6 +196,18 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'detallesCliente' && !empty
 else if(isset($_GET["action"]) && $_GET["action"] == 'buscarCliente'){
     UsuarioController::getInstance()->buscarCliente();
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'habilitarDirecta' && !empty($_GET["idResidenciaSemana"])){
+    DirectaController::getInstance()->activarDirecta($_GET['idResidenciaSemana']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'pasarSubasta' && !empty($_GET["idResidenciaSemana"])){
+    DirectaController::getInstance()->cerrarDirecta($_GET['idResidenciaSemana']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'adjudicarSubasta' && !empty($_GET["idResidenciaSemana"]) && !empty($_GET["idSubasta"])){
+    AuctionsController::getInstance()->adjudicarSubasta($_GET["idSubasta"],$_GET["idResidenciaSemana"]);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'pasarAHotsale' && !empty($_GET["idResidenciaSemana"])){
+    AuctionsController::getInstance()->pasarAhotsale($_GET["idResidenciaSemana"]);
+}
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);
