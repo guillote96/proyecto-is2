@@ -113,12 +113,14 @@ public function userSignup(){
   
 
   public function vistaUserPanel($user){
-    $view = new UserPanel();
+   /* $view = new UserPanel();
+    
     $listaresidencia=PDOResidencia::getInstance()->listarTodas();
     if(empty($user))
       $view->show(array('user' => null,'listaresidencia'=> $listaresidencia));
     else
-      $view->show(array('user' => $user,'listaresidencia'=> $listaresidencia));
+      $view->show(array('user' => $user,'listaresidencia'=> $listaresidencia));*/
+      $this->buscar_semanas();
   }
 
 

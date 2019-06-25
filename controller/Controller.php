@@ -31,8 +31,7 @@
             $viewAdmin->show(array('user' => $_SESSION['usuario'],'listaresidencia'=> $listaresidencia));
             return true;
         }else{
-            $viewUser= new UserPanel();
-            $viewUser->show(array('user' => $_SESSION['usuario'],'listaresidencia'=> $listaresidencia));
+            $this->buscar_semanas();
             return true;
         }
      }
@@ -91,6 +90,21 @@
     }
 
     public function verificarDatos(){}
+
+     public function buscar_semanas(){
+     $subastas=PDOSubasta::getInstance()->listarTodasSubasta();
+     $directas=PDODirecta::getInstance()->listarTodasDirectas();
+     $hotsale= PDOHotsale::getInstance()->listarTodosHotsale();
+     $view= new Semana();
+    if(($subastas != false) || ($directas != false) || ($hotsale != false)){ 
+    $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
+  }
+    else{
+      $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => "No hay Resultados",'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
+    }
+
+
+   }
 
 
 

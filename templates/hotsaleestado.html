@@ -20,7 +20,7 @@
 
   <div class="col-md-9">
     <div class="results-box">
-      <center><h1>Posibles Hotsale</h1></center>
+      <center><h1>Hotsale</h1></center>
 
       {% for hotsale in hotsales %}
       <div class="card mb-5">
@@ -34,7 +34,7 @@
             
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
-              <span class="badge badge-success">Activa</span>
+              <span class="badge badge-danger">Inactiva</span>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
               <p class="card-text"> Precio: A definir...</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
