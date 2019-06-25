@@ -134,6 +134,16 @@ class PDODirecta extends PDORepository {
         return $final_answer;
 
      }
+     public function tieneComprador ($idResidenciaSemana){
+        $answer = $this->queryList("SELECT * FROM directa WHERE idResidenciaSemana=:idResidenciaSemana", array(':idResidenciaSemana'=> $idResidenciaSemana));
+
+        if(isset($answer[0]['idPremiumCompra']) && $answer[0]['idPremiumCompra'] != null){
+            return true;
+        }
+        return false;
+
+
+     }
 
 
 

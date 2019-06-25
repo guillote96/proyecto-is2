@@ -220,11 +220,17 @@ public function activarDirecta($idResidenciaSemana){
    }
 
    public function cerrarDirecta($idResidenciaSemana){
+    if(!PDODirecta::getInstance()->tieneComprador($idResidenciaSemana)){
 
        PDODirecta::getInstance()->borrarSemanaDirecta($idResidenciaSemana);
        PDODirecta::getInstance()->desactivarSemanaDirecta($idResidenciaSemana);
        PDOSubasta::getInstance()->insertarSubasta($idResidenciaSemana,null);
        $this->listarDirectasTodas();
+       return true;
+    }   
+    $this->vistaExito(array('mensaje' => "No puede pasarse a subasta. ¡Ya tiene comprador!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+       
+       return false;
 
 
 

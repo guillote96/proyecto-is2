@@ -187,6 +187,7 @@ public function finalizarSubasta($idSubasta){
 }
 
    public function adjudicarSubasta($idSubasta,$idResidenciaSemana){
+    if(!PDOSubasta::getInstance()->tieneGanador($idSubasta)){
       PDOSubasta::getInstance()->desactivarSemanaSubasta($idResidenciaSemana);
       PDOSubasta::getInstance()->borrarSemanaSubasta($idResidenciaSemana);
       $idUsuario=PDOSubasta::getInstance()->idUsuarioConMayorPujaEnSubasta($idSubasta);
@@ -194,8 +195,15 @@ public function finalizarSubasta($idSubasta){
       if ($usuario->getCreditos() > 0) {
          PDOUsuario::getInstance()->decrementarCreditos($idUsuario);
          PDOSubasta::getInstance()->adjudicarSubasta($idSubasta,$idUsuario);
+         $this->vistaExito(array('mensaje' => "Se adjudico subasta!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+         return true;
       }
-      $this->listarSubastasSinMontos();
+      $this->vistaExito(array('mensaje' => "El usuario ganador no tiene creditos. No se adjudico!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+      return false;
+
+     }
+     $this->vistaExito(array('mensaje' => "Esta subasta ya esta adjudicada!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+     return false;
   }
 
   public function listarSubastasSinMontos(){
@@ -215,10 +223,15 @@ public function finalizarSubasta($idSubasta){
   }
 
   public function cargarMontoSubasta($idResidenciaSemana,$base){
+    if(!PDOSubasta::getInstance()->tieneMonto($idResidenciaSemana)){
 
     PDOSubasta::getInstance()->actualizarBase($idResidenciaSemana,$base);
     $this->procesarInactiva($idResidenciaSemana);
     $this->vistaExito(array('mensaje' => "Se completo subasta..","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+    return true;
+    }
+    $this->vistaExito(array('mensaje' => "¡Ya existe monto para la subasta!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+    return false;
 
 
 
@@ -307,10 +320,15 @@ public function finalizarSubasta($idSubasta){
 }
 
 public function pasarAhotsale($idResidenciaSemana){
+  if(!PDOSubasta::getInstance()->tieneParticipantesV2($idResidenciaSemana)){
   PDOSubasta::getInstance()->desactivarSemanaSubasta($idResidenciaSemana);
   PDOSubasta::getInstance()->borrarSemanaSubasta($idResidenciaSemana);
   PDOHotsale::getInstance()->insertarHotsale($idResidenciaSemana);
-  $this->listarSubastasSinMontos();
+   $this->vistaExito(array('mensaje' => "¡Se paso a posible hotsale!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+  return true;
+  }
+   $this->vistaExito(array('mensaje' => "Esta subasta ya tiene participantes. Pasaje invalido","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+   return false;
 
 }
 

@@ -361,5 +361,40 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
      }
 
+       public function tieneMonto ($idResidenciaSemana){
+       $answer = $this->queryList("SELECT * FROM subasta WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana' => $idResidenciaSemana));
+
+         if(isset($answer[0]['base']) && $answer[0]['base'] != null){
+            return true;
+        }
+        return false;
+      }
+
+  public function tieneParticipantesV2($idResidenciaSemana){
+   $answer = $this->queryList("SELECT * FROM subasta s INNER JOIN participa_subasta ps ON(ps.idSubasta=s.idSubasta) WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana));
+
+        if(sizeof($answer) > 0){
+            //existen participantes
+          return true;
+       }
+
+       return false;
+
+
+     }
+
+     public function tieneGanador($idSubasta){
+      $answer = $this->queryList("SELECT * FROM participa_subasta WHERE idSubasta=:idSubasta AND es_ganador is not null",array(':idSubasta'=> $idSubasta));
+
+      if(sizeof($answer)> 0){
+
+        return true;
+      }
+      
+      return false;
+
+ 
+     }
+
 
 }
