@@ -94,6 +94,7 @@ class DirectaController extends ResidenciaSemanaController {
       //devuelve las que estan lista para activarse
       $directasParaActivar = $this->procesarInactivasV2();
       $directas= $this->procesarActivasV2();
+      $directasFinalizadas= PDODirecta::getInstance()->listarDirectasFinalizadas();
 
       //devuleve las que estan lista para pasar a subasta
 
@@ -101,9 +102,9 @@ class DirectaController extends ResidenciaSemanaController {
 
 
       $view= new EstadoDirecta();
-      if(sizeof($directasParaActivar)>0 || sizeof($directas['parasubasta'])>0 || sizeof($directas['directas'])>0){
+      if(sizeof($directasParaActivar)>0 || sizeof($directas['parasubasta'])>0 || sizeof($directas['directas'])>0 || sizeof($directasFinalizadas)>0 ){
           
-          $view->panelDirectas(array('directasParaActivar' => $directasParaActivar , 'directas'=> $directas , 'idUser' => $_SESSION["id"],'tipousuario' => $_SESSION['tipo'], "user"=> $_SESSION['usuario']));
+          $view->panelDirectas(array('directasParaActivar' => $directasParaActivar , 'directas'=> $directas ,"directasFinalizadas"=> $directasFinalizadas, 'idUser' => $_SESSION["id"],'tipousuario' => $_SESSION['tipo'], "user"=> $_SESSION['usuario']));
           return true;
 
       }else{

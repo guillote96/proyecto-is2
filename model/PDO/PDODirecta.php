@@ -44,6 +44,20 @@ class PDODirecta extends PDORepository {
      }
 
 
+        public function listarDirectasFinalizadas (){
+        //lista las semanas directas para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase Directa y ResidenciaSemana)
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado,u.email,d.idPremiumCompra FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) inner join usuario u on (d.idPremiumCompra=u.idUsuario) WHERE  d.borrada = 1 AND d.idPremiumCompra is not null",array());
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = array("residenciasemana"=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],null),"directa"=> new Directa($element["idResidenciaSemana"],$element["idPremiumCompra"],$element["precio"], $element["activa"], $element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"], "email"=> $element["email"],"idPremium"=>$element["idPremiumCompra"]);
+        }
+
+        return $final_answer;
+
+     }
+
+
      public function activarSemanaDirecta($idResidenciaSemana){
 
         $answer = $this->queryList("UPDATE directa SET activa = 1 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana));

@@ -49,10 +49,11 @@ function validateForm() {
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <span class="badge badge-danger">Inactiva</span>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
-              <p class="card-text"> Precio: a Definir... </p>
+              <p class="card-text">  Base: A definir.. </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="#ventanaConfirmacion{{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" data-toggle="modal" >Completar Semana y Activar</a>
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
 
 
 
@@ -119,10 +120,11 @@ function validateForm() {
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <span class="badge badge-success">Activa</span>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
-              <p class="card-text"> Precio: {{ dato.subasta.base }} </p>
+              <p class="card-text"> Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="./index.php?action=adjudicarSubasta&idResidenciaSemana={{dato.residenciasemana.idResidenciaSemana}}&idSubasta={{dato.subasta.idSubasta}}" class="btn btn-danger btn-sm" > Adjudicar Subasta</a>
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
 
             </div>
 
@@ -147,10 +149,11 @@ function validateForm() {
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <span class="badge badge-success">Activa</span>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
-              <p class="card-text"> Precio: {{ dato.subasta.base }} </p>
+              <p class="card-text">  Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
                <a href="./index.php?action=pasarAHotsale&idResidenciaSemana={{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" > Pasar a Posible Hotsale</a>
+               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
 
             </div>
 
@@ -174,12 +177,43 @@ function validateForm() {
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <span class="badge badge-success">Activa</span>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
-              <p class="card-text"> Precio: {{ dato.subasta.base }} </p>
+              <p class="card-text">  Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
 
             </div>
 
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+    {% for dato in subastasFinalizadas %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-primary">Finalizada</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Base:{{ dato.subasta.base }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <p class="card-text"> Ganador: {{dato.email}} </p>
+              <a  href="./index.php?action=detallesCliente&idUsuario={{dato.idUsuario}}" class="btn btn-primary btn-sm">Perfil Ganador</a>
+
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+            </div>
           </div>
 
         </div>
