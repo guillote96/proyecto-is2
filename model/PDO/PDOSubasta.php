@@ -409,5 +409,12 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
      }
 
+  public function partipantesSubasta($idSubasta){
+    $answer = $this->queryList("SELECT idUsuario FROM participa_subasta WHERE idSubasta = :idSubasta ORDER BY puja DESC",array(':idSubasta'=> $idSubasta));
+
+      return $answer;
+
+   }
+
 
 }

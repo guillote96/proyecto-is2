@@ -190,15 +190,20 @@ public function finalizarSubasta($idSubasta){
     if(!PDOSubasta::getInstance()->tieneGanador($idSubasta)){
       PDOSubasta::getInstance()->desactivarSemanaSubasta($idResidenciaSemana);
       PDOSubasta::getInstance()->borrarSemanaSubasta($idResidenciaSemana);
-      $idUsuario=PDOSubasta::getInstance()->idUsuarioConMayorPujaEnSubasta($idSubasta);
-      $usuario=PDOUsuario::getInstance()->traerUsuario($idUsuario);
-      if ($usuario->getCreditos() > 0) {
-         PDOUsuario::getInstance()->decrementarCreditos($idUsuario);
-         PDOSubasta::getInstance()->adjudicarSubasta($idSubasta,$idUsuario);
-         $this->vistaExito(array('mensaje' => "Se adjudico subasta!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
-         return true;
+      
+      $participantes=PDOSubasta::getInstance()->partipantesSubasta($idSubasta);
+      foreach ($participantes as $key => $usuario) {
+         $usuario=PDOUsuario::getInstance()->traerUsuario($usuario['idUsuario']);
+         if ($usuario->getCreditos() > 0) {
+           PDOUsuario::getInstance()->decrementarCreditos($usuario->getIdUsuario());
+           PDOSubasta::getInstance()->adjudicarSubasta($idSubasta,$usuario->getIdUsuario());
+           $this->vistaExito(array('mensaje' => "Se adjudico subasta!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+           return true;
+         }
       }
-      $this->vistaExito(array('mensaje' => "El usuario ganador no tiene creditos. No se adjudico!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+
+      $this->vistaExito(array('mensaje' => "Ningun usuario tiene creditos. No se adjudico!. Se pasa a posible hotsale!!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+      PDOHotsale::getInstance()->insertarHotsale($idResidenciaSemana);
       return false;
 
      }
