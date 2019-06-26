@@ -86,7 +86,10 @@
               <p class="card-text"> Puja Maxima:{{ dato.subasta.pujamaxima}} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio}} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
-      <button type="button" onclick="location.href='./index.php?action=pujarSubasta&idRS={{dato.residenciasemana.idResidenciaSemana}}'"   class="btn btn-primary btn-sm">Pujar Subasta</button>
+      <button type="button" onclick="location.href='./index.php?action=pujarSubasta&idRS={{dato.residenciasemana.idResidenciaSemana}}'"   class="btn btn-danger btn-sm">Pujar Subasta</button>
+
+      <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}'"   class="btn btn-primary btn-sm">Ver Residencia</button>
+
             </div>
           </div>
 
@@ -118,6 +121,7 @@
                <a href="" class="btn btn-danger btn-sm" >Solicitar Premium</a>
 
               {% endif %}
+              <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}'"   class="btn btn-primary btn-sm">Ver Residencia</button>
 
 
 
@@ -176,6 +180,7 @@
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
               <a href="#ventanaConfirmacion{{dato.residenciasemana.idSemana}}" class="btn btn-danger btn-sm" data-toggle="modal" >Comprar Hotsale</a>
+              <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{hotsale.residenciasemana.idResidencia}}'"   class="btn btn-primary btn-sm">Ver Residencia</button>
 
               <div class="modal fade" id="ventanaConfirmacion{{dato.residenciasemana.idSemana}}">
 

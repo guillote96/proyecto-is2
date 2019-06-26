@@ -246,7 +246,12 @@ class ResidenciaController extends Controller {
      $directas=PDODirecta::getInstance()->listarTodasDirectas();
      $hotsale= PDOHotsale::getInstance()->listarTodosHotsale();
      $view= new Semana();
+    if(($subastas != false) || ($directas != false) || ($hotsale != false)){ 
     $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
+  }
+    else{
+      $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => "No hay Resultados",'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
+    }
 
 
    }

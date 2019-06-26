@@ -10,5 +10,11 @@ class EstadoDirecta extends TwigView {
         
     }
 
+    public function panelDirectas($datos){
+    	echo self::getTwig()->render('panel_directas.html', $datos);
+
+
+    }
+
     
 }

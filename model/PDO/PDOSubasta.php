@@ -225,11 +225,11 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
     public function listarSubasta ($idResidencia){
       //lista las semanas en subasta para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase subasta y ResidenciaSemana)
-       $answer = $this->queryList("SELECT s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia,s.borrada, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) WHERE rs.idResidencia = :idResidencia AND rs.borrada = 0 AND s.borrada = 0",array(':idResidencia' => $idResidencia));
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia,s.borrada, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE rs.idResidencia = :idResidencia AND rs.borrada = 0 AND s.borrada = 0",array(':idResidencia' => $idResidencia));
 
         $final_answer = [];
         foreach ($answer as &$element) {
-          $final_answer[] = array(new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]));
+          $final_answer[] = array('residenciasemana'=>new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),'subasta'=>new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"]);
         }
 
         return $final_answer;
@@ -345,6 +345,55 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
         return $final_answer;
 
+     }
+
+
+         public function traerSubasta ($idResidenciaSemana){
+      //lista las semanas en subasta para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase subasta y ResidenciaSemana)
+       $answer = $this->queryList("SELECT s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia,s.borrada, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) WHERE rs.idResidenciaSemana = :idResidenciaSemana AND rs.borrada = 0 AND s.borrada = 0",array(':idResidenciaSemana' => $idResidenciaSemana));
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array(new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]));
+        }
+
+        return $final_answer;
+
+     }
+
+       public function tieneMonto ($idResidenciaSemana){
+       $answer = $this->queryList("SELECT * FROM subasta WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana' => $idResidenciaSemana));
+
+         if(isset($answer[0]['base']) && $answer[0]['base'] != null){
+            return true;
+        }
+        return false;
+      }
+
+  public function tieneParticipantesV2($idResidenciaSemana){
+   $answer = $this->queryList("SELECT * FROM subasta s INNER JOIN participa_subasta ps ON(ps.idSubasta=s.idSubasta) WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana));
+
+        if(sizeof($answer) > 0){
+            //existen participantes
+          return true;
+       }
+
+       return false;
+
+
+     }
+
+     public function tieneGanador($idSubasta){
+      $answer = $this->queryList("SELECT * FROM participa_subasta WHERE idSubasta=:idSubasta AND es_ganador is not null",array(':idSubasta'=> $idSubasta));
+
+      if(sizeof($answer)> 0){
+
+        return true;
+      }
+      
+      return false;
+
+ 
      }
 
 

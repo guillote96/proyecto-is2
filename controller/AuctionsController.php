@@ -176,7 +176,7 @@ public function finalizarSubasta($idSubasta){
            if(PDOSubasta::getInstance()->tieneParticipantes($dato[1]->getIdSubasta())){
                  // ADJUDICAR
 
-            $this->adjudicarSubasta($dato[1]->getIdSubasta());
+            $this->adjudicarSubasta($dato[1]->getIdSubasta(),null);
             //si no tiene pujantes
            }else{
 
@@ -186,22 +186,33 @@ public function finalizarSubasta($idSubasta){
        }
 }
 
-   public function adjudicarSubasta($idSubasta){
+   public function adjudicarSubasta($idSubasta,$idResidenciaSemana){
+    if(!PDOSubasta::getInstance()->tieneGanador($idSubasta)){
+      PDOSubasta::getInstance()->desactivarSemanaSubasta($idResidenciaSemana);
+      PDOSubasta::getInstance()->borrarSemanaSubasta($idResidenciaSemana);
       $idUsuario=PDOSubasta::getInstance()->idUsuarioConMayorPujaEnSubasta($idSubasta);
       $usuario=PDOUsuario::getInstance()->traerUsuario($idUsuario);
       if ($usuario->getCreditos() > 0) {
          PDOUsuario::getInstance()->decrementarCreditos($idUsuario);
          PDOSubasta::getInstance()->adjudicarSubasta($idSubasta,$idUsuario);
+         $this->vistaExito(array('mensaje' => "Se adjudico subasta!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+         return true;
       }
+      $this->vistaExito(array('mensaje' => "El usuario ganador no tiene creditos. No se adjudico!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+      return false;
 
+     }
+     $this->vistaExito(array('mensaje' => "Esta subasta ya esta adjudicada!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+     return false;
   }
 
   public function listarSubastasSinMontos(){
 
     $lista=PDOSubasta::getInstance()->listarSubastaInactivasSinMonto();
-    if(sizeof($lista)> 0){
+    $subastas=$this->procesarActivasV2();
+    if(sizeof($lista)> 0 || sizeof($subastas['paraadjudicar'])> 0 || sizeof($subastas['parahotsale'])>0 || sizeof($subastas['subastas'])> 0 ){
         $view= new EstadoSubasta();
-        $view->listarSubastasInactivasSinMonto(array('datos'=> $lista, 'user'=> $_SESSION['usuario']));
+        $view->listarSubastasInactivasSinMonto(array('datos'=> $lista,'subastas'=>$subastas, 'user'=> $_SESSION['usuario']));
     }else{
       $this->vistaExito(array('mensaje' => "No hay Subastas para completar","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
 
@@ -212,12 +223,113 @@ public function finalizarSubasta($idSubasta){
   }
 
   public function cargarMontoSubasta($idResidenciaSemana,$base){
+    if(!PDOSubasta::getInstance()->tieneMonto($idResidenciaSemana)){
 
     PDOSubasta::getInstance()->actualizarBase($idResidenciaSemana,$base);
+    $this->procesarInactiva($idResidenciaSemana);
     $this->vistaExito(array('mensaje' => "Se completo subasta..","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+    return true;
+    }
+    $this->vistaExito(array('mensaje' => "¡Ya existe monto para la subasta!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+    return false;
 
 
 
   }
+
+
+   public function procesarInactiva($idResidenciaSemana){
+          $hoy = date_create('2019-12-3');//cambiar por fecha de hoy (la ficticia es para prueba de activacion)
+          $hoy= date_format($hoy, 'Y-m-d');
+        $dato=PDOSubasta::getInstance()->traerSubasta($idResidenciaSemana);
+        //Con la fecha de inicio de la semana, calculo le resto 6 meses para obtener la fecha de activacion exacta de la subasta
+        
+         $fecha_inicio = date_create($dato[0][0]->getFechaInicio());
+         date_sub($fecha_inicio, date_interval_create_from_date_string('6 months'));
+         $fecha_inicio= date_format($fecha_inicio, 'Y-m-d');
+
+         //Con la fecha de inicio  calculada en el paso anterior, le sumo 3 dias (se cuenta el dia "0" como subasta) para obtener la fecha de cierre
+
+         $fecha_fin = date_create($fecha_inicio);
+         date_add($fecha_fin, date_interval_create_from_date_string('3 days'));
+         $fecha_fin= date_format($fecha_fin, 'Y-m-d');
+
+
+          //mientras este en el rango de los primeros 3 dias de la subasta, la misma se activara
+         if( ($hoy >= $fecha_inicio) && ($hoy < $fecha_fin)){
+          //Activar semana subasta
+           PDOSubasta::getInstance()->activarSemanaSubasta($dato[0][0]->getIdResidenciaSemana());
+         }
+
+
+   }
+
+   public function procesarActivasV2(){
+       $hoy = date_create('2019-12-6');//cambiar por fecha de hoy (la ficticia es para prueba de activacion)
+       $hoy= date_format($hoy, 'Y-m-d');
+       $paraHotsale=array();
+       $paraAdjudicar=array();
+       $subastas=array();
+       $residencias= PDOResidencia::getInstance()->listarTodas();
+
+       foreach ($residencias as $key => $residencia){
+
+       $datos= PDOSubasta::getInstance()->listarSubasta ($residencia->getIdResidencia());
+       
+       foreach ($datos as $key => $dato){
+        
+         if ($dato["subasta"]->getActiva()){
+
+     
+       //Con la fecha de inicio de la semana, calculo le resto 6 meses para obtener la fecha de activacion exacta de la subasta
+        
+       $fecha_inicio = date_create($dato["residenciasemana"]->getFechaInicio());
+       date_sub($fecha_inicio, date_interval_create_from_date_string('6 months'));
+       $fecha_inicio= date_format($fecha_inicio, 'Y-m-d');
+
+       //Con la fecha de inicio  calculada en el paso anterior, le sumo 3 dias (se cuenta el dia "0" como subasta) para obtener la fecha de cierre
+
+       $fecha_fin = date_create($fecha_inicio);
+       date_add($fecha_fin, date_interval_create_from_date_string('3 days'));
+       $fecha_fin= date_format($fecha_fin, 'Y-m-d');
+
+       //Verifico si ya corresponde tomar un decision (pasar a hotsale o  adjudicar)
+       if($hoy > $fecha_fin){
+       /* PDOSubasta::getInstance()->desactivarSemanaSubasta($dato[0]->getIdResidenciaSemana());
+        PDOSubasta::getInstance()->borrarSemanaSubasta($dato[0]->getIdResidenciaSemana());*/
+           
+
+           //si tiene pujantes no puede ponerse en hotsale.
+           if(PDOSubasta::getInstance()->tieneParticipantes($dato["subasta"]->getIdSubasta())){
+              $paraAdjudicar[]=$dato;
+                
+            
+           }else{
+
+             $paraHotsale[]=$dato;
+          }
+       }else{
+
+        $subastas[]=$dato;
+       }
+       }
+       }
+     }
+
+     return array('parahotsale' =>$paraHotsale , 'paraadjudicar'=> $paraAdjudicar, 'subastas'=>$subastas);
+}
+
+public function pasarAhotsale($idResidenciaSemana){
+  if(!PDOSubasta::getInstance()->tieneParticipantesV2($idResidenciaSemana)){
+  PDOSubasta::getInstance()->desactivarSemanaSubasta($idResidenciaSemana);
+  PDOSubasta::getInstance()->borrarSemanaSubasta($idResidenciaSemana);
+  PDOHotsale::getInstance()->insertarHotsale($idResidenciaSemana);
+   $this->vistaExito(array('mensaje' => "¡Se paso a posible hotsale!","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+  return true;
+  }
+   $this->vistaExito(array('mensaje' => "Esta subasta ya tiene participantes. Pasaje invalido","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+   return false;
+
+}
 
 }

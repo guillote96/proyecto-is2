@@ -32,11 +32,11 @@ class PDODirecta extends PDORepository {
 
     public function listarDirectas ($idResidencia){
     	//lista las semanas directas para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase Directa y ResidenciaSemana)
-       $answer = $this->queryList("SELECT d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) WHERE rs.idResidencia = :idResidencia AND rs.borrada = 0 AND d.borrada = 0",array(':idResidencia' => $idResidencia));
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE rs.idResidencia = :idResidencia AND rs.borrada = 0 AND d.borrada = 0",array(':idResidencia' => $idResidencia));
 
         $final_answer = [];
         foreach ($answer as &$element) {
-        	$final_answer[] = array(new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],null), new Directa($element["idResidenciaSemana"],$element["idPremiumCompra"],$element["precio"], $element["activa"], $element["borrada"]));
+        	$final_answer[] = array("residenciasemana"=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],null),"directa"=> new Directa($element["idResidenciaSemana"],$element["idPremiumCompra"],$element["precio"], $element["activa"], $element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"]);
         }
 
         return $final_answer;
@@ -132,6 +132,16 @@ class PDODirecta extends PDORepository {
         }
 
         return $final_answer;
+
+     }
+     public function tieneComprador ($idResidenciaSemana){
+        $answer = $this->queryList("SELECT * FROM directa WHERE idResidenciaSemana=:idResidenciaSemana", array(':idResidenciaSemana'=> $idResidenciaSemana));
+
+        if(isset($answer[0]['idPremiumCompra']) && $answer[0]['idPremiumCompra'] != null){
+            return true;
+        }
+        return false;
+
 
      }
 
