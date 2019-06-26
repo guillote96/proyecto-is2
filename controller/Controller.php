@@ -71,6 +71,7 @@
            $view2->show($datos);  
     }
 
+  
 
     public function alta_sesion($usuario,$id, $tipousuario){
         if(!isset($_SESSION)){
