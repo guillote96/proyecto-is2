@@ -44,7 +44,7 @@ require_once('model/PDO/PDOResidencia.php');
 require_once('model/PDO/PDOUsuario.php');
 require_once('model/PDO/PDOSubasta.php');
 require_once('model/PDO/PDOResidenciaSemana.php');
-require_once('model/PDO/PDOHotsale.php');
+require_once('model/PDO/PDOHotsale.php'); 
 require_once('model/PDO/PDOSemana.php');
 require_once('model/PDO/PDODirecta.php');
 require_once('model/PDO/PDOHotsale.php');
@@ -105,7 +105,7 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'verPerfil'){
   UsuarioController::getInstance()->verPerfil();
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'editarPerfil'){
-  UsuarioController::getInstance()->editarPerfil();
+  UsuarioController::getInstance()->editarPerfil(null);
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'cambiarRoldeUsuario'){
   UsuarioController::getInstance()->cambiarRol($_GET['idUsuario']);

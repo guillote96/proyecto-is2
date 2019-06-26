@@ -66,7 +66,8 @@ public function userSignup(){
       
     if(empty($_POST['nombre-input-signup']) || empty($_POST['apellido-input-signup'])|| empty($_POST['email-input-signup'])|| empty($_POST['password-input-signup'])|| empty($_POST['tarjeta-input-signup']) || empty($_POST['fechanacimiento-input-signup'])){
 
-       $this->vistaIniciarSesion(array('mensaje' => "Hay Campos Vacios"));
+        
+       $this->editarPerfil(array('hayError'=> true,'mensaje' => "Hay Campos Vacios"));
 
        return false;
      }
@@ -78,8 +79,8 @@ public function userSignup(){
                             
         //  echo $diff->y .' años ';
         if($diff->y<18){
-          $this->vistaIniciarSesion(array('mensaje' => "Debe ser mayor a 18 años de edad"));
-
+          
+          $this->editarPerfil(array('hayError'=> true,'mensaje' => "Debe ser mayor a 18 años de edad"));
            return false;
 
           }
@@ -87,7 +88,7 @@ public function userSignup(){
         if(!isset($_SESSION['usuario']) || $_SESSION['usuario']!=$_POST['email-input-signup']){
             if(PDOUsuario::getInstance()->existeEmail($_POST['email-input-signup'])){
 
-              $this->vistaIniciarSesion(array('mensaje' => "El email ya se encuentra registrado por otro usuario"));
+              $this->editarPerfil(array('hayError'=> true,'mensaje' => "El email ya se encuentra registrado por otro usuario. Debe ingresar otro email "));
 
               return false;
           }
@@ -129,8 +130,10 @@ public function userSignup(){
        
         $unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
         $esPremium=PDOUsuario::getInstance()->esPremium($_SESSION['id']);
+        $fechaRegistro= $unUsuario->getFechaRegistro();
+        $fechaVencimiento= date("d-m-Y",strtotime($fechaRegistro."+ 1 year"));
         $view = new VerPerfil();
-        $view->show(array('esPremium' => $esPremium,'datos' => $unUsuario));
+        $view->show(array('esPremium' => $esPremium,'fechaVencimiento' => $fechaVencimiento,'datos' => $unUsuario));
   }
 
 
@@ -142,11 +145,11 @@ public function userSignup(){
   }
 
 
-public function editarPerfil(){
+public function editarPerfil($hayVentana){
         
         $unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
         $view = new EditarPerfil();
-        $view->show(array('user' => $_SESSION['id'],'datos' => $unUsuario));
+        $view->show(array('user' => $_SESSION['id'],'datos' => $unUsuario,'hayVentana' => $hayVentana));
        
 
   }

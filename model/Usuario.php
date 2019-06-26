@@ -53,7 +53,10 @@ class Usuario extends PDORepository {
     return $this->password;
   }
 
+  public function getFechaRegistro(){
 
+      return $this->fecha_reg;
+    }
 
 
 

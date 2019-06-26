@@ -1,17 +1,27 @@
 
 
 {% if tipousuario != "administrador" %}
-	<div class="card  bg-success">
+
+	
                         
  		{% if esPremium %}
-			<a href="./index.php?action=quieroCambiarRol"class="btn btn-success p-1 m-1 ">Volver a Estandar </a>
-
+ 		  <div class="card  bg-info">
+ 			<div class= "card-header " align="center">
+         		 <FONT SIZE=5 color="white" ><b>Soy Premium!</b> </font>
+       		 </div>
+			<a href="./index.php?action=quieroCambiarRol"class="btn btn-info p-1 m-1 ">Volver a Estandar </a>
+		  </div>
 		{% endif %}
 
 		{% if not esPremium %}
+		<div class="card  bg-info">
+ 			<div class= "card-header " align="center">
+         		 <FONT color ="white" SIZE=4 ><b>Soy usuario Estandar</b> </font>
+       		 </div>
 			<a href="./index.php?action=quieroCambiarRol"class="btn btn-success p-1 m-1 ">Quiero ser Premium! </a>
+		</div>
 		{% endif %}
-	</div>
+	
 {% endif %}
 
 		

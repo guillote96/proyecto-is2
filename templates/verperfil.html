@@ -36,7 +36,40 @@
   <main class="main" >
     <div class="row">
 
-      <div class= "card  col-md-6 offset-md-3  mt-4 mb-5" >
+      <div class= "card  col-sm-3  mt-4 mb-5" >   
+         <div class="card-body">
+
+              {% include 'quieroCambiarRol.html' %}
+              
+              {% if tipousuario != "administrador" %}
+             
+                {% if esPremium %}
+                  
+                {% endif %}
+
+                {% if not esPremium %}
+                 <div class= "card-header mt-5 " align="center" >
+                   Beneficios de ser Usuario Premium 
+                 </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item" id="" name="" >
+                      Posibilidad de hacer reservas directas</li>
+                    <li class="list-group-item" id="" name="" >
+                      No tendra que abonar un adicional por reserva directa</li>
+                    <li class="list-group-item" id="" name="" >
+                      Cada reserva directa consumira solo un credito</li>  
+                      
+
+                  </ul>
+                {% endif %}
+              
+              {% endif %}
+
+         </div>
+      </div>
+
+      <div class= "card  col-md-6  mt-4 mb-5" >
+        <h1 class="mt-3" align="center">Mi perfil</h2>
         <img class="card-img-top" src="./imagen/usuario.png" alt="Card image cap">
         <div class= "card-header " align="center">
           <FONT SIZE=5 ><b>Datos del usuario</b> </font>
@@ -51,7 +84,7 @@
         <li class="list-group-item" id="password" name="password" >
           <FONT SIZE=4><b>Contraseña: </b></font>{{datos.password}}</li>
         <li class="list-group-item" id="creditos" name="creditos" >
-          <FONT SIZE=4><b>Creditos Disponibles: </b></font>{{ datos.creditos }}</li>
+          <FONT SIZE=4><b>Creditos Disponibles: </b></font>{{ datos.creditos}} <font class=float-right>Vencen: {{ fechaVencimiento }} </font> </li>
         <li class="list-group-item" id="fecha_nac" name="fecha_nac" >
           <FONT SIZE=4><b>Fecha de Nacimiento: </b></font>{{ datos.fecha_nac }}</li>
         <li class="list-group-item" id="tarjeta" name="tarjeta" >
@@ -68,9 +101,9 @@
     </div>
 
       <div class= "card  col-sm-3  mt-4 mb-5" >   
-         <div class="card-body" style="margin-top: 440px">
+         <div class="card-body" >
             
-              {% include 'quieroCambiarRol.html' %}
+              
             
            
          </div>

@@ -9,6 +9,8 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+  <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
   <!-- AMG CSS -->
   <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
 
@@ -69,15 +71,63 @@
 
       
         <div class="card-body text-center">
-          <button type="button" onclick="location.href='./index.php'" class="btn btn-secondary">Cancelar Edicion</button> 
+          <button type="button" onclick="location.href='./index.php?action=verPerfil'" class="btn btn-secondary">Cancelar Edicion</button> 
           <button type="submit" class="btn btn-outline-primary">Editar Cambios</button>         
         </div>
         
          
      </form>
 
-   
+     {% if hayVentana.hayError %}
 
+      <script>
+      $(document).ready(function()
+      {
+         $("#mostrarmodal").modal("show");
+      });
+      </script>
+    
+
+      <div class="modal fade" id="mostrarmodal">
+
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">    
+                         <h5 class="modal-title">
+                                                                       
+                              {{hayVentana.mensaje}}    
+                                           
+                         </h5>
+                         <button type ="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>                        
+                      </div>    
+               <!-- Opcional con body
+                      <div class="modal-body">
+                        <p>
+                          {% if residencia.tieneparticipantes %}
+                            Esta propiedad tiene usuarios participando. 
+                            Si presiona Confirmar Borrado, no se podran hacer reservas sobre la misma. ¿Desea confirmar? 
+                          {% else %}
+                            Si presiona Confirmar Borrado, no se podran hacer reservas sobre la misma. ¿Desea confirmar?
+                          {% endif %}
+                      </p>
+                      </div>
+                -->
+  
+
+                      <div class="modal-footer">
+                        <button type ="button" class="btn btn-default"   data-dismiss="modal">Aceptar</button>  
+  
+<!-- Otro Boton
+                        <a  href="./index.php?action=eliminarResidencia&id={{residencia.idResidencia}}" class="btn btn-danger " role="button" >
+                          Confirmar Borrado
+                        </a>
+-->
+                      </div>         
+
+                  </div>
+                </div> 
+              </div>
+   {% endif %}
 
   </div>
 </main>
