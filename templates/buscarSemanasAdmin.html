@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- AMG CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+
+
+</head>
+<body>
+  {% include 'barra.html' %}
+
+  <div class="row no-gutters">
+
+
+    <!-- LISTADO DE RESIDENCIAS -->
+    <div class="col-md-6">
+
+{% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+    <CENTER>
+      <br>
+     <p>{{ mensaje }}</p>
+    </CENTER>
+  {% endif %}
+  {% endif %}
+
+
+<!-- LISTADOS DIRECTAS -->
+
+{% for dato in datos.directas.inactivas %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-4 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-primary">Directa</span>
+              <span class="badge badge-danger">Inactiva</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <a href="./index.php?action=habilitarDirecta&idResidenciaSemana={{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" > Habilitar Directa</a>
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+      {% for dato in datos.directas.activas.parasubasta %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-primary">Directa</span>
+              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <a href="./index.php?action=pasarSubasta&idResidenciaSemana={{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" >Pasar a Subasta</a>
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+       {% for dato in datos.directas.activas.directas %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-primary">Directa</span>
+              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+        {% for dato in datos.directas.finalizadas %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-primary">Directa</span>
+              <span class="badge badge-primary">Finalizada</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <p class="card-text"> Ganador: {{dato.email}} </p>
+              <a  href="./index.php?action=detallesCliente&idUsuario={{dato.idPremium}}" class="btn btn-primary btn-sm">Perfil Ganador</a>
+
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+<!-- LISTADOS SUBASTAS -->
+
+
+     {% for dato in datos.subastas.inactivas %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-primary">Subasta</span>
+              <span class="badge badge-danger">Inactiva</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text">  Base: A definir.. </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <a href="#ventanaConfirmacion{{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" data-toggle="modal" >Completar Semana y Activar</a>
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+
+
+
+              <div class="modal fade" id="ventanaConfirmacion{{dato.residenciasemana.idResidenciaSemana}}">
+
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">    
+                         <h5 class="modal-title">
+                           Completar Base {{dato.residenciasemana.idSemana}}
+                         </h5>
+                         <button type ="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>
+                         
+                      </div>    
+                       <center>
+                      <div class="modal-body">
+
+
+                         <form name="form" action="./index.php?action=cargarMontoSubasta&idRS={{dato.residenciasemana.idResidenciaSemana}}"
+                          onsubmit="return validateForm()" method="POST" >
+                         <div style=" width: 40%">
+        
+                         
+                         <div class="input-group mb-2">
+
+                         <input type="decimal" id="base" name="base" min="0" class="form-control" placeholder="Ingrese base..">
+                        </div>
+                        
+                        
+                        
+
+                      </div>
+                      </center>
+
+                      <div class="modal-footer">
+                        <button type ="button" class="btn btn-default"   data-dismiss="modal">Cancelar</button>  
+                        <button type="submit" class="btn btn-primary">Terminar</button>
+
+                      </div>         
+
+                  </div>
+                </div> 
+              </div>
+            </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+      {% for dato in datos.subastas.activas.paraadjudicar %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-primary">Subasta</span>
+              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Base:{{ dato.subasta.base }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <a href="./index.php?action=adjudicarSubasta&idResidenciaSemana={{dato.residenciasemana.idResidenciaSemana}}&idSubasta={{dato.subasta.idSubasta}}" class="btn btn-danger btn-sm" > Adjudicar Subasta</a>
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+      {% for dato in datos.subastas.activas.parahotsale %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-primary">Subasta</span>
+              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text">  Base:{{ dato.subasta.base }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+               <a href="./index.php?action=pasarAHotsale&idResidenciaSemana={{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" > Pasar a Posible Hotsale</a>
+               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+     {% for dato in datos.subastas.activas.subastas %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-primary">Subasta</span>
+              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text">  Base:{{ dato.subasta.base }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+    {% for dato in datos.subastas.finalizadas %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <span class="badge badge-primary">Subasta</span>
+              <span class="badge badge-primary">Finalizada</span>
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Base:{{ dato.subasta.base }} </p>
+              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <p class="card-text"> Ganador: {{dato.email}} </p>
+              <a  href="./index.php?action=detallesCliente&idUsuario={{hotsale.idUsuario}}" class="btn btn-primary btn-sm">Perfil Ganador</a>
+
+              <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+<!-- LISTADO HOTSALES -->
+
+
+           {% for hotsale in datos.hotsales.hotsales %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ hotsale.titulo }}</h5>
+              <span class="badge badge-primary">Hotsale</span>
+              <span class="badge badge-danger">Inactiva</span>
+              <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
+              <p class="card-text"> Precio: A definir...</p>
+              <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
+
+              <a href="./index.php?action=habilitarHotsale&idRS={{hotsale.hotsale.idResidenciaSemana}}" class="btn btn-danger btn-sm" >Habilitar Hotsale</a>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+       {% for hotsale in datos.hotsales.hotsalesactivos %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ hotsale.titulo }}</h5>
+              <span class="badge badge-primary">Hotsale</span>
+              <span class="badge badge-success">Activo</span>
+              <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
+              <p class="card-text"> Precio: {{ hotsale.hotsale.precio }}</p>
+              <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+    {% for hotsale in datos.hotsales.hotsalesfinalizados %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ hotsale.titulo }}</h5>
+              <span class="badge badge-primary">Hotsale</span>
+              <span class="badge badge-primary">Finalizado</span>
+              <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
+              <p class="card-text"> Precio: {{ hotsale.hotsale.precio }}</p>
+              <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
+              <p class="card-text"> Ganador: {{ hotsale.email}} </p>
+              <a  href="./index.php?action=detallesCliente&idUsuario={{hotsale.idUsuario}}" class="btn btn-primary btn-sm">Perfil Ganador</a>
+
+              <a href="./index.php?action=mostrarResidencia&id={{hotsale.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+    </div>
+
+    <!-- BUSCADOR DE RESIDENCIA -->
+      <div class="col-md-6">
+        <div class="card pt-sm-5 pl-sm-5 pr-sm-5" style="height: 100%">
+          
+              <center><h2>Buscador Semanas</h2></center>
+    <form action="" method="POST">
+      <div class="input-group mb-3">
+            <div class="input-group-prepend">
+               <span class="input-group-text" id="inputGroup-sizing-default">Desde</span>
+            </div>
+             <input type="date" class="form-control" name='fecha_inicio' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+            <div class="input-group-prepend">
+               <span class="input-group-text" id="inputGroup-sizing-default">Hasta</span>
+            </div>
+             <input type="date" class="form-control" name='fecha_fin' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text"  for="inputGroupSelect01">Residencia</label>
+             </div>
+             <input type="text" class="form-control" name='residencia' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">   
+      </div>
+
+      <center><button type="submit" style="width:23%" type="button" class="btn btn-primary">Buscar</button></center>
+    </form>
+
+
+        </div>
+      </div>
+
+  </div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

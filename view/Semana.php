@@ -17,6 +17,12 @@ class Semana extends TwigView {
         
     }
 
+    public function buscarSemanaAdmin($datos){
+    	 echo self::getTwig()->render('buscarSemanasAdmin.html',$datos);
+
+
+    }
+
 
     
 }

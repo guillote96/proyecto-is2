@@ -208,6 +208,9 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'adjudicarSubasta' && !empt
 else if(isset($_GET["action"]) && $_GET["action"] == 'pasarAHotsale' && !empty($_GET["idResidenciaSemana"])){
     AuctionsController::getInstance()->pasarAhotsale($_GET["idResidenciaSemana"]);
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'buscarSemanaAdmin'){
+    AdministradorController::getInstance()->buscarSemanas();
+}
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);
