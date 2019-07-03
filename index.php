@@ -237,6 +237,9 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'cambiarPassword'){
 else if(isset($_GET["action"]) && $_GET["action"] == 'procesarCambioPassword' && !empty($_GET['email'])){
     SistemaController::getInstance()->procesar_cambioPassword();
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'desactivarCuenta'){
+    UsuarioController::getInstance()->desactivarCuenta();
+}
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);

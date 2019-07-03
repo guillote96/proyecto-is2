@@ -247,6 +247,14 @@ public function editarPerfil($hayVentana){
       $this-> listarClientes();
     }
 
+    public function desactivarCuenta(){
+      PDOUsuario::getInstance()->desactivarCuenta($_SESSION['id']);
+      session_destroy();
+      $this->vistaHome(null);
+
+
+    }
+
     
 
  

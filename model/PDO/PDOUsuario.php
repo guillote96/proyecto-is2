@@ -240,4 +240,9 @@ class PDOUsuario extends PDORepository {
         return false;
     }
 
+     public function desactivarCuenta($idUsuario){
+      $answer = $this->queryList("UPDATE usuario SET borrada=:borrada WHERE idUsuario=:idUsuario",array(':idUsuario'=> $idUsuario,':borrada'=>1));
+
+     }
+
 }
