@@ -10,5 +10,11 @@ class AdminPanel extends TwigView {
         
     }
 
+
+    public function sistemaPanel(){
+
+    	echo self::getTwig()->render('panel_sistema.html');
+    }
+
     
 }

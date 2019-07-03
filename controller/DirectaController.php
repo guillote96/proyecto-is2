@@ -71,6 +71,88 @@ class DirectaController extends ResidenciaSemanaController {
          }
     }
 
+
+
+      public function procesarInactivas2021($dato){
+    //mientras este en el rango de los primeros 6 meses correspondiente a una semana directa, la misma se activara..
+          $hoy = date_create('2020-05-24');//cambiar por fecha de hoy
+          $hoy= date_format($hoy, 'Y-m-d');
+
+   
+        //Con la fecha de inicio de la semana, calculo le resto 12 meses para obtener la fecha de activacion
+        
+         $fecha_inicio = date_create($dato["residenciasemana"]->getFechaInicio());
+         date_sub($fecha_inicio, date_interval_create_from_date_string('1 year'));
+         $fecha_inicio= date_format($fecha_inicio, 'Y-m-d');
+         //Con la fecha de inicio de la semana, calculo le resto 6 meses para obtener la fecha de cerrado
+         $fecha_fin = date_create($dato["residenciasemana"]->getFechaInicio());
+         date_sub($fecha_fin, date_interval_create_from_date_string('6 months'));
+         $fecha_fin= date_format($fecha_fin, 'Y-m-d');
+
+         if( ($hoy >= $fecha_inicio) && ($hoy < $fecha_fin)){
+          //Activar semana directa
+           PDODirecta::getInstance()->activarSemanaDirecta($dato["residenciasemana"]->getIdResidenciaSemana());
+
+         }
+
+
+
+   }
+
+
+
+      public function procesarActivas2021($dato){
+      if($dato["directa"]->getIdPremiumCompra() != null){
+        //No hacer pasaje a subasta por que alguien la compro.Setear el booleano de borrado y desactivar semana.
+       PDODirecta::getInstance()->borrarSemanaDirecta($dato["residenciasemana"]->getIdResidenciaSemana());
+       PDODirecta::getInstance()->desactivarSemanaDirecta($dato["residenciasemana"]->getIdResidenciaSemana());
+
+       }else{
+        // Nadie la compro. Hay que verificar si esta lista para pasarse a subasta
+          $hoy = date_create('2020-11-27');//cambiar por fecha de hoy
+            $hoy= date_format($hoy, 'Y-m-d');
+
+            $fecha_fin = date_create($dato["residenciasemana"]->getFechaInicio());
+            date_sub($fecha_fin, date_interval_create_from_date_string('6 months'));
+            $fecha_fin= date_format($fecha_fin, 'Y-m-d');
+
+            if(($hoy > $fecha_fin) && ($dato["directa"]->getBorrada()== 0)){
+          //Se  hace borrado de semana directa y Se inserta tupla en Subasta.
+              PDODirecta::getInstance()->borrarSemanaDirecta($dato["residenciasemana"]->getIdResidenciaSemana());
+              PDODirecta::getInstance()->desactivarSemanaDirecta($dato["residenciasemana"]->getIdResidenciaSemana());
+              $this->crearSemanaDirecta($dato);
+             PDOSubasta::getInstance()->insertarSubasta($dato["residenciasemana"]->getIdResidenciaSemana(),null);
+            }
+         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  /*   public function procesarActivas($dato){
     	if($dato["directa"]->getIdPremiumCompra() != null){
     		//No hacer pasaje a subasta por que alguien la compro.Setear el booleano de borrado y desactivar semana.
@@ -140,6 +222,23 @@ class DirectaController extends ResidenciaSemanaController {
 
 
      }
+
+
+       public function sincronizador2021($idResidencia){
+      $datos= PDODirecta::getInstance()->listarDirectas ($idResidencia);
+      
+      
+       foreach ($datos as $key => $dato){
+        
+         if (!$dato["directa"]->getActiva())
+           $this->procesarInactivas2021($dato);
+         else
+           $this->procesarActivas2021($dato);
+        }
+
+
+     }
+
 
 //************************HASTA ACA no se USA mas*************************
 

@@ -57,5 +57,34 @@ class HotsaleController extends ResidenciaSemanaController {
 
   }
 
+    public function sincronizador($idResidencia){
+      $datos= PDOHotsale::getInstance()->listarHotsale($idResidencia);
+      
+       foreach ($datos as $key => $dato){
+           $this->procesarActivas($dato);
+        }
+
+
+     }
+
+
+    public function procesarActivas($dato){
+      if($dato["hotsale"]->getIdUsuario() != null){
+        //No hacer pasaje a subasta por que alguien la compro.Setear el booleano de borrado y desactivar semana.
+        PDOHotsale::getInstance()->borrarSemanaHotsale($dato["residenciasemana"]->getIdResidenciaSemana());
+       
+
+       }else{
+        // Nadie la compro. Hay que verificar si esta lista para pasarse a subasta
+            $hoy = date_create('2020-05-24');//cambiar por fecha de hoy
+            $hoy= date_format($hoy, 'Y-m-d');
+
+            if($hoy == $dato["residenciasemana"]->getFechaInicio()){
+          //Se  hace borrado de semana directa y Se inserta tupla en Subasta.
+              PDOHotsale::getInstance()->borrarSemanaHotsale($dato["residenciasemana"]->getIdResidenciaSemana());
+            }
+         }
+    }
+
 
 }

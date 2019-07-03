@@ -15,6 +15,7 @@ require_once('controller/AuctionsController.php');
 require_once('controller/DirectaController.php');
 require_once('controller/HotsaleController.php');
 require_once('controller/ResidenciaSemanaController.php');
+require_once('controller/SistemaController.php');
 
 /* VIEW */
 require_once('view/TwigView.php');
@@ -210,6 +211,21 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'pasarAHotsale' && !empty($
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'buscarSemanaAdmin'){
     AdministradorController::getInstance()->buscarSemanas();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizarDirectas'){
+   ResidenciaController::getInstance()->sincronizadorDirectas();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizarSubastas'){
+   ResidenciaController::getInstance()->sincronizadorSubastas();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizarDirectas2021'){
+   ResidenciaController::getInstance()->sincronizadorDirectas2021();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'panelSistema'){
+  SistemaController::getInstance()->vistaPanel();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizarHotsales'){
+   ResidenciaController::getInstance()->sincronizadorHotsales();
 }
 else{
 	if(!isset($_SESSION['usuario']))

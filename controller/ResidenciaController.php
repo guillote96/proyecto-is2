@@ -225,6 +225,77 @@ class ResidenciaController extends Controller {
    }
 
 
+  public function sincronizadorDirectas(){
+      // Sincroniza todas las semanas para cada residencia.
+     $residencias= PDOResidencia::getInstance()->listarTodas();
+     foreach ($residencias as $key => $residencia){
+       DirectaController::getInstance()->sincronizador($residencia->getIdResidencia());
+
+      }
+
+      SistemaController::getInstance()->vistaPanel();
+
+   }
+
+
+     public function sincronizadorSubastas(){
+      // Sincroniza todas las semanas para cada residencia.
+     $residencias= PDOResidencia::getInstance()->listarTodas();
+      foreach ($residencias as $key => $residencia){
+       AuctionsController::getInstance()->sincronizador($residencia->getIdResidencia());
+
+      }
+      SistemaController::getInstance()->vistaPanel();
+
+
+   }
+
+
+     public function sincronizadorHotsales(){
+      // Sincroniza todas las semanas para cada residencia.
+     $residencias= PDOResidencia::getInstance()->listarTodas();
+      foreach ($residencias as $key => $residencia){
+       HotsaleController::getInstance()->sincronizador($residencia->getIdResidencia());
+
+      }
+      SistemaController::getInstance()->vistaPanel();
+
+
+   }
+
+
+     public function sincronizadorDirectas2021(){
+      // Sincroniza todas las semanas para cada residencia.
+     $residencias= PDOResidencia::getInstance()->listarTodas();
+     foreach ($residencias as $key => $residencia){
+       DirectaController::getInstance()->sincronizador2021($residencia->getIdResidencia());
+
+      }
+
+      SistemaController::getInstance()->vistaPanel();
+
+   }
+
+        public function sincronizadorSubastas2021(){
+      // Sincroniza todas las semanas para cada residencia.
+     $residencias= PDOResidencia::getInstance()->listarTodas();
+     foreach ($residencias as $key => $residencia){
+       AuctionsController::getInstance()->sincronizador2021($residencia->getIdResidencia());
+
+      }
+
+      SistemaController::getInstance()->vistaPanel();
+
+   }
+
+
+
+
+
+
+
+
+
    public function buscarResidencia(){
 
      $residencias=PDOResidencia::getInstance()->buscarResidencia();

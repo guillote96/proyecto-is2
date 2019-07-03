@@ -106,7 +106,6 @@ public function finalizarSubasta($idSubasta){
 
     
     foreach ($datos as $key => $dato){
-      var_dump($dato);
              if (!$dato["subasta"]->getActiva())
            $this->procesarInactivas($dato);
          else
