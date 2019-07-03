@@ -66,8 +66,8 @@ class PDOResidenciaSemana extends PDORepository {
     }
 
    public function insertarSemanaResidencia($idResidencia,$idSemana){
-     $answer = $this->queryList("INSERT INTO residencia_semana (idResidencia,idSemana)
-     VALUES (:idResidencia,:idSemana);",array(':idResidencia' => $idResidencia,':idSemana'=>$idSemana));
+     $answer = $this->queryList("INSERT INTO residencia_semana (idResidencia,idSemana,borrada)
+     VALUES (:idResidencia,:idSemana,:borrada);",array(':idResidencia' => $idResidencia,':idSemana'=>$idSemana,':borrada'=>0));
 
 
 

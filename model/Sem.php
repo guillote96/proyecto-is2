@@ -17,6 +17,12 @@ class Sem extends PDORepository {
     }
 
 
+    public function getIdSemana(){
+
+        return $this->idSemana;
+    }
+
+
 
 
 

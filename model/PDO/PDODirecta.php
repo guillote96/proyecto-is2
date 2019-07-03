@@ -19,7 +19,7 @@ class PDODirecta extends PDORepository {
 
   public function listarTodasDirectas(){
 
-       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.precio,d.idResidenciaSemana,rs.idResidencia, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE rs.borrada = 0 AND d.borrada = 0 AND d.activa = 1", array());
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.precio,d.idResidenciaSemana,rs.idResidencia, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE d.borrada = 0 AND d.activa = 1", array());
 
         $final_answer = [];
         foreach ($answer as &$element) {
@@ -32,7 +32,7 @@ class PDODirecta extends PDORepository {
 
     public function listarDirectas ($idResidencia){
     	//lista las semanas directas para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase Directa y ResidenciaSemana)
-       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE rs.idResidencia = :idResidencia AND rs.borrada = 0 AND d.borrada = 0",array(':idResidencia' => $idResidencia));
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE rs.idResidencia = :idResidencia AND rs.borrada = 0",array(':idResidencia' => $idResidencia));
 
         $final_answer = [];
         foreach ($answer as &$element) {
@@ -80,7 +80,7 @@ class PDODirecta extends PDORepository {
      }
 
       public function adjudicarDirecta($idResidenciaSemana,$idUser){
-        $answer = $this->queryList("UPDATE directa SET idPremiumCompra=:idUser ,activa= 0,borrada = 1 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana, ':idUser'=>$idUser));
+        $answer = $this->queryList("UPDATE directa SET idPremiumCompra=:idUser ,activa= 1,borrada = 1 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana, ':idUser'=>$idUser));
 
 
 
