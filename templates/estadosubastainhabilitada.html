@@ -48,7 +48,8 @@ function validateForm() {
             
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
-              <span class="badge badge-danger">Inactiva</span>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-danger"> Falta completar monto</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text">  Base: A definir.. </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
@@ -176,7 +177,8 @@ function validateForm() {
             
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
-              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success"> En proceso</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text">  Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
@@ -205,7 +207,8 @@ function validateForm() {
             
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
-              <span class="badge badge-primary">Finalizada</span>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary"> Finalizada</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text"> Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>

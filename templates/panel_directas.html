@@ -108,9 +108,9 @@
             
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
-              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Directa</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
-              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
@@ -133,12 +133,12 @@
             
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
-              <span class="badge badge-primary">Finalizada</span>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Directa</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary"> Comprada</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
-              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
-              <p class="card-text"> Ganador: {{dato.email}} </p>
+              <p class="card-text"> Comprador: {{dato.email}} </p>
               <a  href="./index.php?action=detallesCliente&idUsuario={{dato.idPremium}}" class="btn btn-primary btn-sm">Perfil Ganador</a>
 
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>

@@ -81,7 +81,8 @@
             
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
-              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Subasta</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion}} </p>
               <p class="card-text"> Puja Maxima:{{ dato.subasta.pujamaxima}} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio}} </p>
@@ -110,9 +111,9 @@
             
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
-              <span class="badge badge-success">Activa</span>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Directa</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
-              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               {% if tipo == "premium" %}
@@ -174,7 +175,8 @@
             
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
-              <span class="badge badge-success">Activa</span>
+               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Hotsale</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
               <p class="card-text"> Precio: {{hotsale.hotsale.precio}}</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>

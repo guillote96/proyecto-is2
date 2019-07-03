@@ -213,4 +213,31 @@ class PDOUsuario extends PDORepository {
 
     }
 
+     public function actualizarToken($email,$token){
+        
+        $answer = $this->queryList("UPDATE usuario SET token=:token WHERE email=:email ", array(':email'=>$email,':token'=>$token));
+
+        
+    }
+
+    public function actualizarPassword($email,$password){
+        
+        $answer = $this->queryList("UPDATE usuario SET token=:token, password=:password WHERE email=:email ", array(':email'=>$email,':password'=>$password,':token'=>null));
+
+        
+    }
+
+
+    public function traerUsuarioYtoken($email){
+        $answer = $this->queryList("SELECT email,token FROM usuario WHERE email=:email",array(':email'=> $email));
+
+        if(sizeof($answer)>0){
+
+          return array('email'=> $answer[0]['email'],'token'=> $answer[0]['token']);
+
+        }
+
+        return false;
+    }
+
 }

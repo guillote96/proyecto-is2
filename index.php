@@ -37,6 +37,7 @@ require_once('view/IngresoMonto.php');
 require_once('view/VerPerfil.php');
 require_once('view/EditarPerfil.php');
 require_once('view/Cliente.php');
+require_once('view/CambiarPassword.php');
 
 
 /* PDO */
@@ -226,6 +227,15 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'panelSistema'){
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizarHotsales'){
    ResidenciaController::getInstance()->sincronizadorHotsales();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'solicitarPassword'){
+    SistemaController::getInstance()->solicitarPassword($_POST['email']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'cambiarPassword'){
+    SistemaController::getInstance()->cambiarPassword();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'procesarCambioPassword' && !empty($_GET['email'])){
+    SistemaController::getInstance()->procesar_cambioPassword();
 }
 else{
 	if(!isset($_SESSION['usuario']))
