@@ -14,6 +14,7 @@
 
 
 </head>
+<title>Buscar Semana</title>
 <body>
 
 <!-- NAV BAR -->
@@ -56,6 +57,10 @@
 
 <div class="col-md-7">
 
+
+    <div class="results-box">
+<center><h1>Semanas</h1></center>
+
             {% if mensaje is defined %}
 
   {% if not mensaje is empty %}
@@ -65,9 +70,6 @@
     </CENTER>
   {% endif %}
   {% endif %}
-
-
-    <div class="results-box">
 
       {% for dato in datos.subastas %}
       <div class="card mb-5">
