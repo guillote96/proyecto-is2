@@ -12,16 +12,19 @@
   <!-- AMG CSS -->
   <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
 
-
+<title>Buscar Semana</title>
 </head>
 <body>
   {% include 'barra.html' %}
+
+        <center><h1>Semanas</h1></center>
 
   <div class="row no-gutters">
 
 
     <!-- LISTADO DE RESIDENCIAS -->
     <div class="col-md-6">
+
 
 {% if mensaje is defined %}
 
@@ -432,12 +435,15 @@
 
 
     </div>
-
     <!-- BUSCADOR DE RESIDENCIA -->
-      <div class="col-md-6">
+
+      <div class="col-md-6" >
+
+
+
         <div class="card pt-sm-5 pl-sm-5 pr-sm-5" style="height: 100%">
           
-              <center><h2>Buscador Semanas</h2></center>
+              <center><h3>Buscador Semanas</h3></center>
     <form action="" method="POST">
       <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -468,7 +474,6 @@
       </div>
 
   </div>
-
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
