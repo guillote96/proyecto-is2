@@ -346,6 +346,19 @@ class ResidenciaController extends Controller {
 
 
    }
+public function crearSemanaDirectaParaTodasLasResidencias(){
+
+  $residencias= PDOResidencia::getInstance()->listarTodas();
+  foreach ($residencias as $key => $residencia){
+      DirectaController::getInstance()->crearSemanaDirectaPanelSistema($residencia->getIdResidencia());
+
+   }
+
+     SistemaController::getInstance()->vistaPanel();
+
+    
+}
+
 
 }
     

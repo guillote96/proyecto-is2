@@ -85,10 +85,10 @@
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Subasta</span><p>
               <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
-              <p class="card-text"> Descripcion:{{ dato.descripcion}} </p>
-              <p class="card-text"> Puja Maxima:{{ dato.subasta.pujamaxima}} </p>
-              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio}} </p>
-              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
+              <p class="card-text"> Descripcion: {{ dato.descripcion}} </p>
+              <p class="card-text"> Mayor Puja: {{ dato.pujamaxima}} </p>
+              <p class="card-text"> Fecha Inicio: {{ dato.residenciasemana.fecha_inicio}} </p>
+              <p class="card-text"> Fecha Fin: {{ dato.residenciasemana.fecha_fin}} </p>
       <button type="button" onclick="location.href='./index.php?action=pujarSubasta&idRS={{dato.residenciasemana.idResidenciaSemana}}'"   class="btn btn-danger btn-sm">Pujar Subasta</button>
 
       <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}'"   class="btn btn-primary btn-sm">Ver Residencia</button>

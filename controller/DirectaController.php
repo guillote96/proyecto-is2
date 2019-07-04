@@ -454,7 +454,25 @@ public function activarDirecta($idResidenciaSemana){
       return array('parasubasta' =>$directasParaSubasta,'directas'=>$directasActivas);
 
   }*/
-    
+
+
+
+ public function crearSemanaDirectaPanelSistema($idResidencia){
+
+$semana=PDOSemana::getInstance()-> buscarSemana('2020-05-24','2020-05-30');
+      //Insertar residencia semana
+if(!PDOResidenciaSemana::getInstance()->existeSemanaParaResidencia($idResidencia,$semana[0]->getIdSemana())){
+
+ PDOResidenciaSemana::getInstance()->insertarSemanaResidencia($idResidencia,$semana[0]->getIdSemana());
+      //Obtener IDResidenciaSemana para poder armar la semana directa.
+$idResidenciaSemana=PDOResidenciaSemana::getInstance()->traerIdResidenciaSemana($idResidencia,$semana[0]->getIdSemana());
+PDODirecta::getInstance()->insertarDirecta($idResidenciaSemana,0);
+
+}
+}
+
+
+
 
  }
 

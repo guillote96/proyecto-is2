@@ -176,7 +176,7 @@ public function finalizarSubasta($idSubasta){
            if(PDOSubasta::getInstance()->tieneParticipantes($dato["subasta"]->getIdSubasta())){
                  // ADJUDICAR
 
-            $this->adjudicarSubasta($dato["subasta"]->getIdSubasta(),null);
+            $this->adjudicarSubasta($dato["subasta"]->getIdSubasta(),$dato["residenciasemana"]->getIdResidenciaSemana());
             //si no tiene pujantes
            }else{
 

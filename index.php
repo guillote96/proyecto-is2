@@ -240,6 +240,9 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'procesarCambioPassword' &&
 else if(isset($_GET["action"]) && $_GET["action"] == 'desactivarCuenta'){
     UsuarioController::getInstance()->desactivarCuenta();
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'crearDirectasParaTodasLasResidencias'){
+     ResidenciaController::getInstance()->crearSemanaDirectaParaTodasLasResidencias();
+}
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);
