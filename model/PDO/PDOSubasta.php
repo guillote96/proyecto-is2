@@ -149,7 +149,7 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
       }
 
       public function actualizarBase($idResidenciaSemana,$base){
-        $answer = $this->queryList("UPDATE subasta SET base=:base WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana' => $idResidenciaSemana, ':base' => $base ));
+        $answer = $this->queryList("UPDATE subasta SET base=:base, activa=1 WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana' => $idResidenciaSemana, ':base' => $base ));
         return true;
       }
 

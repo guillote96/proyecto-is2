@@ -72,7 +72,7 @@ class PDOUsuario extends PDORepository {
 
     public function traerUsuarioPorEmail($email){
 
-        $answer = $this->queryList("SELECT * FROM usuario WHERE email=:email",array(':email'=> $email));
+        $answer = $this->queryList("SELECT * FROM usuario WHERE email=:email AND borrada=0",array(':email'=> $email));
         
 
      return (sizeof($answer)> 0) ? new Usuario($answer[0]['idUsuario'],$answer[0]['email'],$answer[0]['password'], $answer[0]['nombre'],$answer[0]['apellido'],$answer[0]['tarjeta'],(int)$answer[0]['creditos'],$answer[0]['fecha_nac'],$answer[0]['fecha_reg'],$answer[0]['borrada']) : false;

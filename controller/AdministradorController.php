@@ -49,28 +49,28 @@ class AdministradorController extends Controller {
   public function buscarSemanas(){
 
 
-      $directasParaActivar = DirectaController::getInstance()->procesarInactivasV2();
-      $directasActivas= DirectaController::getInstance()->procesarActivasV2();
+      $directasActivas= PDODirecta::getInstance()->listarTodasDirectas();
       $directasFinalizadas= PDODirecta::getInstance()->listarDirectasFinalizadas();
-      $directas=array('inactivas' => $directasParaActivar, 'activas'=>$directasActivas, 'finalizadas' => $directasFinalizadas);
+      $directas=array('activas'=>$directasActivas,'finalizadas' => $directasFinalizadas);
 
 
-      $lista=PDOSubasta::getInstance()->listarSubastaInactivasSinMonto();
-      $subastas=AuctionsController::getInstance()->procesarActivasV2();
+      $subastasSinMonto=PDOSubasta::getInstance()->listarSubastaInactivasSinMonto();
+      $subastasActivas=PDOSubasta::getInstance()->listarTodasSubasta ();
       $subastasFinalizadas=PDOSubasta::getInstance()->listarSubastasFinalizadas();
 
-      $subastas=array('inactivas' => $lista, 'activas'=>$subastas, 'finalizadas' => $subastasFinalizadas);
+      $subastas=array('activas'=>$subastasActivas,'inactivas' => $subastasSinMonto,'finalizadas'=>$subastasFinalizadas);
 
-      $posiblesHotsale=PDOHotsale::getInstance()->listarTodosHotsaleDeshabilitado();
+     $posiblesHotsale=PDOHotsale::getInstance()->listarTodosHotsaleDeshabilitado();
      $hotsaleActivos= PDOHotsale::getInstance()->listarTodosHotsale();
      $hotsaleFinalizados= PDOHotsale::getInstance()->listarHotsaleFinalizados();
 
       $hotsale=array('hotsales' => $posiblesHotsale,'hotsalesactivos'=>$hotsaleActivos,'hotsalesfinalizados' => $hotsaleFinalizados);
 
+
      $view= new Semana();
     if(($subastas != false) || ($directas != false) || ($hotsale != false)){ 
     $view->buscarSemanaAdmin(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
-  }
+      }
     else{
       $view->buscarSemanaAdmin(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => "No hay Resultados",'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
     }
