@@ -18,7 +18,7 @@ class PDOUsuario extends PDORepository {
         
     }
     public function listarUsuarios(){
-      $answer = $this->queryList("SELECT * FROM usuario WHERE borrada=:borrada",array(':borrada'=>0));
+      $answer = $this->queryList("SELECT * FROM usuario",array());
 
        $final_answer = [];
         foreach ($answer as &$element) {
@@ -142,8 +142,8 @@ class PDOUsuario extends PDORepository {
    
   
     public function buscarUsuario(){
-      $sql="SELECT * FROM usuario WHERE borrada=:borrada AND ";
-      $parametros=array(':borrada'=>0);
+      $sql="SELECT * FROM usuario WHERE ";
+      $parametros=array();
          if(!isset($_POST['nombre']) && !isset($_POST['fecha_registro']) && !isset($_POST['tipo_usuario'])){
              return false;
 
