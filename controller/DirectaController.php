@@ -218,7 +218,14 @@ class DirectaController extends ResidenciaSemanaController {
   	  	   $this->procesarInactivas($dato);
   	     else
            $this->procesarActivas($dato);
-        }
+         }
+
+         if($dato["directa"]->getBorrada()==1 && PDODirecta::getInstance()->existeDirecta($idResidencia,$dato["residenciasemana"]->getFechaInicio(),$dato["residenciasemana"]->getFechaFin())){
+          $this->crearSemanaDirecta($dato);
+
+
+
+         }
 
 
      }

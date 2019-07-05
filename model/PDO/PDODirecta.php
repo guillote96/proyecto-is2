@@ -258,10 +258,24 @@ class PDODirecta extends PDORepository {
 
      }
 
+ public function existeDirecta($idResidencia,$fechainicio,$fechafin){
+
+     $answer = $this->queryList("SELECT * FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE sem.fecha_inicio=:fechainicio AND sem.fecha_fin=:fechafin", array(':fechainicio'=>$fechainicio, ':fechafin'=>$fechafin));
+
+     if(sizeof($answer)>0){
+        return true;
+     }
+     return false;
+
+
+     }
+
+
+
+
+ }
 
 
 
 
 
-
-}
