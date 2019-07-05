@@ -243,6 +243,11 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'desactivarCuenta'){
 else if(isset($_GET["action"]) && $_GET["action"] == 'crearDirectasParaTodasLasResidencias'){
      ResidenciaController::getInstance()->crearSemanaDirectaParaTodasLasResidencias();
 }
+
+else if(isset($_GET["action"]) && $_GET["action"] == 'buscarSemanasAdmin'){
+     AdministradorController::getInstance()->buscar_semanas();
+}
+
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);

@@ -109,9 +109,8 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
                <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Directa</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success" title="Todavía hay tiempo para reservarse"> En Proceso</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
-              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
@@ -135,9 +134,8 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
                <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Directa</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-primary">Reservada</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary" title="La semana fue reservada por un Usuario">>Reservada</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
-              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <p class="card-text"> Ganador: {{dato.email}} </p>
@@ -168,7 +166,7 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-danger"> Falta completar monto</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-danger" title="El administrador debe ingresar Base">> Falta completar monto</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text">  Base: A definir.. </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
@@ -299,7 +297,7 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-success"> En proceso</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success" title="Todavía hay tiempo para pujar">> En proceso</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text">  Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
@@ -329,7 +327,7 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
                <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-primary"> Finalizada</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary" title="La semana fue adjudicada a participante"> Adjudicada</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text"> Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
@@ -360,7 +358,7 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
              <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Hotsale</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-danger"> Falta completar monto</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-danger" title="El administrador debe completar monto"> Falta completar monto</span><p>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
               <p class="card-text"> Precio: A definir...</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
@@ -390,7 +388,7 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
              <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Hotsale</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success" title="Todavía hay tiempo para ser comprada"> En Proceso</span><p>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
               <p class="card-text"> Precio: {{ hotsale.hotsale.precio }}</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
@@ -416,7 +414,7 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Hotsale</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-primary">Comprada</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary" title="Ya fue comprada por un usuario">Comprada</span><p>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
               <p class="card-text"> Precio: {{ hotsale.hotsale.precio }}</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
@@ -444,7 +442,7 @@
         <div class="card pt-sm-5 pl-sm-5 pr-sm-5" style="height: 100%">
           
               <center><h3>Buscador Semanas</h3></center>
-    <form action="" method="POST">
+    <form action="./index.php?action=buscarSemanasAdmin" method="POST">
       <div class="input-group mb-3">
             <div class="input-group-prepend">
                <span class="input-group-text" id="inputGroup-sizing-default">Desde</span>
