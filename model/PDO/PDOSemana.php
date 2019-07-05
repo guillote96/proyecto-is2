@@ -49,5 +49,18 @@ class PDOSemana extends PDORepository {
 
    }
 
+   public function traerSemanaDeResidencia($idResidenciaSemana){
+    //Para determinada residencia, busca aquellas semanas que no esten en la tabla de residencia_semana y devuelve las semanas no incluidas.
+     $answer = $this->queryList("SELECT * FROM semana sem inner join residencia_semana rs ON (rs.idSemana=sem.idSemana) WHERE rs.idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana' => $idResidenciaSemana));
+
+     $final_answer = [];
+      foreach ($answer as &$element) {
+         $final_answer[] = new Sem ($element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["idAdministrador"],$element["fecha_creacion"]);
+      }
+
+    return $final_answer;
+
+   }
+
 
 }

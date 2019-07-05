@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+{% include 'encabezado.html' %}
+    <head>
+        <title>Editar Semana</title>
+
+</head>
+{% include 'barra.html' %}
+
+
+<body>
+<br>
+
+{% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+    <CENTER>
+    <div class="alert alert-danger" role="alert">
+    {{ mensaje }}
+    </div>
+    </CENTER>
+  {% endif %}
+
+{% endif %}
+
+
+
+
+<div class="container" >
+
+<main class="main">
+ <center> 
+   <div class="card" >
+    <br>
+   <h1>Editar Semana</h1>
+   <br>
+   <div style="width:20%;">
+  <form action="./index.php?action=editar_semana&idRS={{idResidenciaSemana}}&idResidencia={{idResidencia}}" method="POST">
+    <p class="card-text"> Fecha de Inicio:  <input id="date" name="fecha_inicio" class="form-control" type="date" value="{{fecha_inicio}}"><p>
+    
+    
+     
+     <p>NOTA: Se modifica el campo inicio y el sistema calcula la fecha fin. </p>
+
+     <br>
+
+    <button type="submit" class="btn btn-primary">Editar Semana</button>
+    <br>
+    <br>
+    <button type="button" onclick="location.href='./index.php?action=listarSubastaInactivas'" class="btn btn-primary"> Cancelar</button>
+   </form>
+
+
+    
+  </div>
+
+    <br>
+</center>            
+   </div>
+
+ </main>
+</div>
+
+</body>
+</html>

@@ -23,6 +23,12 @@ class Semana extends TwigView {
 
     }
 
+    public function editarSemana($datos){
+        echo self::getTwig()->render('editarSemana.html',$datos);
+
+
+    }
+
 
     
 }

@@ -23,7 +23,7 @@ class PDOResidenciaSemana extends PDORepository {
 
      public function traerResidenciaSemanas($idResidencia) {
      	//Para una residencia trae TODAS las semanas que intervengan en la misma
-         $answer = $this->queryList("SELECT rs.idResidenciaSemana, rs.idResidencia,rs.idSemana ,s.fecha_inicio , s.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) WHERE idResidencia =:idResidencia",array(':idResidencia' => $idResidencia));
+         $answer = $this->queryList("SELECT rs.borrada,rs.idResidenciaSemana, rs.idResidencia,rs.idSemana ,s.fecha_inicio , s.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) WHERE idResidencia =:idResidencia",array(':idResidencia' => $idResidencia));
          $final_answer = [];
 
          foreach ($answer as &$element) {
@@ -94,6 +94,12 @@ class PDOResidenciaSemana extends PDORepository {
 
    }
 
+ public function actualizarResidenciaSemana($idResidenciaSemana,$idSemana){
+
+    $answer = $this->queryList("UPDATE residencia_semana SET idSemana=:idSemana WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana' => $idResidenciaSemana,':idSemana'=> $idSemana));
+
+
+
+ } 
 
 }
-

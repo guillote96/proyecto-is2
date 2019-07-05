@@ -247,6 +247,15 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'crearDirectasParaTodasLasR
 else if(isset($_GET["action"]) && $_GET["action"] == 'buscarSemanasAdmin'){
      AdministradorController::getInstance()->buscar_semanas();
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'editarSemana' && !empty($_GET["idRS"])&& !empty($_GET["idResidencia"])){
+     ResidenciaSemanaController::getInstance()->editarSemana($_GET["idRS"],$_GET["idResidencia"]);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'editar_semana' && !empty($_GET["idRS"])&& !empty($_GET["idResidencia"])){
+     ResidenciaSemanaController::getInstance()->editar_semana($_GET["idRS"],$_GET["idResidencia"]);
+}
+
+
+
 
 else{
 	if(!isset($_SESSION['usuario']))
