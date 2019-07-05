@@ -200,7 +200,7 @@ class PDOHotsale extends PDORepository {
 
     public function buscarHotsalesAdminDeshabilitados(){
 
-         $sql="SELECT r.titulo, r.descripcion,h.idResidenciaSemana, h.activa,h.idUsuario,h.borrada as hotsaleborrada,h.precio,s.fecha_inicio,s.fecha_fin,rs.idResidencia,rs.idSemana,rs.estado,rs.borrada FROM residencia r INNER JOIN residencia_semana rs ON (r.idResidencia=rs.idResidencia) INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN hotsale h ON (h.idResidenciaSemana=rs.idResidenciaSemana) WHERE h.activa=0 AND h.borrada=0 AND h.precio is null ";
+         $sql="SELECT r.titulo, r.descripcion,h.idResidenciaSemana, h.activa,h.idUsuario,h.borrada as hotsaleborrada,h.precio,s.fecha_inicio,s.fecha_fin,rs.idResidencia,rs.idSemana,rs.estado,rs.borrada FROM residencia r INNER JOIN residencia_semana rs ON (r.idResidencia=rs.idResidencia) INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN hotsale h ON (h.idResidenciaSemana=rs.idResidenciaSemana) WHERE h.activa=0 AND h.borrada=0 AND h.precio is null AND";
 
 
          $parametros=array();
@@ -245,7 +245,7 @@ class PDOHotsale extends PDORepository {
 
        public function buscarHotsalesAdminFinalizados(){
 
-         $sql="SELECT r.titulo, r.descripcion,h.idResidenciaSemana, h.activa,h.idUsuario,h.borrada as hotsaleborrada,h.precio,s.fecha_inicio,s.fecha_fin,rs.idResidencia,rs.idSemana,rs.estado,rs.borrada FROM residencia r INNER JOIN residencia_semana rs ON (r.idResidencia=rs.idResidencia) INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN hotsale h ON (h.idResidenciaSemana=rs.idResidenciaSemana) WHERE h.activa=0 AND h.borrada=1 AND h.idUsuario is not null ";
+         $sql="SELECT u.email,r.titulo, r.descripcion,h.idResidenciaSemana, h.activa,h.idUsuario,h.borrada as hotsaleborrada,h.precio,s.fecha_inicio,s.fecha_fin,rs.idResidencia,rs.idSemana,rs.estado,rs.borrada FROM residencia r INNER JOIN residencia_semana rs ON (r.idResidencia=rs.idResidencia) INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN hotsale h ON (h.idResidenciaSemana=rs.idResidenciaSemana) INNER JOIN usuario u ON (u.idUsuario=h.idUsuario) WHERE h.activa=0 AND h.borrada=1 AND h.idUsuario is not null AND";
 
 
          $parametros=array();
@@ -279,13 +279,15 @@ class PDOHotsale extends PDORepository {
          $sql = substr($sql, 0, -4);
 
          $answer = $this->queryList($sql,$parametros);
-         $final_answer = [];
-         foreach ($answer as &$element) {
-         $final_answer[] = array('residenciasemana'=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element["borrada"]),'hotsale'=> new Hotsale ($element["idResidenciaSemana"], $element["idUsuario"],$element["precio"],$element["fecha_inicio"],$element["fecha_fin"],$element["activa"],$element["hotsaleborrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"]);
+        $final_answer = [];
+        foreach ($answer as &$element) {
+         $final_answer[] = array('residenciasemana'=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element["borrada"]),'hotsale'=> new Hotsale ($element["idResidenciaSemana"], $element["idUsuario"],$element["precio"],$element["fecha_inicio"],$element["fecha_fin"],$element["activa"],$element["hotsaleborrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"],"email"=> $element["email"],"idUsuario"=> $element["idUsuario"]);
 
-         }
+        }
 
-         return $final_answer;
+
+
+       return $final_answer;
    }
 
 
