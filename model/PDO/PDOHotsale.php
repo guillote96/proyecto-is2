@@ -290,6 +290,17 @@ class PDOHotsale extends PDORepository {
        return $final_answer;
    }
 
+        public function tieneComprador ($idResidenciaSemana){
+        $answer = $this->queryList("SELECT * FROM hotsale WHERE idResidenciaSemana=:idResidenciaSemana", array(':idResidenciaSemana'=> $idResidenciaSemana));
+
+        if(isset($answer[0]['idUsuario']) && $answer[0]['idUsuario'] != null){
+            return true;
+        }
+        return false;
+
+
+     }
+
 
 
 }

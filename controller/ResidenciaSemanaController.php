@@ -28,9 +28,15 @@ class ResidenciaSemanaController extends Controller {
 
 
      public function editarSemana($idResidenciaSemana,$idResidencia){
+      if(!PDODirecta::getInstance()->tieneComprador ($idResidenciaSemana) && !PDOSubasta::getInstance()->tieneParticipantesV2($idResidenciaSemana) && !PDOHotsale::getInstance()->tieneComprador ($idResidenciaSemana)){
         $semana=PDOSemana::getInstance()->traerSemanaDeResidencia($idResidenciaSemana);
         $view = new Semana();
         $view->editarSemana(array("idResidenciaSemana"=>$idResidenciaSemana,"idResidencia"=>$idResidencia,"fecha_inicio"=>$semana[0]->getFechaInicio()));
+
+      }else{
+
+        $this->vistaExito(array('mensaje' =>"¡Tiene compradores o particiapantes! Edicion Denegada", 'user' =>$_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+      }
 
      }
 
