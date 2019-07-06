@@ -15,6 +15,7 @@ require_once('controller/AuctionsController.php');
 require_once('controller/DirectaController.php');
 require_once('controller/HotsaleController.php');
 require_once('controller/ResidenciaSemanaController.php');
+require_once('controller/TarifasController.php');
 
 /* VIEW */
 require_once('view/TwigView.php');
@@ -36,7 +37,7 @@ require_once('view/IngresoMonto.php');
 require_once('view/VerPerfil.php');
 require_once('view/EditarPerfil.php');
 require_once('view/Cliente.php');
-
+require_once('view/Tarifas.php');
 
 /* PDO */
 require_once('model/PDO/PDORepository.php');
@@ -48,6 +49,7 @@ require_once('model/PDO/PDOHotsale.php');
 require_once('model/PDO/PDOSemana.php');
 require_once('model/PDO/PDODirecta.php');
 require_once('model/PDO/PDOHotsale.php');
+require_once('model/PDO/PDOTarifa.php');
 
 /* MODEL */
 
@@ -208,6 +210,16 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'adjudicarSubasta' && !empt
 else if(isset($_GET["action"]) && $_GET["action"] == 'pasarAHotsale' && !empty($_GET["idResidenciaSemana"])){
     AuctionsController::getInstance()->pasarAhotsale($_GET["idResidenciaSemana"]);
 }
+
+else if(isset($_GET["action"]) && $_GET["action"] == 'tarifas'){
+    TarifasController::getInstance()->traerTarifas(null);
+
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'procesarEdicionTarifas'){
+  TarifasController::getInstance()->procesarEdicionTarifas();
+}
+
+
 else{
 	if(!isset($_SESSION['usuario']))
 		Controller::getInstance()->vistaHome(null);

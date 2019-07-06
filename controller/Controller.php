@@ -21,8 +21,9 @@
     public function vistaHome($datos){
         $view = new Home();
         $listaresidencia=PDOResidencia::getInstance()->listarTodas();
+        $tarifaestandar= PDOTarifa::getInstance()->traerTarifaEstandar();
         if(empty($datos['user'])){
-           $view->show(array('user' => null,'listaresidencia'=> $listaresidencia));
+           $view->show(array('user' => null,'tarifaestandar' => $tarifaestandar,'listaresidencia'=> $listaresidencia));
            return true;
         }
          $viewAdmin= new AdminPanel();
@@ -96,12 +97,14 @@
      $subastas=PDOSubasta::getInstance()->listarTodasSubasta();
      $directas=PDODirecta::getInstance()->listarTodasDirectas();
      $hotsale= PDOHotsale::getInstance()->listarTodosHotsale();
+     
+    
      $view= new Semana();
     if(($subastas != false) || ($directas != false) || ($hotsale != false)){ 
-    $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
+    $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo'],'email' => $_SESSION['usuario'],'idUser' => $_SESSION["id"]));
   }
     else{
-      $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => "No hay Resultados",'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
+      $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => "No hay Resultados",'tipo'=> $_SESSION['tipo'],'email' => $_SESSION['usuario'],'idUser' => $_SESSION["id"]));
     }
 
 

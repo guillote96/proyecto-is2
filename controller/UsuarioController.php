@@ -132,8 +132,9 @@ public function userSignup(){
         $esPremium=PDOUsuario::getInstance()->esPremium($_SESSION['id']);
         $fechaRegistro= $unUsuario->getFechaRegistro();
         $fechaVencimiento= date("d-m-Y",strtotime($fechaRegistro."+ 1 year"));
+        $tarifapremium= PDOTarifa::getInstance()->traerTarifaPremium();
         $view = new VerPerfil();
-        $view->show(array('esPremium' => $esPremium,'fechaVencimiento' => $fechaVencimiento,'datos' => $unUsuario));
+        $view->show(array('esPremium' => $esPremium,'email' => $_SESSION['usuario'], 'tarifapremium' => $tarifapremium,'fechaVencimiento' => $fechaVencimiento,'datos' => $unUsuario));
   }
 
 
@@ -149,7 +150,7 @@ public function editarPerfil($hayVentana){
         
         $unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
         $view = new EditarPerfil();
-        $view->show(array('user' => $_SESSION['id'],'datos' => $unUsuario,'hayVentana' => $hayVentana));
+        $view->show(array('user' => $_SESSION['id'],'email' => $_SESSION['usuario'],'datos' => $unUsuario,'hayVentana' => $hayVentana));
        
 
   }

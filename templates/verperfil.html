@@ -48,10 +48,11 @@
                 {% endif %}
 
                 {% if not esPremium %}
+                
                  <div class= "card-header mt-5 " align="center" >
                    Beneficios de ser Usuario Premium 
                  </div>
-                  <ul class="list-group list-group-flush">
+                 <ul class="list-group list-group-flush">
                     <li class="list-group-item" id="" name="" >
                       Posibilidad de hacer reservas directas</li>
                     <li class="list-group-item" id="" name="" >
@@ -60,7 +61,7 @@
                       Cada reserva directa consumira solo un credito</li>  
                       
 
-                  </ul>
+                 </ul>
                 {% endif %}
               
               {% endif %}
@@ -70,9 +71,9 @@
 
       <div class= "card  col-md-6  mt-4 mb-5" >
         <h1 class="mt-3" align="center">Mi perfil</h2>
-        <img class="card-img-top" src="./imagen/usuario.png" alt="Card image cap">
+        <img class="card-img-top" src="./imagen/usuario.png" alt="Card image cap" >
         <div class= "card-header " align="center">
-          <FONT SIZE=5 ><b>Datos del usuario</b> </font>
+          <FONT SIZE=6 ><b>Datos del usuario <a href="./index.php?action=editarPerfil" class="btn mb-2 "><img class= ""  src="./imagen/icon-editar.svg" title="Editar Perfil" width="30" height="30"></a></b> </font>
         </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item" id="nombre" name="nombre" >
@@ -94,7 +95,7 @@
       {% if tipousuario != "administrador" %}
 
       <div class="card-body">
-        <a href="./index.php?action=editarPerfil" class="btn btn-primary">Editar Datos</a>
+        
       </div>
 
       {% endif %}
