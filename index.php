@@ -19,6 +19,7 @@ require_once('controller/TarifasController.php');
 require_once('controller/SistemaController.php');
 
 
+
 /* VIEW */
 require_once('view/TwigView.php');
 require_once('view/Home.php');
@@ -41,7 +42,6 @@ require_once('view/EditarPerfil.php');
 require_once('view/Cliente.php');
 require_once('view/Tarifas.php');
 require_once('view/CambiarPassword.php');
-
 
 
 /* PDO */
@@ -217,6 +217,7 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'pasarAHotsale' && !empty($
 }
 
 
+
 else if(isset($_GET["action"]) && $_GET["action"] == 'tarifas'){
     TarifasController::getInstance()->traerTarifas(null);
 
@@ -224,6 +225,7 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'tarifas'){
 else if(isset($_GET["action"]) && $_GET["action"] == 'procesarEdicionTarifas'){
   TarifasController::getInstance()->procesarEdicionTarifas();
 }
+
 
 else if(isset($_GET["action"]) && $_GET["action"] == 'buscarSemanaAdmin'){
     AdministradorController::getInstance()->buscarSemanas();
