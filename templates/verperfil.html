@@ -94,11 +94,11 @@
       </ul>
       {% if tipousuario != "administrador" %}
 
-      <div class="card-body">
+      <div align="center" class="card-body">
 
-        <a href="./index.php?action=editarPerfil" class="btn btn-primary">Editar Datos</a>
+      
 
-     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Desactivar Cuenta </button>
+     <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Desactivar Cuenta </button>
     </div>
 
       <!-- Desactivar Cuenta -->
@@ -124,15 +124,18 @@
     </div>
   </div>
 </form>
-</div>
+
 
       {% endif %}
+
+
     </div>
 
       <div class= "card  col-sm-3  mt-4 mb-5" >   
          <div class="card-body" >
             
-              
+              <button type="button" onclick="location.href='./index.php?action=verPerfil'" class="btn btn-warning">Historial de compras</button> 
+         </div>
             
            
          </div>
