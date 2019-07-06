@@ -14,6 +14,7 @@
 
 
 </head>
+<title>Buscar Semana</title>
 <body>
 
 <!-- NAV BAR -->
@@ -56,6 +57,10 @@
 
 <div class="col-md-7">
 
+
+    <div class="results-box">
+<center><h1>Semanas</h1></center>
+
             {% if mensaje is defined %}
 
   {% if not mensaje is empty %}
@@ -65,9 +70,6 @@
     </CENTER>
   {% endif %}
   {% endif %}
-
-
-    <div class="results-box">
 
       {% for dato in datos.subastas %}
       <div class="card mb-5">
@@ -79,20 +81,27 @@
               <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
             </div>
             
-            <div class="col mt-3">
-              <h5 class="card-title" align="center">{{ dato.titulo }}</h5>
-              <span class="badge badge-success">Activa</span>
-              <p class="card-text"> Descripcion:{{ dato.descripcion}} </p>
-              <p class="card-text"> Puja Maxima:{{ dato.subasta.pujamaxima}} </p>
-              <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio}} </p>
-              <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
-              <div align="center">
-      <button type="button" onclick="location.href='./index.php?action=pujarSubasta&idRS={{dato.residenciasemana.idResidenciaSemana}}'"   class="btn btn-danger btn-sm m-1">Pujar Subasta</button>
 
-      <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}'"   class="btn btn-primary btn-sm m-1">Ver Residencia</button>
+            <div class="col-md-9 mt-3 ml-5">
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Subasta</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
+              <p class="card-text"> Descripcion: {{ dato.descripcion}} </p>
+              <p class="card-text"> Mayor Puja: {{ dato.pujamaxima}} </p>
+              <p class="card-text"> Fecha Inicio: {{ dato.residenciasemana.fecha_inicio}} </p>
+              <p class="card-text"> Fecha Fin: {{ dato.residenciasemana.fecha_fin}} </p>
+      <center>
+      <div class="m-1" >
+      <button type="button" onclick="location.href='./index.php?action=pujarSubasta&idRS={{dato.residenciasemana.idResidenciaSemana}}'"   class="btn btn-danger btn-sm">Pujar Subasta</button>
+     </div>
+     <div>
+      <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}'"   class="btn btn-primary btn-sm">Ver Residencia</button>
+      </div>
+      </center>
+     
               </div>
             </div>
-          </div>
+          
 
         </div>
       </div>
@@ -109,11 +118,16 @@
               <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
             </div>
             
-            <div class="col mt-3 ">
-              <h5 class="card-title" align="center">{{ dato.titulo }}</h5>
-              <span class="badge badge-success">Activa</span>
+
+ <!--            <div class="col mt-3 ">   -->
+            
+
+           <div class="col-md-9 mt-3 ml-5">   
+              <h5 class="card-title">{{ dato.titulo }}</h5>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Reserva Directa</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
+
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
-              <p class="card-text"> Precio:{{ dato.directa.precio }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <div align="center">
@@ -174,9 +188,10 @@
               <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
             </div>
             
-            <div class="col-md-6 mt-3">
+            <div class="col-md-6 mt-3 ml-5">
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
-              <span class="badge badge-success">Activa</span>
+               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Hotsale</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
               <p class="card-text"> Precio: {{hotsale.hotsale.precio}}</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>

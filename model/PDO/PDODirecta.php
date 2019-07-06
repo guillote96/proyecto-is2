@@ -19,7 +19,7 @@ class PDODirecta extends PDORepository {
 
   public function listarTodasDirectas(){
 
-       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.precio,d.idResidenciaSemana,rs.idResidencia, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE rs.borrada = 0 AND d.borrada = 0 AND d.activa = 1", array());
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.precio,d.idResidenciaSemana,rs.idResidencia, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE d.borrada = 0 AND d.activa = 1", array());
 
         $final_answer = [];
         foreach ($answer as &$element) {
@@ -32,11 +32,25 @@ class PDODirecta extends PDORepository {
 
     public function listarDirectas ($idResidencia){
     	//lista las semanas directas para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase Directa y ResidenciaSemana)
-       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE rs.idResidencia = :idResidencia AND rs.borrada = 0 AND d.borrada = 0",array(':idResidencia' => $idResidencia));
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE rs.idResidencia = :idResidencia AND rs.borrada = 0",array(':idResidencia' => $idResidencia));
 
         $final_answer = [];
         foreach ($answer as &$element) {
         	$final_answer[] = array("residenciasemana"=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],null),"directa"=> new Directa($element["idResidenciaSemana"],$element["idPremiumCompra"],$element["precio"], $element["activa"], $element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"]);
+        }
+
+        return $final_answer;
+
+     }
+
+
+        public function listarDirectasFinalizadas (){
+        //lista las semanas directas para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase Directa y ResidenciaSemana)
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado,u.email,d.idPremiumCompra FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) inner join usuario u on (d.idPremiumCompra=u.idUsuario) WHERE  d.borrada = 1 AND d.idPremiumCompra is not null",array());
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = array("residenciasemana"=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],null),"directa"=> new Directa($element["idResidenciaSemana"],$element["idPremiumCompra"],$element["precio"], $element["activa"], $element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"], "email"=> $element["email"],"idPremium"=>$element["idPremiumCompra"]);
         }
 
         return $final_answer;
@@ -66,7 +80,7 @@ class PDODirecta extends PDORepository {
      }
 
       public function adjudicarDirecta($idResidenciaSemana,$idUser){
-        $answer = $this->queryList("UPDATE directa SET idPremiumCompra=:idUser ,activa= 0,borrada = 1 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana, ':idUser'=>$idUser));
+        $answer = $this->queryList("UPDATE directa SET idPremiumCompra=:idUser ,activa= 1,borrada = 1 WHERE idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana'=> $idResidenciaSemana, ':idUser'=>$idUser));
 
 
 
@@ -145,6 +159,123 @@ class PDODirecta extends PDORepository {
 
      }
 
+    public function buscarDirectasAdminActivas(){
+
+         $sql="SELECT r.titulo, r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE d.activa=1 AND d.borrada = 0 AND";
 
 
-}
+         $parametros=array();
+         if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin'])){
+             return false;
+
+         }
+
+          if(empty($_POST['fecha_inicio']) || empty($_POST['fecha_fin'])){
+              return false;
+
+         }
+
+        $fechainicio; $fechafin;
+         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio']) && isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
+
+          $fechainicio=date_format(new DateTime($_POST['fecha_inicio']),"Y-m-d");
+          $fechafin=date_format(new DateTime($_POST['fecha_fin']),"Y-m-d");
+
+         $sql.=" (fecha_inicio BETWEEN '$fechainicio' AND '$fechafin') AND (fecha_fin BETWEEN '$fechainicio' AND '$fechafin') AND";
+        
+
+
+         }
+
+          $residencia;
+         if(isset($_POST['residencia']) && !empty($_POST['residencia'])){
+            $residencia=$_POST['residencia'];
+            $sql.=" r.titulo LIKE '$residencia%' AND";
+         }
+
+         $sql = substr($sql, 0, -4);
+         $answer = $this->queryList($sql,$parametros);
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = array("residenciasemana"=>new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],null),"directa"=> new Directa($element["idResidenciaSemana"],$element["idPremiumCompra"],$element["precio"], $element["activa"], $element["borrada"]),"titulo"=> $element["titulo"],"descripcion"=> $element["descripcion"]);
+        }
+
+        return $final_answer;
+
+     }
+
+         public function buscarDirectasAdminFinalizadas(){
+
+         $sql="SELECT r.titulo,r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado,u.email,d.idPremiumCompra FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) inner join usuario u on (d.idPremiumCompra=u.idUsuario) WHERE d.borrada = 1 AND d.idPremiumCompra is not null AND";
+
+
+         $parametros=array();
+         if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin']) && !isset($_POST['residencia'])){
+             return false;
+
+         }
+
+        if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin'])){
+             return false;
+
+         }
+
+          if(empty($_POST['fecha_inicio']) || empty($_POST['fecha_fin'])){
+              return false;
+
+         }
+
+        $fechainicio; $fechafin;
+         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio']) && isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
+
+          $fechainicio=date_format(new DateTime($_POST['fecha_inicio']),"Y-m-d");
+          $fechafin=date_format(new DateTime($_POST['fecha_fin']),"Y-m-d");
+
+         $sql.=" (fecha_inicio BETWEEN '$fechainicio' AND '$fechafin') AND (fecha_fin BETWEEN '$fechainicio' AND '$fechafin') AND";
+        
+
+
+         }
+
+          $residencia;
+         if(isset($_POST['residencia']) && !empty($_POST['residencia'])){
+            $residencia=$_POST['residencia'];
+            $sql.=" r.titulo LIKE '$residencia%' AND";
+         }
+
+
+
+         $sql = substr($sql, 0, -4);
+         $answer = $this->queryList($sql,$parametros);
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+            $final_answer[] = array("residenciasemana"=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],null),"directa"=> new Directa($element["idResidenciaSemana"],$element["idPremiumCompra"],$element["precio"], $element["activa"], $element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"], "email"=> $element["email"],"idPremium"=>$element["idPremiumCompra"]);
+        }
+
+        return $final_answer;
+
+     }
+
+ public function existeDirecta($idResidencia,$fechainicio,$fechafin){
+
+     $answer = $this->queryList("SELECT * FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE sem.fecha_inicio=:fechainicio AND sem.fecha_fin=:fechafin", array(':fechainicio'=>$fechainicio, ':fechafin'=>$fechafin));
+
+     if(sizeof($answer)>0){
+        return true;
+     }
+     return false;
+
+
+     }
+
+
+
+
+ }
+
+
+
+
+

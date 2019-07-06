@@ -17,6 +17,23 @@ class Sem extends PDORepository {
     }
 
 
+    public function getIdSemana(){
+
+        return $this->idSemana;
+    }
+
+     public function getFechaInicio(){
+
+        return $this->fecha_inicio;
+    }
+
+    public function getFechaFin(){
+
+        return $this->fecha_fin;
+    }
+
+
+
 
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Listado Clientes</title>
 
 
   <!-- Required meta tags -->
@@ -61,6 +61,7 @@
       <th scope="col">Ver Perfil</th>
       <th scope="col">Cambiar Tipo</th>
       <th scope="col" class="text-center"> Solicitud</th>
+      <th scope="col" class="text-center"> Activo</th>
 
     </tr>
   </thead>
@@ -85,6 +86,7 @@
       </td>
 
       <td><div class="text-center">{{cliente.envioSolicitud ? "SI" : "NO" }}</div></td>
+      <td><div class="text-center">{{not cliente.usuario.borrada ? "SI" : "NO" }}</div></td>
     </th>
     </tr>
     {% endfor %}

@@ -18,7 +18,7 @@ class PDOUsuario extends PDORepository {
         
     }
     public function listarUsuarios(){
-      $answer = $this->queryList("SELECT * FROM usuario WHERE borrada=:borrada",array(':borrada'=>0));
+      $answer = $this->queryList("SELECT * FROM usuario",array());
 
        $final_answer = [];
         foreach ($answer as &$element) {
@@ -72,7 +72,7 @@ class PDOUsuario extends PDORepository {
 
     public function traerUsuarioPorEmail($email){
 
-        $answer = $this->queryList("SELECT * FROM usuario WHERE email=:email",array(':email'=> $email));
+        $answer = $this->queryList("SELECT * FROM usuario WHERE email=:email AND borrada=0",array(':email'=> $email));
         
 
      return (sizeof($answer)> 0) ? new Usuario($answer[0]['idUsuario'],$answer[0]['email'],$answer[0]['password'], $answer[0]['nombre'],$answer[0]['apellido'],$answer[0]['tarjeta'],(int)$answer[0]['creditos'],$answer[0]['fecha_nac'],$answer[0]['fecha_reg'],$answer[0]['borrada']) : false;
@@ -142,8 +142,8 @@ class PDOUsuario extends PDORepository {
    
   
     public function buscarUsuario(){
-      $sql="SELECT * FROM usuario WHERE borrada=:borrada AND ";
-      $parametros=array(':borrada'=>0);
+      $sql="SELECT * FROM usuario WHERE ";
+      $parametros=array();
          if(!isset($_POST['nombre']) && !isset($_POST['fecha_registro']) && !isset($_POST['tipo_usuario'])){
              return false;
 
@@ -212,5 +212,37 @@ class PDOUsuario extends PDORepository {
 
 
     }
+
+     public function actualizarToken($email,$token){
+        
+        $answer = $this->queryList("UPDATE usuario SET token=:token WHERE email=:email ", array(':email'=>$email,':token'=>$token));
+
+        
+    }
+
+    public function actualizarPassword($email,$password){
+        
+        $answer = $this->queryList("UPDATE usuario SET token=:token, password=:password WHERE email=:email ", array(':email'=>$email,':password'=>$password,':token'=>null));
+
+        
+    }
+
+
+    public function traerUsuarioYtoken($email){
+        $answer = $this->queryList("SELECT email,token FROM usuario WHERE email=:email",array(':email'=> $email));
+
+        if(sizeof($answer)>0){
+
+          return array('email'=> $answer[0]['email'],'token'=> $answer[0]['token']);
+
+        }
+
+        return false;
+    }
+
+     public function desactivarCuenta($idUsuario){
+      $answer = $this->queryList("UPDATE usuario SET borrada=:borrada WHERE idUsuario=:idUsuario",array(':idUsuario'=> $idUsuario,':borrada'=>1));
+
+     }
 
 }

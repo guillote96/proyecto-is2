@@ -40,6 +40,10 @@ class Hotsale extends PDORepository {
         return $this->borrada;
     }
 
+    public function getFechaInicio(){
+        return $this->fecha_inicio;
+    }
+
 }
 
 

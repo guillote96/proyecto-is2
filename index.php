@@ -16,6 +16,8 @@ require_once('controller/DirectaController.php');
 require_once('controller/HotsaleController.php');
 require_once('controller/ResidenciaSemanaController.php');
 require_once('controller/TarifasController.php');
+require_once('controller/SistemaController.php');
+
 
 /* VIEW */
 require_once('view/TwigView.php');
@@ -38,6 +40,9 @@ require_once('view/VerPerfil.php');
 require_once('view/EditarPerfil.php');
 require_once('view/Cliente.php');
 require_once('view/Tarifas.php');
+require_once('view/CambiarPassword.php');
+
+
 
 /* PDO */
 require_once('model/PDO/PDORepository.php');
@@ -211,6 +216,7 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'pasarAHotsale' && !empty($
     AuctionsController::getInstance()->pasarAhotsale($_GET["idResidenciaSemana"]);
 }
 
+
 else if(isset($_GET["action"]) && $_GET["action"] == 'tarifas'){
     TarifasController::getInstance()->traerTarifas(null);
 
@@ -218,6 +224,52 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'tarifas'){
 else if(isset($_GET["action"]) && $_GET["action"] == 'procesarEdicionTarifas'){
   TarifasController::getInstance()->procesarEdicionTarifas();
 }
+
+else if(isset($_GET["action"]) && $_GET["action"] == 'buscarSemanaAdmin'){
+    AdministradorController::getInstance()->buscarSemanas();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizarDirectas'){
+   ResidenciaController::getInstance()->sincronizadorDirectas();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizarSubastas'){
+   ResidenciaController::getInstance()->sincronizadorSubastas();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizarDirectas2021'){
+   ResidenciaController::getInstance()->sincronizadorDirectas2021();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'panelSistema'){
+  SistemaController::getInstance()->vistaPanel();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'sincronizarHotsales'){
+   ResidenciaController::getInstance()->sincronizadorHotsales();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'solicitarPassword'){
+    SistemaController::getInstance()->solicitarPassword($_POST['email']);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'cambiarPassword'){
+    SistemaController::getInstance()->cambiarPassword();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'procesarCambioPassword' && !empty($_GET['email'])){
+    SistemaController::getInstance()->procesar_cambioPassword();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'desactivarCuenta'){
+    UsuarioController::getInstance()->desactivarCuenta();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'crearDirectasParaTodasLasResidencias'){
+     ResidenciaController::getInstance()->crearSemanaDirectaParaTodasLasResidencias();
+}
+
+else if(isset($_GET["action"]) && $_GET["action"] == 'buscarSemanasAdmin'){
+     AdministradorController::getInstance()->buscar_semanas();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'editarSemana' && !empty($_GET["idRS"])&& !empty($_GET["idResidencia"])){
+     ResidenciaSemanaController::getInstance()->editarSemana($_GET["idRS"],$_GET["idResidencia"]);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'editar_semana' && !empty($_GET["idRS"])&& !empty($_GET["idResidencia"])){
+     ResidenciaSemanaController::getInstance()->editar_semana($_GET["idRS"],$_GET["idResidencia"]);
+}
+
+
 
 
 else{

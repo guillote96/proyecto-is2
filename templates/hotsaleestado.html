@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <!-- Required meta tags -->
+  <title>Semanas Hotsales</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -34,7 +35,8 @@
             
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
-              <span class="badge badge-danger">Inactiva</span>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Hotsale</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-danger"> Falta completa monto</span><p>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
               <p class="card-text"> Precio: A definir...</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
@@ -49,6 +51,63 @@
         </div>
       </div>
       {% endfor %}
+
+
+       {% for hotsale in hotsalesactivos %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ hotsale.titulo }}</h5>
+              <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Hotsale</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
+              <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
+              <p class="card-text"> Precio: {{ hotsale.hotsale.precio }}</p>
+              <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+    {% for hotsale in hotsalesfinalizados %}
+      <div class="card mb-5">
+        <div class="card-body">
+
+          <div class="row">
+
+            <div class="col-md-4 ml-5 mr-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+            <div class="col-md-6 mt-3">
+              <h5 class="card-title">{{ hotsale.titulo }}</h5>
+               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Hotsale</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary">Comprada</span><p>
+              <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
+              <p class="card-text"> Precio: {{ hotsale.hotsale.precio }}</p>
+              <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
+              <p class="card-text"> Comprador: {{ hotsale.email}} </p>
+              <a  href="./index.php?action=detallesCliente&idUsuario={{hotsale.idUsuario}}" class="btn btn-primary btn-sm">Perfil Ganador</a>
+
+              <a href="./index.php?action=mostrarResidencia&id={{hotsale.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
     </div>
   </div>
 </div>

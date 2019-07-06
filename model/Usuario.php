@@ -58,6 +58,12 @@ class Usuario extends PDORepository {
       return $this->fecha_reg;
     }
 
+    public function getBorrada(){
+      return $this->borrada;
+
+
+    }
+
 
 
 

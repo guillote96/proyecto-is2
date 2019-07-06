@@ -46,5 +46,70 @@ class AdministradorController extends Controller {
       $view->show(array('user' => $user,'listaresidencia'=> $listaresidencia));
   }
 
+  public function buscarSemanas(){
+
+
+      $directasActivas= PDODirecta::getInstance()->listarTodasDirectas();
+      $directasFinalizadas= PDODirecta::getInstance()->listarDirectasFinalizadas();
+      $directas=array('activas'=>$directasActivas,'finalizadas' => $directasFinalizadas);
+
+
+      $subastasSinMonto=PDOSubasta::getInstance()->listarSubastaInactivasSinMonto();
+      $subastasActivas=PDOSubasta::getInstance()->listarTodasSubasta ();
+      $subastasFinalizadas=PDOSubasta::getInstance()->listarSubastasFinalizadas();
+
+      $subastas=array('activas'=>$subastasActivas,'inactivas' => $subastasSinMonto,'finalizadas'=>$subastasFinalizadas);
+
+     $posiblesHotsale=PDOHotsale::getInstance()->listarTodosHotsaleDeshabilitado();
+     $hotsaleActivos= PDOHotsale::getInstance()->listarTodosHotsale();
+     $hotsaleFinalizados= PDOHotsale::getInstance()->listarHotsaleFinalizados();
+
+      $hotsale=array('hotsales' => $posiblesHotsale,'hotsalesactivos'=>$hotsaleActivos,'hotsalesfinalizados' => $hotsaleFinalizados);
+
+
+     $view= new Semana();
+    if(($subastas != false) || ($directas != false) || ($hotsale != false)){ 
+    $view->buscarSemanaAdmin(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
+      }
+    else{
+      $view->buscarSemanaAdmin(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => "No hay Resultados",'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
+    }
+
+
+  }
+
+
+
+  public function buscar_semanas(){
+
+
+      $directasActivas= PDODirecta::getInstance()-> buscarDirectasAdminActivas();
+      $directasFinalizadas= PDODirecta::getInstance()-> buscarDirectasAdminFinalizadas();
+      $directas=array('activas'=>$directasActivas,'finalizadas' => $directasFinalizadas);
+
+
+      $subastasSinMonto=PDOSubasta::getInstance()->buscarSubastaAdminInactivasSinMonto();
+      $subastasActivas=PDOSubasta::getInstance()->buscarSubastaAdminActivas();
+      $subastasFinalizadas=PDOSubasta::getInstance()->buscarSubastaAdminFinalizadas();
+
+      $subastas=array('activas'=>$subastasActivas,'inactivas' => $subastasSinMonto,'finalizadas'=>$subastasFinalizadas);
+
+     $posiblesHotsale=PDOHotsale::getInstance()->buscarHotsalesAdminDeshabilitados();
+     $hotsaleActivos= PDOHotsale::getInstance()->buscarHotsalesAdminActivas();
+     $hotsaleFinalizados= PDOHotsale::getInstance()->buscarHotsalesAdminFinalizados();
+
+      $hotsale=array('hotsales' => $posiblesHotsale,'hotsalesactivos'=>$hotsaleActivos,'hotsalesfinalizados' => $hotsaleFinalizados);
+
+
+     $view= new Semana();
+    if(($subastas['activas'] != false) || ($subastas['inactivas'] != false)|| ($subastas['finalizadas'] != false)   || ($directas['activas'] != false) || ($directas['finalizadas'] != false) || ($hotsale['hotsales'] != false) || ($hotsale['hotsalesactivos'] != false) ||($hotsale['hotsalesfinalizados'] != false)){
+    $view->buscarSemanaAdmin(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,'hotsales'=>$hotsale),'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"], 'mensaje' => null));
+      }
+    else{
+      $view->buscarSemanaAdmin(array('datos' => array("subastas"=>$subastas,"directas"=>$directas),'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"],'mensaje' => "No hay Resultados"));
+    }
+
+   }
+
 
 }

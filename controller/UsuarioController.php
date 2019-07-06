@@ -194,7 +194,7 @@ public function editarPerfil($hayVentana){
       $this->permitirEnvio();
     }
     else{
-      $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'Usted ya envio una solicitud, espere a ser contactado ', 'exito' => true));
+      $this->vistaExito(array('id' => $_SESSION['id'], 'mensaje' => 'Usted ya envio una solicitud, espere a ser contactado ', 'exito' => true,'tipousuario'=> $_SESSION['tipo'],'user'=> $_SESSION['usuario']));
     }
   }
 
@@ -246,6 +246,14 @@ public function editarPerfil($hayVentana){
       }  
 
       $this-> listarClientes();
+    }
+
+    public function desactivarCuenta(){
+      PDOUsuario::getInstance()->desactivarCuenta($_SESSION['id']);
+      session_destroy();
+      $this->vistaHome(null);
+
+
     }
 
     

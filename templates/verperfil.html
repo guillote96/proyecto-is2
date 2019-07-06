@@ -11,7 +11,7 @@
 
   <!-- AMG CSS -->
   <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
-
+<title>Mi Perfil</title>
 
 </head>
 <body>
@@ -82,8 +82,8 @@
           <FONT SIZE=4><b>Apellido: </b></font>{{ datos.apellido }}</li>
         <li class="list-group-item" id="email" name="email" >
           <FONT SIZE=4><b>Email: </b></font> {{ datos.email }}</li>
-        <li class="list-group-item" id="password" name="password" >
-          <FONT SIZE=4><b>Contraseña: </b></font>{{datos.password}}</li>
+        <!--<li class="list-group-item" type="password" id="password" name="password" >
+          <FONT SIZE=4><b>Contraseña: </b></font>{{datos.password}}</li>-->
         <li class="list-group-item" id="creditos" name="creditos" >
           <FONT SIZE=4><b>Creditos Disponibles: </b></font>{{ datos.creditos}} <font class=float-right>Vencen: {{ fechaVencimiento }} </font> </li>
         <li class="list-group-item" id="fecha_nac" name="fecha_nac" >
@@ -95,8 +95,38 @@
       {% if tipousuario != "administrador" %}
 
       <div class="card-body">
-        
+
+
+
+
+
+     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> Desactivar Cuenta </button>
+    </div>
+
+      <!-- Desactivar Cuenta -->
+       <form action="./index.php?action=desactivarCuenta" method="POST">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby= "exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+               <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Desactivar Cuenta</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+               </div>
+               <div class="modal-body">
+                ¿Esta Seguro que quiere desactivar su cuenta?
+               </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Confirmar</button>
+
       </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
 
       {% endif %}
     </div>

@@ -25,7 +25,7 @@ class PDOSubasta extends PDORepository {
 
         $final_answer = [];
         foreach ($answer as &$element) {
-          $final_answer[] = array('residenciasemana' => new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),'subasta' => new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"]);
+          $final_answer[] = array('residenciasemana' => new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),'subasta' => new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"],"pujamaxima"=>$this->pujaMaximaSubasta($element["idSubasta"]));
         }
 
         return $final_answer;
@@ -149,7 +149,7 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
       }
 
       public function actualizarBase($idResidenciaSemana,$base){
-        $answer = $this->queryList("UPDATE subasta SET base=:base WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana' => $idResidenciaSemana, ':base' => $base ));
+        $answer = $this->queryList("UPDATE subasta SET base=:base, activa=1 WHERE idResidenciaSemana=:idResidenciaSemana",array(':idResidenciaSemana' => $idResidenciaSemana, ':base' => $base ));
         return true;
       }
 
@@ -394,6 +394,182 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
       return false;
 
  
+     }
+
+      public function listarSubastasFinalizadas(){
+      //lista las semanas en subasta para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase subasta y ResidenciaSemana)
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia,s.borrada, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado, u.idUsuario, u.email FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) INNER JOIN participa_subasta ps ON (ps.idSubasta=s.idSubasta) INNER JOIN usuario u ON (u.idUsuario=ps.idUsuario) WHERE s.activa=0 AND s.borrada = 1 AND ps.es_ganador is NOT null",array());
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array('residenciasemana' => new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),'subasta' => new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"],"email"=>$element["email"],"idUsuario"=>$element["idUsuario"]);
+        }
+
+        return $final_answer;
+
+     }
+
+  public function partipantesSubasta($idSubasta){
+    $answer = $this->queryList("SELECT idUsuario FROM participa_subasta WHERE idSubasta = :idSubasta ORDER BY puja DESC",array(':idSubasta'=> $idSubasta));
+
+      return $answer;
+
+   }
+
+
+   public function buscarSubastaAdminActivas(){
+         $sql="SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE (s.borrada = :borrada ) AND (s.activa=:activa) AND ";
+
+
+         $parametros=array(':borrada' => 0,':activa'=> 1);
+         if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin']) && !isset($_POST['residencia'])){
+             return false;
+
+         }
+         if((empty($_POST['fecha_inicio']) || empty($_POST['fecha_fin'])) && empty($_POST['residencia'])){
+              return false;
+
+         }
+
+          $fechainicio; $fechafin;
+         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio']) && isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
+
+        $fechainicio=date_format(new DateTime($_POST['fecha_inicio']),"Y-m-d");
+        $fechafin=date_format(new DateTime($_POST['fecha_fin']),"Y-m-d");
+
+        $sql.=" (fecha_inicio BETWEEN '$fechainicio' AND '$fechafin') AND (fecha_fin BETWEEN '$fechainicio' AND '$fechafin') AND";
+        
+
+
+         }
+
+
+          $residencia;
+         if(isset($_POST['residencia']) && !empty($_POST['residencia'])){
+            $residencia=$_POST['residencia'];
+            $sql.=" r.titulo LIKE '$residencia%' AND";
+         }
+         $sql = substr($sql, 0, -4);
+
+         
+         $answer = $this->queryList($sql,$parametros);
+
+      //lista las semanas en subasta para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase subasta y ResidenciaSemana)
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array("residenciasemana" => new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),"subasta" => new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"]);
+        }
+
+        return $final_answer;
+
+     }
+
+
+     public function buscarSubastaAdminInactivasSinMonto(){
+         $sql="SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE (s.borrada = :borrada ) AND (s.activa=:activa) AND s.base is null AND";
+
+
+         $parametros=array(':borrada' => 0,':activa'=> 0);
+         if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin']) && !isset($_POST['residencia'])){
+             return false;
+
+         }
+         if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin'])){
+             return false;
+
+         }
+
+          if(empty($_POST['fecha_inicio']) || empty($_POST['fecha_fin'])){
+              return false;
+
+         }
+
+          $fechainicio; $fechafin;
+         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio']) && isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
+
+        $fechainicio=date_format(new DateTime($_POST['fecha_inicio']),"Y-m-d");
+        $fechafin=date_format(new DateTime($_POST['fecha_fin']),"Y-m-d");
+
+        $sql.=" (fecha_inicio BETWEEN '$fechainicio' AND '$fechafin') AND (fecha_fin BETWEEN '$fechainicio' AND '$fechafin') AND";
+        
+
+
+         }
+
+
+          $residencia;
+         if(isset($_POST['residencia']) && !empty($_POST['residencia'])){
+            $residencia=$_POST['residencia'];
+            $sql.=" r.titulo LIKE '$residencia%' AND";
+         }
+         $sql = substr($sql, 0, -4);
+
+         
+         $answer = $this->queryList($sql,$parametros);
+
+      //lista las semanas en subasta para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase subasta y ResidenciaSemana)
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array("residenciasemana" => new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),"subasta" => new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"]);
+        }
+
+        return $final_answer;
+
+     }
+
+      public function buscarSubastaAdminFinalizadas(){
+
+        $sql="SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia,s.borrada, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado, u.idUsuario, u.email FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) INNER JOIN participa_subasta ps ON (ps.idSubasta=s.idSubasta) INNER JOIN usuario u ON (u.idUsuario=ps.idUsuario) WHERE s.activa=:activa AND s.borrada = :borrada AND ps.es_ganador is NOT null AND ";
+
+
+         $parametros=array(':borrada' => 1,':activa'=> 0);
+         if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin']) && !isset($_POST['residencia'])){
+             return false;
+
+         }
+       if(!isset($_POST['fecha_inicio']) && !isset($_POST['fecha_fin'])){
+             return false;
+
+         }
+
+          if(empty($_POST['fecha_inicio']) || empty($_POST['fecha_fin'])){
+              return false;
+
+         }
+
+          $fechainicio; $fechafin;
+         if(isset($_POST['fecha_inicio']) && !empty($_POST['fecha_inicio']) && isset($_POST['fecha_fin']) && !empty($_POST['fecha_fin'])){
+
+        $fechainicio=date_format(new DateTime($_POST['fecha_inicio']),"Y-m-d");
+        $fechafin=date_format(new DateTime($_POST['fecha_fin']),"Y-m-d");
+
+        $sql.=" (fecha_inicio BETWEEN '$fechainicio' AND '$fechafin') AND (fecha_fin BETWEEN '$fechainicio' AND '$fechafin') AND";
+        
+
+
+         }
+
+
+          $residencia;
+         if(isset($_POST['residencia']) && !empty($_POST['residencia'])){
+            $residencia=$_POST['residencia'];
+            $sql.=" r.titulo LIKE '$residencia%' AND";
+         }
+         $sql = substr($sql, 0, -4);
+
+         
+         $answer = $this->queryList($sql,$parametros);
+
+      //lista las semanas en subasta para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase subasta y ResidenciaSemana)
+
+      $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array('residenciasemana' => new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),'subasta' => new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"],"email"=>$element["email"],"idUsuario"=>$element["idUsuario"]);
+        }
+
+        return $final_answer;
      }
 
 
