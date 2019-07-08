@@ -18,6 +18,12 @@
 
 {% include 'barra.html' %}
 
+  <script>
+document.getElementById("tarifas").innerHTML = "<li class='nav-item active'><a class='nav-link' href='./index.php?action=tarifas'><p class='font-weight-bold'>Tarifas</p></a></li>";
+
+</script>
+
+
 {% if mensaje is defined %}
 
   {% if not mensaje is empty %}

@@ -14,10 +14,20 @@
 
 <title>Buscar Semana</title>
 </head>
+
+
+
+
 <body>
   {% include 'barra.html' %}
+    <script>
+document.getElementById("buscarsemana").innerHTML = "<li class='nav-item active'><a class='nav-link' href='./index.php?action=buscarSemanaAdmin'><p class='font-weight-bold'>Buscar Semana</p></a></li>";
 
-        <center><h1>Semanas</h1></center>
+</script>
+
+
+
+        <h1 style="position: relative; left:20%;">Semanas</h1>
 
   <div class="row no-gutters">
 
@@ -450,22 +460,23 @@
             <div class="input-group-prepend">
                <span class="input-group-text" id="inputGroup-sizing-default">Desde</span>
             </div>
-             <input type="date" class="form-control" name='fecha_inicio' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+             <input type="date" class="form-control" name='fecha_inicio' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" title="Fecha Desde" required>
       </div>
 
       <div class="input-group mb-3">
             <div class="input-group-prepend">
                <span class="input-group-text" id="inputGroup-sizing-default">Hasta</span>
             </div>
-             <input type="date" class="form-control" name='fecha_fin' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+             <input type="date" class="form-control" name='fecha_fin' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" title="Fecha Hasta" required>
       </div>
 
       <div class="input-group mb-3">
             <div class="input-group-prepend">
               <label class="input-group-text"  for="inputGroupSelect01">Residencia</label>
              </div>
-             <input type="text" class="form-control" name='residencia' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">   
+             <input type="text" class="form-control" name='residencia' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Titulo de Residencia" title="Titulo de Residencia">   
       </div>
+      <center><p>NOTA: Los campos de fechas son requeridos. El campo residencia es opcional</p></center>
 
       <center><button type="submit" style="width:23%" type="button" class="btn btn-primary">Buscar</button></center>
     </form>

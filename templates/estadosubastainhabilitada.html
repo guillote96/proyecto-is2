@@ -27,7 +27,13 @@ function validateForm() {
   }
  
 }
+
+
+document.getElementById("subastas").innerHTML = "<li class='nav-item active'><a class='nav-link' href='./index.php?action=listarSubastaInactivas'><p class='font-weight-bold'>Subastas</p></a></li>";
+
 </script>
+
+
 
 <body>
 
@@ -35,7 +41,7 @@ function validateForm() {
 
   <div class="col-md-9">
     <div class="results-box">
-       <center><h1>Subastas</h1></center>
+       <center><h1>Semanas Subastas</h1></center>
       {% for dato in datos %}
       <div class="card mb-5">
         <div class="card-body">
@@ -83,7 +89,7 @@ function validateForm() {
                          
                          <div class="input-group mb-2">
 
-                         <input type="decimal" id="base" name="base" min="0" class="form-control" placeholder="Ingrese base..">
+                         <input type="number" id="base" name="base" min="1" class="form-control" placeholder="Ingrese base..">
                         </div>
                         
                         

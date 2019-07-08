@@ -15,13 +15,19 @@
 
 {% include 'barra.html' %}
 </head>
+<script>
+document.getElementById("hotsales").innerHTML = "<li class='nav-item active'><a class='nav-link' href='./index.php?action=listaPosibleHotsale'><p class='font-weight-bold'>Hotsales</p></a></li>";
+
+</script>
+
+
 <body>
 
 <div class="row no-gutters">
 
   <div class="col-md-9">
     <div class="results-box">
-      <center><h1>Hotsale</h1></center>
+      <center><h1>Semanas Hotsale</h1></center>
 
       {% for hotsale in hotsales %}
       <div class="card mb-5">

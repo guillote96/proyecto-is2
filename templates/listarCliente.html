@@ -18,6 +18,13 @@
 </head>
 <body>
 	{% include 'barra.html' %}
+
+
+  <script>
+document.getElementById("clientes").innerHTML = "<li class='nav-item active'><a class='nav-link' href='./index.php?action=listarClientes'><p class='font-weight-bold'>Clientes</p></a></li>";
+
+</script>
+
 <div class="container">
    <center><h1>Clientes</h1></center>
    <br>
@@ -26,15 +33,15 @@
   <div class="form-row">
 
     <div class="col">
-      <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+      <input type="text" class="form-control" name="nombre" placeholder="Nombre" title="Nombre del cliente">
     </div>
 
     <div class="col">
-      <input type="date" class="form-control" name="fecha_registro" placeholder="Fecha Registro">
+      <input type="date" class="form-control" name="fecha_registro" placeholder="Fecha Registro" title="Fecha de Registro">
     </div>
 
     <div class="col">
-      <select class="custom-select" name="tipo_usuario">
+      <select class="custom-select" name="tipo_usuario" title="Tipo de Usuario">
         <option value=0 selected>Seleccione Tipo</option>
         <option value=1>Estandar</option>
         <option value=5>Premium</option>
@@ -58,10 +65,10 @@
       <th scope="col">Apellido</th>
       <th scope="col">Tipo</th>
       <th scope="col">Fecha Registro</th>
-      <th scope="col">Ver Perfil</th>
+      <th scope="col" title="Info personal del cliente">Ver Perfil</th>
       <th scope="col">Cambiar Tipo</th>
-      <th scope="col" class="text-center"> Solicitud</th>
-      <th scope="col" class="text-center"> Activo</th>
+      <th scope="col" class="text-center" title="Solicitud de cambio de rol"> Solicitud</th>
+      <th scope="col" class="text-center" title="Cuentas desactivadas por el usuario"> Activo</th>
 
     </tr>
   </thead>

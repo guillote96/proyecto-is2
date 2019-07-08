@@ -25,6 +25,13 @@
 
 
 </head>
+
+<script>
+document.getElementById("directas").innerHTML = "<li class='nav-item active id='directas'> <a  class='nav-link' href='./index.php?action=listarDirectas'><p class='font-weight-bold'>Reservas Directas</p></a> </li>";
+</script>
+
+
+
 <body>
 
 
@@ -34,7 +41,7 @@
   <div class="col-md-9">
     <div class="results-box">
 
-       <center><h1>Directas</h1></center>
+       <center><h1>Semanas Directas</h1></center>
 
        {% if directasParaActivas is not empty %}
        <br>
