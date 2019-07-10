@@ -216,11 +216,13 @@ public function finalizarSubasta($idSubasta){
     $lista=PDOSubasta::getInstance()->listarSubastaInactivasSinMonto();
     $subastas=PDOSubasta::getInstance()->listarTodasSubasta ();
     $subastasFinalizadas=PDOSubasta::getInstance()->listarSubastasFinalizadas();
+     $view= new EstadoSubasta();
     if(sizeof($lista)> 0 || sizeof($subastas)> 0 || sizeof($subastasFinalizadas)> 0 ){
-        $view= new EstadoSubasta();
+       
         $view->listarSubastasInactivasSinMonto(array('datos'=> $lista,'subastas'=>$subastas,"subastasFinalizadas"=>$subastasFinalizadas,"subastas"=>$subastas ,'user'=> $_SESSION['usuario']));
     }else{
-      $this->vistaExito(array('mensaje' => "No hay Subastas para completar","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+      //$this->vistaExito(array('mensaje' => "No hay Subastas para completar","user"=> $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+      $view->listarSubastasInactivasSinMonto(array('datos'=> $lista,'subastas'=>$subastas,"subastasFinalizadas"=>$subastasFinalizadas,"subastas"=>$subastas ,'user'=> $_SESSION['usuario'],"mensaje"=> "No hay subastas para mostrar"));
 
 
     }

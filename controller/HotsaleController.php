@@ -24,12 +24,13 @@ class HotsaleController extends ResidenciaSemanaController {
      $posiblesHotsale=PDOHotsale::getInstance()->listarTodosHotsaleDeshabilitado();
      $hotsaleActivos= PDOHotsale::getInstance()->listarTodosHotsale();
      $hotsaleFinalizados= PDOHotsale::getInstance()->listarHotsaleFinalizados();
+      $view= new EstadoHotsale();
      if(sizeof($posiblesHotsale) == 0 && sizeof($hotsaleActivos) == 0 && sizeof($hotsaleFinalizados) == 0){
-        $this->vistaExito(array('mensaje' =>"No hay Posibles hotsale para mostrar! ", 'user' =>$_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+        $view->show(array('mensaje' =>"No hay hotsale para mostrar", 'user' =>$_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
         return false;
 
      }
-     $view= new EstadoHotsale();
+    
      $view->show(array('hotsales' => $posiblesHotsale,'hotsalesactivos'=>$hotsaleActivos,'hotsalesfinalizados' => $hotsaleFinalizados, 'user'=> $_SESSION['usuario']));
      return true;
 

@@ -43,11 +43,17 @@ document.getElementById("directas").innerHTML = "<li class='nav-item active id='
 
        <center><h1>Semanas Directas</h1></center>
 
-       {% if directasParaActivas is not empty %}
-       <br>
-         <center> <p> No hay Resultados <p></center>
-          <br>
-       {% endif %}
+  {% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+  <br>
+    <CENTER>
+
+   <p> {{ mensaje }} <p>
+
+    </CENTER>
+  {% endif %}
+  {% endif %}
 
      
    <!--   {% for dato in directasParaActivar %}
@@ -121,6 +127,7 @@ document.getElementById("directas").innerHTML = "<li class='nav-item active id='
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
             </div>
           </div>
 

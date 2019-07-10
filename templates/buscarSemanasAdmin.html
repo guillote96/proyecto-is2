@@ -126,6 +126,7 @@ document.getElementById("buscarsemana").innerHTML = "<li class='nav-item active'
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
             </div>
           </div>
 
@@ -186,6 +187,7 @@ document.getElementById("buscarsemana").innerHTML = "<li class='nav-item active'
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="#ventanaConfirmacion{{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" data-toggle="modal" >Completar Semana y Activar</a>
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
 
 
 
@@ -316,6 +318,7 @@ document.getElementById("buscarsemana").innerHTML = "<li class='nav-item active'
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
 
             </div>
 
@@ -378,6 +381,7 @@ document.getElementById("buscarsemana").innerHTML = "<li class='nav-item active'
               <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
 
               <a href="./index.php?action=habilitarHotsale&idRS={{hotsale.hotsale.idResidenciaSemana}}" class="btn btn-danger btn-sm" >Habilitar Hotsale</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
 
 
             </div>
@@ -406,7 +410,9 @@ document.getElementById("buscarsemana").innerHTML = "<li class='nav-item active'
               <p class="card-text"> Precio: {{ hotsale.hotsale.precio }}</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
+              <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
             </div>
+
           </div>
 
         </div>

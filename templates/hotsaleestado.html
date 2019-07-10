@@ -29,6 +29,20 @@ document.getElementById("hotsales").innerHTML = "<li class='nav-item active'><a 
     <div class="results-box">
       <center><h1>Semanas Hotsale</h1></center>
 
+
+      {% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+  <br>
+    <CENTER>
+
+   <p> {{ mensaje }} <p>
+
+    </CENTER>
+  {% endif %}
+
+{% endif %}
+
       {% for hotsale in hotsales %}
       <div class="card mb-5">
         <div class="card-body">
@@ -49,6 +63,7 @@ document.getElementById("hotsales").innerHTML = "<li class='nav-item active'><a 
               <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
 
               <a href="./index.php?action=habilitarHotsale&idRS={{hotsale.hotsale.idResidenciaSemana}}" class="btn btn-danger btn-sm" >Habilitar Hotsale</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
 
 
             </div>
@@ -78,6 +93,7 @@ document.getElementById("hotsales").innerHTML = "<li class='nav-item active'><a 
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
             </div>
+             <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
           </div>
 
         </div>

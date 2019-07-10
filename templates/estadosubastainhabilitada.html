@@ -42,6 +42,19 @@ document.getElementById("subastas").innerHTML = "<li class='nav-item active'><a 
   <div class="col-md-9">
     <div class="results-box">
        <center><h1>Semanas Subastas</h1></center>
+
+             {% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+  <br>
+    <CENTER>
+
+   <p> {{ mensaje }} <p>
+
+    </CENTER>
+  {% endif %}
+
+{% endif %}
       {% for dato in datos %}
       <div class="card mb-5">
         <div class="card-body">
