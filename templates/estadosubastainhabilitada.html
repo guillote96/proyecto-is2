@@ -199,7 +199,7 @@ document.getElementById("subastas").innerHTML = "<li class='nav-item active'><a 
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-success"> En proceso</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success" title="Todavía hay tiempo para pujar"> En proceso</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text">  Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
@@ -231,7 +231,7 @@ document.getElementById("subastas").innerHTML = "<li class='nav-item active'><a 
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-primary"> Finalizada</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary"  title="La semana fue adjudicada a participante"> Adjudicada</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text"> Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
