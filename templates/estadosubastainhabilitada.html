@@ -27,7 +27,13 @@ function validateForm() {
   }
  
 }
+
+
+document.getElementById("subastas").innerHTML = "<li class='nav-item active'><a class='nav-link' href='./index.php?action=listarSubastaInactivas'><p class='font-weight-bold'>Subastas</p></a></li>";
+
 </script>
+
+
 
 <body>
 
@@ -35,7 +41,20 @@ function validateForm() {
 
   <div class="col-md-9">
     <div class="results-box">
-       <center><h1>Subastas</h1></center>
+       <center><h1>Semanas Subastas</h1></center>
+
+             {% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+  <br>
+    <CENTER>
+
+   <p> {{ mensaje }} <p>
+
+    </CENTER>
+  {% endif %}
+
+{% endif %}
       {% for dato in datos %}
       <div class="card mb-5">
         <div class="card-body">
@@ -83,7 +102,7 @@ function validateForm() {
                          
                          <div class="input-group mb-2">
 
-                         <input type="decimal" id="base" name="base" min="0" class="form-control" placeholder="Ingrese base..">
+                         <input type="number" id="base" name="base" min="1" class="form-control" placeholder="Ingrese base..">
                         </div>
                         
                         
@@ -180,7 +199,7 @@ function validateForm() {
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-success"> En proceso</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success" title="Todavía hay tiempo para pujar"> En proceso</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text">  Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
@@ -212,7 +231,7 @@ function validateForm() {
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-primary"> Finalizada</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary"  title="La semana fue adjudicada a participante"> Adjudicada</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text"> Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>

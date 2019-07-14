@@ -25,6 +25,13 @@
 
 
 </head>
+
+<script>
+document.getElementById("directas").innerHTML = "<li class='nav-item active id='directas'> <a  class='nav-link' href='./index.php?action=listarDirectas'><p class='font-weight-bold'>Reservas Directas</p></a> </li>";
+</script>
+
+
+
 <body>
 
 
@@ -34,13 +41,19 @@
   <div class="col-md-9">
     <div class="results-box">
 
-       <center><h1>Directas</h1></center>
+       <center><h1>Semanas Directas</h1></center>
 
-       {% if directasParaActivas is not empty %}
-       <br>
-         <center> <p> No hay Resultados <p></center>
-          <br>
-       {% endif %}
+  {% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+  <br>
+    <CENTER>
+
+   <p> {{ mensaje }} <p>
+
+    </CENTER>
+  {% endif %}
+  {% endif %}
 
      
    <!--   {% for dato in directasParaActivar %}
@@ -109,11 +122,12 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Directa</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success" title="Todavía hay tiempo para reservarse"> En Proceso</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
             </div>
           </div>
 
@@ -134,7 +148,7 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Directa</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-primary">Reservada</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary" title="La semana fue reservada por un Usuario">Reservada</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>

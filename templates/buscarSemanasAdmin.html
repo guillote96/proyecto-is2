@@ -14,10 +14,20 @@
 
 <title>Buscar Semana</title>
 </head>
+
+
+
+
 <body>
   {% include 'barra.html' %}
+    <script>
+document.getElementById("buscarsemana").innerHTML = "<li class='nav-item active'><a class='nav-link' href='./index.php?action=buscarSemanaAdmin'><p class='font-weight-bold'>Buscar Semana</p></a></li>";
 
-        <center><h1>Semanas</h1></center>
+</script>
+
+
+
+        <h1 style="position: relative; left:20%;">Semanas</h1>
 
   <div class="row no-gutters">
 
@@ -116,6 +126,7 @@
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
             </div>
           </div>
 
@@ -137,7 +148,7 @@
               <h5 class="card-title">{{ dato.titulo }}</h5>
                <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Reserva Directa</span><p>
 
-              <p class="card-text"> Estado: <span class="badge badge-primary" title="La semana fue reservada por un Usuario">>Reservada</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary" title="La semana fue reservada por un Usuario">Reservada</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
@@ -176,6 +187,7 @@
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="#ventanaConfirmacion{{dato.residenciasemana.idResidenciaSemana}}" class="btn btn-danger btn-sm" data-toggle="modal" >Completar Semana y Activar</a>
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
 
 
 
@@ -300,12 +312,13 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ dato.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Subasta</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-success" title="Todavía hay tiempo para pujar">> En proceso</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success" title="Todavía hay tiempo para pujar"> En proceso</span><p>
               <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
               <p class="card-text">  Base:{{ dato.subasta.base }} </p>
               <p class="card-text"> Fecha Inicio:{{ dato.residenciasemana.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ dato.residenciasemana.fecha_fin}} </p>
               <a href="./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Ver Residencia</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
 
             </div>
 
@@ -368,6 +381,7 @@
               <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
 
               <a href="./index.php?action=habilitarHotsale&idRS={{hotsale.hotsale.idResidenciaSemana}}" class="btn btn-danger btn-sm" >Habilitar Hotsale</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
 
 
             </div>
@@ -396,7 +410,9 @@
               <p class="card-text"> Precio: {{ hotsale.hotsale.precio }}</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
+              <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
             </div>
+
           </div>
 
         </div>
@@ -450,22 +466,23 @@
             <div class="input-group-prepend">
                <span class="input-group-text" id="inputGroup-sizing-default">Desde</span>
             </div>
-             <input type="date" class="form-control" name='fecha_inicio' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+             <input type="date" class="form-control" name='fecha_inicio' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" title="Fecha Desde" required>
       </div>
 
       <div class="input-group mb-3">
             <div class="input-group-prepend">
                <span class="input-group-text" id="inputGroup-sizing-default">Hasta</span>
             </div>
-             <input type="date" class="form-control" name='fecha_fin' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+             <input type="date" class="form-control" name='fecha_fin' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" title="Fecha Hasta" required>
       </div>
 
       <div class="input-group mb-3">
             <div class="input-group-prepend">
               <label class="input-group-text"  for="inputGroupSelect01">Residencia</label>
              </div>
-             <input type="text" class="form-control" name='residencia' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">   
+             <input type="text" class="form-control" name='residencia' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Titulo de Residencia" title="Titulo de Residencia">   
       </div>
+      <center><p>NOTA: Los campos de fechas son requeridos. El campo residencia es opcional</p></center>
 
       <center><button type="submit" style="width:23%" type="button" class="btn btn-primary">Buscar</button></center>
     </form>

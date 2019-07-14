@@ -15,13 +15,33 @@
 
 {% include 'barra.html' %}
 </head>
+<script>
+document.getElementById("hotsales").innerHTML = "<li class='nav-item active'><a class='nav-link' href='./index.php?action=listaPosibleHotsale'><p class='font-weight-bold'>Hotsales</p></a></li>";
+
+</script>
+
+
 <body>
 
 <div class="row no-gutters">
 
   <div class="col-md-9">
     <div class="results-box">
-      <center><h1>Hotsale</h1></center>
+      <center><h1>Semanas Hotsale</h1></center>
+
+
+      {% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+  <br>
+    <CENTER>
+
+   <p> {{ mensaje }} <p>
+
+    </CENTER>
+  {% endif %}
+
+{% endif %}
 
       {% for hotsale in hotsales %}
       <div class="card mb-5">
@@ -36,13 +56,14 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Hotsale</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-danger"> Falta completa monto</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-danger" title="El administrador debe completar monto"> Falta completa monto</span><p>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
               <p class="card-text"> Precio: A definir...</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
 
               <a href="./index.php?action=habilitarHotsale&idRS={{hotsale.hotsale.idResidenciaSemana}}" class="btn btn-danger btn-sm" >Habilitar Hotsale</a>
+               <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
 
 
             </div>
@@ -66,12 +87,14 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
               <p class="card-text"> Tipo Semana: <span class="badge badge-primary"> Hotsale</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success" title="Todavía hay tiempo para ser comprada"> En Proceso</span><p>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
               <p class="card-text"> Precio: {{ hotsale.hotsale.precio }}</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>
               <p class="card-text"> Fecha Fin:{{ hotsale.hotsale.fecha_fin}} </p>
+              <a href="./index.php?action=editarSemana&idRS={{dato.residenciasemana.idResidenciaSemana}}&idResidencia={{dato.residenciasemana.idResidencia}}" class="btn btn-primary btn-sm">Editar Semana</a>
             </div>
+
           </div>
 
         </div>
@@ -92,7 +115,7 @@
             <div class="col-md-6 mt-3">
               <h5 class="card-title">{{ hotsale.titulo }}</h5>
                <p class="card-text"> Tipo Semana: <span class="badge badge-primary">Hotsale</span><p>
-              <p class="card-text"> Estado: <span class="badge badge-primary">Comprada</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-primary" title="Ya fue comprada por un usuario">Comprada</span><p>
               <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
               <p class="card-text"> Precio: {{ hotsale.hotsale.precio }}</p>
               <p class="card-text"> Fecha Inicio:{{ hotsale.hotsale.fecha_inicio }} </p>

@@ -68,7 +68,7 @@ class AdministradorController extends Controller {
 
 
      $view= new Semana();
-    if(($subastas != false) || ($directas != false) || ($hotsale != false)){ 
+    if(($subastas['activas'] != false) || ($subastas['inactivas'] != false)|| ($subastas['finalizadas'] != false)   || ($directas['activas'] != false) || ($directas['finalizadas'] != false) || ($hotsale['hotsales'] != false) || ($hotsale['hotsalesactivos'] != false) ||($hotsale['hotsalesfinalizados'] != false)){ 
     $view->buscarSemanaAdmin(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo'],'idUser' => $_SESSION["id"]));
       }
     else{

@@ -261,7 +261,8 @@ public function listarDirectasTodas(){
           return true;
 
       }else{
-         $this->vistaExito(array('mensaje' =>"No Hay semanas directas para Mostrar.", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+         //$this->vistaExito(array('mensaje' =>"No Hay semanas directas para Mostrar.", 'user' => $_SESSION['usuario'],'tipousuario'=>$_SESSION['tipo']));
+        $view->panelDirectas(array('directas'=> $directas,"directasFinalizadas"=> $directasFinalizadas ,'idUser' => $_SESSION["id"],'tipousuario' => $_SESSION['tipo'], "user"=> $_SESSION['usuario'],"mensaje"=> "No hay reservas directas para mostrar "));
         return false;
 
 
