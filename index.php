@@ -200,6 +200,12 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'listarClientes'){
 else if(isset($_GET["action"]) && $_GET["action"] == 'detallesCliente' && !empty($_GET["idUsuario"])){
     UsuarioController::getInstance()->detallesUsuario($_GET["idUsuario"]);
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'detallesClienteHistorial' && !empty($_GET["idUsuario"])){
+    UsuarioController::getInstance()->detallesUsuarioHistorial($_GET["idUsuario"]);
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'detallesClienteEditarPerfil' && !empty($_GET["idUsuario"])){
+    UsuarioController::getInstance()->detallesEditarPerfilUsuario(null,$_GET["idUsuario"]);
+}
 else if(isset($_GET["action"]) && $_GET["action"] == 'buscarCliente'){
     UsuarioController::getInstance()->buscarCliente();
 }
@@ -270,6 +276,12 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'editarSemana' && !empty($_
 else if(isset($_GET["action"]) && $_GET["action"] == 'editar_semana' && !empty($_GET["idRS"])&& !empty($_GET["idResidencia"])){
      ResidenciaSemanaController::getInstance()->editar_semana($_GET["idRS"],$_GET["idResidencia"]);
 }
+
+
+else if(isset($_GET["action"]) && $_GET["action"] == 'verHistorialCompras'){
+     UsuarioController::getInstance()->verHistorialDeCompras();
+}
+
 
 
 

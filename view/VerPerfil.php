@@ -10,4 +10,12 @@ class VerPerfil extends TwigView {
   }
 
 
+  public function showHistorial($datos) {
+
+    echo self::getTwig()->render('historialuser.html', $datos);
+
+
+  }
+
+
 }

@@ -318,10 +318,10 @@ class ResidenciaController extends Controller {
      $hotsale= PDOHotsale::getInstance()->listarTodosHotsale();
      $view= new Semana();
     if(($subastas != false) || ($directas != false) || ($hotsale != false)){ 
-    $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo'],'email' => $_SESSION['usuario'],'idUser' => $_SESSION["id"]));
+    $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => null,'tipo'=> $_SESSION['tipo'],'user' => $_SESSION['usuario'],'idUser' => $_SESSION["id"]));
   }
     else{
-      $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => "No hay Resultados",'tipo'=> $_SESSION['tipo'],'email' => $_SESSION['usuario'],'idUser' => $_SESSION["id"]));
+      $view->buscarSemana(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsale), 'mensaje' => "No hay Resultados",'tipo'=> $_SESSION['tipo'],'user' => $_SESSION['usuario'],'idUser' => $_SESSION["id"]));
     }
 
 

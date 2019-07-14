@@ -32,6 +32,9 @@ class PDOSubasta extends PDORepository {
 
      }
 
+
+
+
     public function subastaInfo($idRS){
         //subasta info activas ( activo =1)
         $answer = $this->queryList("SELECT su.idSubasta,su.borrada, su.idResidenciaSemana, su.base, su.activa, s.fecha_inicio, s.fecha_fin FROM residencia_semana rs INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN subasta su ON (su.idResidenciaSemana=rs.idResidenciaSemana) WHERE su.idResidenciaSemana = :idResidenciaSemana",array(':idResidenciaSemana' => $idRS));
@@ -571,6 +574,26 @@ VALUES (:idSubasta,:idUsuario, :puja);",array(':idUsuario'=> $idUsuario,':idSuba
 
         return $final_answer;
      }
+
+
+
+
+public function traerHistorialSubastas ($idUsuario){
+      //lista las semanas en subasta para una residencia determinada (devuelve un arreglo con arreglos de 2 objetos de la clase subasta y ResidenciaSemana)
+       $answer = $this->queryList("SELECT r.titulo,r.descripcion,s.idSubasta,rs.borrada as rsborrada,s.borrada,s.base, s.idResidenciaSemana,rs.idResidencia,s.borrada, s.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado FROM residencia_semana rs INNER JOIN subasta s ON (rs.idResidenciaSemana=s.idResidenciaSemana) INNER JOIN participa_subasta ps ON (s.idSubasta=ps.idSubasta) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) WHERE s.borrada = 1 AND ps.idUsuario = :idUsuario AND ps.es_ganador = 1",array(':idUsuario' => $idUsuario));
+
+        $final_answer = [];
+        foreach ($answer as &$element) {
+          $final_answer[] = array('residenciasemana' => new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element['rsborrada']),'subasta' => new Subasta ($element["idSubasta"],$element["idResidenciaSemana"], $element["base"],$element["activa"],$element["fecha_inicio"],$element["fecha_fin"],$element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"],"pujamaxima"=>$this->pujaMaximaSubasta($element["idSubasta"]));
+        }
+
+        return $final_answer;
+
+     }
+
+
+
+
 
 
 }

@@ -134,15 +134,41 @@ public function userSignup(){
         $fechaVencimiento= date("d-m-Y",strtotime($fechaRegistro."+ 1 year"));
         $tarifapremium= PDOTarifa::getInstance()->traerTarifaPremium();
         $view = new VerPerfil();
-        $view->show(array('esPremium' => $esPremium,'email' => $_SESSION['usuario'], 'tarifapremium' => $tarifapremium,'fechaVencimiento' => $fechaVencimiento,'datos' => $unUsuario));
+        $view->show(array('esPremium' => $esPremium,'user' => $_SESSION['usuario'], 'tarifapremium' => $tarifapremium,'fechaVencimiento' => $fechaVencimiento,'datos' => $unUsuario,'tipousuario' => $_SESSION['tipo']));
   }
 
 
   public function detallesUsuario($idUsuario){
-
-        $unUsuario=PDOUsuario::getInstance()->traerUsuario($idUsuario);  
+        
+        $unUsuario=PDOUsuario::getInstance()->traerUsuario($idUsuario); 
+        $fechaRegistro= $unUsuario->getFechaRegistro();
+        $fechaVencimiento= date("d-m-Y",strtotime($fechaRegistro."+ 1 year")); 
         $view = new VerPerfil();
-        $view->show(array('user' => $idUsuario,'datos' => $unUsuario, "tipousuario"=> $_SESSION['tipo']));
+        $view->show(array('user' => $idUsuario,'fechaVencimiento' => $fechaVencimiento,'datos' => $unUsuario, "tipousuario"=> $_SESSION['tipo']));
+  }
+
+   public function detallesUsuarioHistorial($idUsuario){
+    
+    $unUsuario=PDOUsuario::getInstance()->traerUsuario($idUsuario);   
+    $directas = PDODirecta::getInstance()->traerHistorialDirectas($idUsuario);
+    $subastas = PDOSubasta::getInstance()->traerHistorialSubastas($idUsuario);
+    $hotsales = PDOHotsale::getInstance()->traerHistorialHotsales($idUsuario);
+    $view = new VerPerfil();
+
+  
+
+ if(($subastas != false) || ($directas != false) || ($hotsales != false)){ 
+      $view->showHistorial(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsales),'tipousuario' => $_SESSION['tipo'],'idUser' => $idUsuario,'unUsuario' => $unUsuario,'mensaje' => null));
+
+      }
+    else{
+        $view->showHistorial(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsales),'tipousuario' => $_SESSION['tipo'],'idUser' => $idUsuario,'unUsuario' => $unUsuario,'mensaje' => " Todavia no ha hecho ninguna reserva"));
+
+    }
+   
+
+  
+
   }
 
 
@@ -150,7 +176,7 @@ public function editarPerfil($hayVentana){
         
         $unUsuario=PDOUsuario::getInstance()->traerUsuario($_SESSION['id']); 
         $view = new EditarPerfil();
-        $view->show(array('user' => $_SESSION['id'],'email' => $_SESSION['usuario'],'datos' => $unUsuario,'hayVentana' => $hayVentana));
+        $view->show(array('idUser' => $_SESSION['id'],'user' => $_SESSION['usuario'], "tipousuario"=> $_SESSION['tipo'],'datos' => $unUsuario,'hayVentana' => $hayVentana));
        
 
   }
@@ -258,15 +284,37 @@ public function editarPerfil($hayVentana){
 
     
 
- 
+ public function verHistorialDeCompras(){
 
 
+    $idUsuario=$_SESSION['id'];
+    $directas = PDODirecta::getInstance()->traerHistorialDirectas($idUsuario);
+    $subastas = PDOSubasta::getInstance()->traerHistorialSubastas($idUsuario);
+    $hotsales = PDOHotsale::getInstance()->traerHistorialHotsales($idUsuario);
+    $view = new VerPerfil();
 
+  
 
+ if(($subastas != false) || ($directas != false) || ($hotsales != false)){ 
+      $view->showHistorial(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsales),'idUser' => $_SESSION["id"], "tipousuario"=> $_SESSION['tipo'],'user' => $_SESSION["usuario"],'mensaje' => null));
 
+      }
+    else{
+        $view->showHistorial(array('datos' => array("subastas"=>$subastas,"directas"=>$directas,"hotsales"=>$hotsales),"tipousuario"=> $_SESSION['tipo'],'idUser' => $_SESSION["id"],'user' => $_SESSION["usuario"],'mensaje' => "Usted todavia no ha hecho ninguna reserva"));
 
+    }
+   
 
+  }
 
+public function detallesEditarPerfilUsuario($hayVentana,$idUsuario){
+        
+        $unUsuario=PDOUsuario::getInstance()->traerUsuario($idUsuario); 
+        $view = new EditarPerfil();
+        $view->show(array('idUser' => $idUsuario,'user' => $_SESSION['usuario'], "tipousuario"=> $_SESSION['tipo'],'datos' => $unUsuario,'hayVentana' => $hayVentana));
+       
+
+  }
 
 
 }

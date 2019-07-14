@@ -302,5 +302,20 @@ class PDOHotsale extends PDORepository {
      }
 
 
+  public function traerHistorialHotsales($idUsuario){
+        $answer = $this->queryList("SELECT u.email,r.titulo, r.descripcion,h.idResidenciaSemana, h.activa,h.idUsuario,h.borrada as hotsaleborrada,h.precio,s.fecha_inicio,s.fecha_fin,rs.idResidencia,rs.idSemana,rs.estado,rs.borrada FROM residencia r INNER JOIN residencia_semana rs ON (r.idResidencia=rs.idResidencia) INNER JOIN  semana s ON (rs.idSemana=s.idSemana) INNER JOIN hotsale h ON (h.idResidenciaSemana=rs.idResidenciaSemana) INNER JOIN usuario u ON (u.idUsuario=h.idUsuario) WHERE h.borrada=1 AND h.idUsuario=:idUsuario",array(':idUsuario' => $idUsuario));
+        $final_answer = [];
+        foreach ($answer as &$element) {
+         $final_answer[] = array('residenciasemana'=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],$element["borrada"]),'hotsale'=> new Hotsale ($element["idResidenciaSemana"], $element["idUsuario"],$element["precio"],$element["fecha_inicio"],$element["fecha_fin"],$element["activa"],$element["hotsaleborrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"],"email"=> $element["email"],"idUsuario"=> $element["idUsuario"]);
+
+        }
+
+
+
+       return $final_answer;
+     }
+
+
+
 
 }

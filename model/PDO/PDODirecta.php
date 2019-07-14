@@ -86,6 +86,10 @@ class PDODirecta extends PDORepository {
 
       }
 
+
+
+
+
       public function insertarDirecta($idResidenciaSemana,$precio){
         $answer = $this->queryList("INSERT INTO directa (idResidenciaSemana,precio,activa,borrada)  VALUES (:idResidenciaSemana,:precio,:activa,:borrada)",array(':idResidenciaSemana'=> $idResidenciaSemana, ':precio'=> $precio, ':activa'=> 0,':borrada'=> 0));
 
@@ -271,7 +275,25 @@ class PDODirecta extends PDORepository {
      }
 
 
+  
 
+
+
+     public function traerHistorialDirectas($idUsuario){
+
+     $answer = $this->queryList("SELECT r.titulo,r.descripcion,d.idResidenciaSemana,rs.idResidencia,d.precio, d.idPremiumCompra,d.borrada, d.activa,rs.idSemana, sem.fecha_inicio, sem.fecha_fin, rs.estado,u.email,d.idPremiumCompra FROM residencia_semana rs INNER JOIN directa d ON (rs.idResidenciaSemana=d.idResidenciaSemana) INNER JOIN semana sem ON (sem.idSemana= rs.idSemana) INNER JOIN residencia r ON (r.idResidencia=rs.idResidencia) inner join usuario u on (d.idPremiumCompra=u.idUsuario) WHERE d.borrada = 1 AND d.idPremiumCompra = :idPremiumCompra",array(':idPremiumCompra' => $idUsuario));
+
+
+
+
+    $final_answer = [];
+    foreach ($answer as &$element) {
+        $final_answer[] = array("residenciasemana"=> new ResidenciaSemana ($element["idResidenciaSemana"],$element["idResidencia"], $element["idSemana"],$element["fecha_inicio"],$element["fecha_fin"],$element["estado"],null),"directa"=> new Directa($element["idResidenciaSemana"],$element["idPremiumCompra"],$element["precio"], $element["activa"], $element["borrada"]),"titulo" => $element["titulo"],"descripcion"=> $element["descripcion"], "email"=> $element["email"],"idPremium"=>$element["idPremiumCompra"]);
+    }
+
+    return $final_answer;
+
+     }
 
  }
 

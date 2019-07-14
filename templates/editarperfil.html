@@ -19,8 +19,16 @@
 <body>
 
 <!-- NAV BAR -->
- {% include 'barra_user.html' %}
+{% if tipousuario != "administrador" %}
 
+  {% include 'barra_user.html' %}
+
+{% else %}
+
+  {% include 'barra.html' %}
+
+
+{% endif %}
 
 
 

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- AMG CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+
+
+</head>
+<title>Hostorial de compras</title>
+<body>
+
+<!-- NAV BAR -->
+{% if tipousuario != "administrador" %}
+
+  {% include 'barra_user.html' %}
+
+{% else %}
+
+  {% include 'barra.html' %}
+
+
+{% endif %}
+
+<div class="row no-gutters">
+
+  
+
+<div class="col-md-9">
+
+
+    <div class="results-box">
+<center class="mb-5 bg-warning border border-dark rounded" >
+
+  {% if tipousuario != "administrador" %}
+
+  
+    <h1>Historial de compras</h1></center>
+{% else %}
+
+  
+  <h2>Historial de compras del Usuario: {{unUsuario.email}}</h2></center>
+
+{% endif %}
+
+  
+
+
+
+
+  {% if mensaje is defined %}
+
+  {% if not mensaje is empty %}
+    <CENTER>
+      <br>
+     <p>{{unUsuario.email }}{{ mensaje }}</p>
+    </CENTER>
+  {% endif %}
+  {% endif %}
+
+      {% for dato in datos.subastas %}
+      <div class="card mb-5">
+        <div class="card-body">
+          <h5 align="center" class="card-title">{{ dato.titulo }}</h5>
+          <div class="row">
+
+            <div align="center" class="m-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+             <div class=" col-md-3"> </div>
+            <div class=" col-md-9  mt-3 ">
+              
+              <p class="card-text"> Propiedad <span class="badge badge-primary"> Reservada por Subasta</span><p>
+            
+              <p class="card-text"> Descripcion: {{ dato.descripcion}} </p>
+              <p class="card-text"> Adjudicada por un monto de: ${{ dato.pujamaxima}} </p>
+              <p class="card-text"> Fecha Inicio: {{ dato.residenciasemana.fecha_inicio}} </p>
+              <p class="card-text"> Fecha Fin: {{ dato.residenciasemana.fecha_fin}} </p>
+      
+     
+     
+      <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}'"   class="btn btn-primary btn-sm ml-5">Ver Residencia</button>
+      
+      
+     
+              </div>
+            </div>
+          
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+      {% for dato in datos.directas %}
+      <div class="card mb-5">
+        <div class="card-body">
+          <h5 align="center" class="card-title">{{ dato.titulo }}</h5>
+          <div class="row">
+            
+            <div align="center" class="m-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+
+ <!--            <div class="col mt-3 ">   -->
+            
+            <div class=" col-md-3"> </div>
+           <div class=" col-md-9  mt-3 ">   
+              
+
+              <p class="card-text"> Propiedad <span class="badge badge-primary"> Reservada por Reserva Directa</span><p>
+              <p class="card-text"> Estado: <span class="badge badge-success"> En Proceso</span><p>
+
+
+              <p class="card-text"> Descripcion:{{ dato.descripcion }} </p>
+              <p class="card-text"> Se ocupo el dia: {{ dato.residenciasemana.fecha_inicio }} </p>
+              <p class="card-text"> Se desocupo el dia: {{ dato.residenciasemana.fecha_fin}} </p>
+              
+             
+              <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{dato.residenciasemana.idResidencia}}'"   class="btn btn-primary btn-sm ml-5">Ver Residencia</button>
+
+              
+
+              
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+      {% for hotsale in datos.hotsales %}
+      <div class="card mb-5">
+        <div class="card-body">
+          <h5 align="center" class="card-title">{{ hotsale.titulo }}</h5>
+          <div class="row">
+
+            <div align="center" class="m-3">
+              <img src="./imagen/imagen1.jpg" class="card-img" alt="...">
+            </div>
+            
+             <div class=" col-md-3"> </div>
+           <div class=" col-md-9  mt-3 ">   
+              
+               <p class="card-text"> Propiedad  <span class="badge badge-primary"> Reservada por Hotsale</span><p>
+              
+              <p class="card-text"> Descripcion:{{ hotsale.descripcion }} </p>
+              <p class="card-text"> Precio: ${{hotsale.hotsale.precio}}</p>
+              <p class="card-text"> Fecha Inicio: {{ hotsale.hotsale.fecha_inicio }} </p>
+              <p class="card-text"> Fecha Fin: {{ hotsale.hotsale.fecha_fin}} </p>
+              
+              <button type="button" onclick="location.href='./index.php?action=mostrarResidencia&id={{hotsale.residenciasemana.idResidencia}}'"   class="btn btn-primary btn-sm ml-5">Ver Residencia</button>
+
+             
+
+
+
+
+
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
