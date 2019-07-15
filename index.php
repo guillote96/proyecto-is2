@@ -274,6 +274,9 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'procesarCambioPassword' &&
 else if(isset($_GET["action"]) && $_GET["action"] == 'desactivarCuenta'){
     UsuarioController::getInstance()->desactivarCuenta();
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'desactivarCuentaAdmin' && !empty($_GET["idAdministrador"])){
+    AdministradorController::getInstance()->desactivarCuentaAdmin($_GET["idAdministrador"]);
+}
 else if(isset($_GET["action"]) && $_GET["action"] == 'crearDirectasParaTodasLasResidencias'){
      ResidenciaController::getInstance()->crearSemanaDirectaParaTodasLasResidencias();
 }

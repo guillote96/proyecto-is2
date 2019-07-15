@@ -20,7 +20,7 @@ class PDOAdmin extends PDORepository {
 
 
     public function listarAdministradores(){
-      $answer = $this->queryList("SELECT * FROM administrador",array());
+      $answer = $this->queryList("SELECT * FROM administrador WHERE borrada=0",array());
 
        $final_answer = [];
         foreach ($answer as &$element) {
@@ -59,7 +59,10 @@ class PDOAdmin extends PDORepository {
    }
 
 
+public function desactivarCuenta($idAdministrador){
+      $answer = $this->queryList("UPDATE administrador SET borrada=:borrada WHERE idAdministrador=:idAdministrador",array(':idAdministrador'=> $idAdministrador,':borrada'=>1));
 
+     }
 
 
 }

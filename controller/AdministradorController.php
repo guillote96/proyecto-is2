@@ -195,5 +195,13 @@ public function adminSignup(){
   
   }
   
+public function desactivarCuentaAdmin($idAdministrador){
+      PDOAdmin::getInstance()->desactivarCuenta($idAdministrador);
+      $this->listarAdmins();
+
+
+    }
+
+
 
 }
