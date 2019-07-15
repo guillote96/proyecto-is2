@@ -28,7 +28,10 @@
 
 {% endif %}
 
+  <script>
+document.getElementById("clientes").innerHTML = "<li class='nav-item active'><a class='nav-link' href='./index.php?action=listarClientes'><p class='font-weight-bold'>Clientes</p></a></li>";
 
+</script>
 
 
 
@@ -95,7 +98,8 @@
 
           {% else %}
 
-            <FONT SIZE=6 ><b>Datos del usuario <a href="./index.php?action=detallesClienteEditarPerfil&idUsuario={{user}}" class="btn mb-2 "><img class= ""  src="./imagen/icon-editar.svg" title="Editar Perfil" width="30" height="30"></a></b> </font>
+            <!--<FONT SIZE=6 ><b>Datos del usuario <a href="./index.php?action=detallesClienteEditarPerfil&idUsuario={{user}}" class="btn mb-2 "><img class= ""  src="./imagen/icon-editar.svg" title="Editar Perfil" width="30" height="30"></a></b> </font>-->
+              <FONT SIZE=6 ><b>Datos del usuario </b> </font>
 
 
           {% endif %}
