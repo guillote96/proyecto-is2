@@ -42,7 +42,7 @@ require_once('view/EditarPerfil.php');
 require_once('view/Cliente.php');
 require_once('view/Tarifas.php');
 require_once('view/CambiarPassword.php');
-
+require_once('view/Admin.php');
 
 /* PDO */
 require_once('model/PDO/PDORepository.php');
@@ -55,6 +55,7 @@ require_once('model/PDO/PDOSemana.php');
 require_once('model/PDO/PDODirecta.php');
 require_once('model/PDO/PDOHotsale.php');
 require_once('model/PDO/PDOTarifa.php');
+require_once('model/PDO/PDOAdmin.php');
 
 /* MODEL */
 
@@ -66,6 +67,7 @@ require_once('model/ResidenciaSemana.php');
 require_once('model/Residencia.php');
 require_once('model/Sem.php');
 require_once('model/AuctionDetail.php');
+require_once('model/Administrador.php');
 
 
 if(isset($_GET["action"]) && $_GET["action"] == 'iniciarsesion'){
@@ -102,11 +104,17 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'pujarSubasta' && !empty($_
 else if(isset($_GET["action"]) && $_GET["action"] == 'admin-login'){
   AdministradorController::getInstance()->adminLogin();
 }
+else if(isset($_GET["action"]) && $_GET["action"] == 'admin-signup'){
+  AdministradorController::getInstance()->adminSignup();
+}
 else if(isset($_GET["action"]) && $_GET["action"] == 'user-login'){
   UsuarioController::getInstance()->userLogin();
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'user-signup'){
      UsuarioController::getInstance()->userSignup();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'registraradmin'){
+     AdministradorController::getInstance()->registrarAdmin(null);
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'verPerfil'){
   UsuarioController::getInstance()->verPerfil();
@@ -196,6 +204,9 @@ else if(isset($_GET["action"]) && $_GET["action"] == 'comprarHotsale'&& !empty($
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'listarClientes'){
     UsuarioController::getInstance()->listarClientes();
+}
+else if(isset($_GET["action"]) && $_GET["action"] == 'listarAdmins'){
+    AdministradorController::getInstance()->listarAdmins();
 }
 else if(isset($_GET["action"]) && $_GET["action"] == 'detallesCliente' && !empty($_GET["idUsuario"])){
     UsuarioController::getInstance()->detallesUsuario($_GET["idUsuario"]);

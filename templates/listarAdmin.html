@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Listado Clientes</title>
+
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- AMG CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+
+</head>
+<body>
+	{% include 'barra.html' %}
+
+
+  <script>
+document.getElementById("administradores").innerHTML = "<li class='nav-item active'><a class='nav-link' href='./index.php?action=listarAdmins'><p class='font-weight-bold'>Administradores</p></a></li>";
+
+</script>
+
+<div class="container">
+   <center><h1>Administradores</h1></center>
+   <br>
+
+
+
+
+	<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Dni</th>
+      <th scope="col" title="Presione para eliminar un Administrador">Dar de baja Administrador</th>
+      
+      
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for administrador in administradores %}
+    <tr>
+      <td scope="row" > {{administrador.admin.username}}</td>
+      <td>{{administrador.admin.nombre}}</td>
+      <td>{{administrador.admin.apellido}}</td>
+      <td>{{administrador.admin.dni }}</td>     
+      <td><a class="btn btn-danger"   href="./index.php?action=detallesCliente&idUsuario={{cliente.usuario.idUsuario}}" role="button">Eliminar Administrador</a></td>
+     
+
+      
+   
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+     <a class="btn btn-primary float-right"  href="./index.php?action=registraradmin" role="button">Registrar Nuevo Admin</a>
+</div>
+
+
+   
+
+
+</body>
+</html>

@@ -26,8 +26,15 @@ class AdministradorController extends Controller {
               $this->vistaIniciarSesion(array('mensaje' => "Hay Campos Vacios"));
              return false;
         }
+     $admin=PDOAdmin::getInstance()->traerAdminPorUsername($_POST['username-input-admin']);
+     
+     if($admin == false){
+      //no existe usuario
+       $this->vistaIniciarSesion(array('mensaje' => "Email o contraseña incorrecta"));
+       return false;
+     }
 
-     if($_POST['username-input-admin'] == "admin" && $_POST['password-input-admin'] == 1234){
+     if($_POST['username-input-admin'] == $admin->getUsername() && $_POST['password-input-admin'] == $admin->getPassword()){
        $this->alta_sesion($_POST['username-input-admin'], 1, "administrador"); // el id es ficticio para esta entrega
        $this->vistaAdminPanel($_POST['username-input-admin']);
      }else{
@@ -111,5 +118,82 @@ class AdministradorController extends Controller {
 
    }
 
+
+
+   public function listarAdmins(){
+    $administradores= PDOAdmin::getInstance()->listarAdministradores();
+
+    $view=new Admin();
+
+    $view->show(array('administradores'=>$administradores,'user'=> $_SESSION['usuario'],'tipousuario'=> $_SESSION['tipo']));
+
+
+  }
+
+
+public function adminSignup(){
+  
+  if($this->verificarDatosAdmin()){
+
+    $this->altaRegistroAdmin();
+      return true;
+    }
+  else{
+     return false;
+    }
+  }
+
+
+  public function verificarDatosAdmin(){
+      
+    if(empty($_POST['nombre-input-signup']) || empty($_POST['apellido-input-signup'])|| empty($_POST['username-input-signup'])|| empty($_POST['password-input-signup'])|| empty($_POST['dni-input-signup']) ){
+
+        
+       $this->registrarAdmin(array('hayError'=> true,'mensaje' => "Hay Campos Vacios"));
+
+       return false;
+     }
+
+     else {
+        
+                            
+        //  echo $diff->y .' años ';
+        
+         //si no existe la sesion pasa se fija si el mail del registro no esta en la base, si el mail que ingrese en el editar perfil es distinto al que tengo en SESSION entonces se fija en la base si existe el nuevo email 
+        if(!isset($_SESSION['usuario']) || $_SESSION['usuario']!=$_POST['username-input-signup']){
+            if(PDOAdmin::getInstance()->existeUsername($_POST['username-input-signup'])){
+
+              $this->registrarAdmin(array('hayError'=> true,'mensaje' => "El username ya se encuentra registrado por otro administrador. Debe ingresar otro username "));
+
+              return false;
+          }
+        }
+
+        
+      }   
+
+     return true;
+  }
+
+
+  
+
+  public function altaRegistroAdmin(){
+      // Inserta el usuario
+       PDOAdmin::getInstance()->insertarAdmin();
+        $this->vistaExito(array('mensaje' =>"¡¡¡El administrador fue cargado exitosamente!!!"));
+        return true;
+       
+    }
+
+
+
+  public function registrarAdmin($hayVentana){
+    $view = new Admin();
+    
+    $view->showRegistrar(array('idUser' => $_SESSION['id'],'user' => $_SESSION['usuario'], "tipousuario"=> $_SESSION['tipo'],'hayVentana' => $hayVentana));
+  
+  }
+  
 
 }
