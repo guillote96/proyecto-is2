@@ -12,7 +12,7 @@ class Admin extends TwigView {
 
     public function showRegistrar($datos) {
         
-        echo self::getTwig()->render('registraradmin.html', $datos);
+        echo self::getTwig()->render('registrarAdmin.html', $datos);
         
         
     }
