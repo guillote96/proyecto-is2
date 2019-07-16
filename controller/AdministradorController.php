@@ -35,7 +35,7 @@ class AdministradorController extends Controller {
      }
 
      if($_POST['username-input-admin'] == $admin->getUsername() && $_POST['password-input-admin'] == $admin->getPassword()){
-       $this->alta_sesion($_POST['username-input-admin'], 1, "administrador"); // el id es ficticio para esta entrega
+       $this->alta_sesion($_POST['username-input-admin'],$admin->getIdAdmin(), "administrador"); // el id es ficticio para esta entrega
        $this->vistaAdminPanel($_POST['username-input-admin']);
      }else{
        $this->vistaIniciarSesion(array('mensaje' => "Usuario o contraseña incorrecta"));
@@ -156,18 +156,16 @@ public function adminSignup(){
 
      else {
         
-                            
-        //  echo $diff->y .' años ';
         
          //si no existe la sesion pasa se fija si el mail del registro no esta en la base, si el mail que ingrese en el editar perfil es distinto al que tengo en SESSION entonces se fija en la base si existe el nuevo email 
-        if(!isset($_SESSION['usuario']) || $_SESSION['usuario']!=$_POST['username-input-signup']){
+        
             if(PDOAdmin::getInstance()->existeUsername($_POST['username-input-signup'])){
 
               $this->registrarAdmin(array('hayError'=> true,'mensaje' => "El username ya se encuentra registrado por otro administrador. Debe ingresar otro username "));
 
               return false;
           }
-        }
+        
 
         
       }   
@@ -196,11 +194,25 @@ public function adminSignup(){
   }
   
 public function desactivarCuentaAdmin($idAdministrador){
-      PDOAdmin::getInstance()->desactivarCuenta($idAdministrador);
-      $this->listarAdmins();
+  PDOAdmin::getInstance()->desactivarCuenta($idAdministrador);
 
+  if(!PDOAdmin::getInstance()->hayMasAdministradores()){
+      PDOAdmin::getInstance()->reActivarCuenta($idAdministrador);
+      $this->vistaExito(array('mensaje' =>"Usted es el ultimo administrador, no puede darse de baja hasta que registre un nuevo administrador"));
+  }
+    
+  else{
+        
+        if($_SESSION['id']==$idAdministrador){
 
-    }
+            $this->cerrarSesion();
+        }
+        else{
+            
+            $this->listarAdmins();
+        }    
+  }      
+}
 
 
 

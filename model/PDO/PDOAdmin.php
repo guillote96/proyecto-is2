@@ -47,6 +47,13 @@ class PDOAdmin extends PDORepository {
      return (sizeof($answer)> 0) ? true : false;
    }
 
+   public function hayMasAdministradores(){
+
+        $answer = $this->queryList("SELECT * FROM administrador WHERE borrada=0",array());
+        
+     return (sizeof($answer)>0) ? true : false;
+   }
+
 
        public function traerAdminPorUsername($username){
 
@@ -64,5 +71,8 @@ public function desactivarCuenta($idAdministrador){
 
      }
 
+public function reActivarCuenta($idAdministrador){
+      $answer = $this->queryList("UPDATE administrador SET borrada=:borrada WHERE idAdministrador=:idAdministrador",array(':idAdministrador'=> $idAdministrador,':borrada'=>0));
 
+     }
 }

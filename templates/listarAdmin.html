@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Listado Clientes</title>
+	<title>Listado Administradores</title>
 
 
   <!-- Required meta tags -->
@@ -52,12 +52,53 @@ document.getElementById("administradores").innerHTML = "<li class='nav-item acti
       <td>{{administrador.admin.nombre}}</td>
       <td>{{administrador.admin.apellido}}</td>
       <td>{{administrador.admin.dni }}</td>     
-      <td><a class="btn btn-danger"   href="./index.php?action=desactivarCuentaAdmin&idAdministrador={{administrador.admin.idAdministrador}}" role="button">Eliminar Administrador</a></td>
+      <td>
+        
+        <a href="#ventanaConfirmacion{{administrador.admin.idAdministrador}}" class="btn btn-danger" data-toggle="modal">Eliminar Administrador</a></td>
      
 
       
    
     </tr>
+
+    <div class="modal fade" id="ventanaConfirmacion{{administrador.admin.idAdministrador}}">
+
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">    
+                         <h5 class="modal-title">
+                                                          
+                            {% if administrador.admin.username == user %}
+                              ¿Esta seguro que desea eliminarse del sistema?
+
+                               {% else %}
+                                        
+                              ¿Esta seguro que desea eliminar al administrador con username:  {{administrador.admin.username}}? 
+                            {% endif %}                   
+                         </h5>
+                         <button type ="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>                        
+                      </div>    
+                      <div class="modal-body">
+                        <p>
+                          {% if administrador.admin.username == user %}
+                            Si presiona Eliminar se cerrara la sesion y usted sera dado de baja del sistema. Desea continuar?
+                          {% else %}
+                            Si presiona Eliminar el usuario desaparecera del listado, y sera dado de baja del sistema. Desea continuar?
+                          {% endif %}
+                      </p>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type ="button" class="btn btn-default"   data-dismiss="modal">Cancelar</button>  
+                        <a href="./index.php?action=desactivarCuentaAdmin&idAdministrador={{administrador.admin.idAdministrador}}" class="btn btn-danger " role="button" >
+                          Eliminar
+                        </a>
+
+                      </div>         
+
+                  </div>
+                </div> 
+              </div>
     {% endfor %}
   </tbody>
 </table>
@@ -69,5 +110,10 @@ document.getElementById("administradores").innerHTML = "<li class='nav-item acti
    
 
 
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
